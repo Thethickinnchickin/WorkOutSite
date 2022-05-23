@@ -1,0 +1,31 @@
+{
+  "name": "workoutsite",
+  "version": "1.0.0",
+  "description": "workout site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thethickinnchickin/WorkOutSite.git"
+  },
+  "author": "Matt Reiley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thethickinnchickin/WorkOutSite/issues"
+  },
+  "homepage": "https://github.com/Thethickinnchickin/WorkOutSite#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "connect-mongo": "^4.6.0",
+    "connect-mongoose": "^0.0.2",
+    "express": "^4.18.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.3.4",
+    "path": "^0.12.7",
+    "session": "^0.1.0"
+  }
+}
