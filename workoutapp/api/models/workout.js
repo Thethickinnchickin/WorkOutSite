@@ -13,7 +13,11 @@ const WorkoutSchema = new Schema({
             type: Schema.ObjectId,
             ref: 'Exercise'
         }
-    ]
+    ],
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    }
 });
 
 

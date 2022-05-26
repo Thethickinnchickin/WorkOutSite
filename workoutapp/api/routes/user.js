@@ -9,10 +9,8 @@ const verifyToken = require('../middleware/verify-token')
 
 router.post('/user', verifyToken, async (req, res) => {
     try {
-        console.log(req.decoded);
         let foundUser = await User.findOne({_id: req.decoded._id})
 
-            console.log(foundUser)
             res.json({
                 success: true,
                 user: foundUser

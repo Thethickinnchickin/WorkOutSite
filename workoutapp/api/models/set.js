@@ -4,9 +4,17 @@ const Schema = mongoose.Schema;
 //Creating Workout Model
 
 const SetSchema = new Schema({
-    repAmount: Number,
-    weight: Number,
-    timeinSeconds: Number
+    targetRepAmount: Number,
+    actualRepAmount: Number,
+    targetWeight: Number,
+    actualWeight: Number,
+    targetTimeinSeconds: Number,
+    actualTimeinSeconds: Number,
+    warmupSet: Boolean,
+    exerciseId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    }
 });
 
 

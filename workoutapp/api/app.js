@@ -12,6 +12,8 @@ const User = require('./models/user');
 const cors = require('cors')
 const userRoutes = require('./routes/user');
 const workoutRoutes = require('./routes/workout');
+const exerciseRoutes = require('./routes/exercise');
+const setRoutes = require('./routes/set');
 
 const dbUrl = "mongodb+srv://workout-user:OaklandA's54@cluster0.vnc1b.mongodb.net/?retryWrites=true&w=majority";
 
@@ -64,8 +66,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use('/workout', workoutRoutes);
+app.use('/api/workout', workoutRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/exercise', exerciseRoutes);
+app.use('/api/set', setRoutes);
 
 //starting up app
 const port = 4000
