@@ -11,10 +11,10 @@ router.post('/user', verifyToken, async (req, res) => {
     try {
         let foundUser = await User.findOne({_id: req.decoded._id})
 
-            res.json({
-                success: true,
-                user: foundUser
-            })
+        res.json({
+            success: true,
+            user: foundUser
+        })
         
     } catch (err) {
         res.status(500).json({

@@ -19,6 +19,10 @@ const ExerciseSchema = new Schema({
         required: true
     },
     notes: String,
+    isCompleted: {
+        type: Number,
+        required: true
+    }
     
 });
 
