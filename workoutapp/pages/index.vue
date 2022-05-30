@@ -29,13 +29,36 @@
 
                 </div>
             </div>
-        </div>    
+        </div>  
+        <div v-if="workouts">        
+            <button @click="addAllWorkouts(workouts)">Go To Workouts</button>
+        </div>  
+
   </main>
 
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+
+
+  async asyncData({$axios}) {
+      try {
+          let response = await $axios.$get('/api/workout');
+          let workouts = JSON.parse(JSON.stringify(response.workouts))
+
+          return {
+            workouts: workouts
+          }
+      } catch (err) {
+          return
+      }
+  },
+  methods: {
+      ...mapActions(["addAllWorkouts"])
+  }
 }
 </script>

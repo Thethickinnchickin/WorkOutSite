@@ -7,6 +7,7 @@ const Set = require('../models/set');
 const verifyToken = require('../middleware/verify-token');
 
 
+
 //Creating new exercise
 router.post('/create', async (req, res) => {
     const user = await User.findByUsername("Matt");
@@ -74,7 +75,7 @@ router.delete('/', async(req, res) => {
 //Editing Workout for user
 router.put('/', async (req, res) => {
     try {
-        const exercise = await Workout.findByIdAndUpdate(req.body.exerciseId, {
+        const exercise = await Exercise.findByIdAndUpdate(req.body.exerciseId, {
             name: req.body.name, 
             notes: req.body.notes
         });
@@ -95,6 +96,27 @@ router.put('/', async (req, res) => {
 
 
 });
+
+//Changing isCompleted to true or false
+router.put('/isCompleted', async (req, res) => {
+    try {
+        const exercise = await Exercise.findByIdAndUpdate(req.body.exerciseId, {
+            isCompleted: req.body.isCompleted
+        });
+
+        await exercise.save();
+
+        res.json({
+            success: true,
+            message: "You have updated is Completed for exercise"
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+})
 
 
 

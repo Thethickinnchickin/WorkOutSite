@@ -1,5 +1,6 @@
-const URL = 'http://localhost:4000/'
+const URL = 'http://localhost:4000'
 export default {
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'client',
@@ -16,6 +17,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -41,7 +43,7 @@ export default {
   ],
 
   server: {
-    port: 9000
+    port: 8000
   },
 
   proxy: {
@@ -55,7 +57,12 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: URL,
+    proxy: true
   
+  },
+
+  proxy: {
+    "/api": URL
   },
 
   router: {

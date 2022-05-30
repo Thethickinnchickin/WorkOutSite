@@ -75,7 +75,7 @@ router.delete('/', async(req, res) => {
 })
 
 //Editing Set for user targets
-router.put('/update-set', async (req, res) => {
+router.put('/', async (req, res) => {
     try {
         if(req.body.updateType === "target")
         {
@@ -112,6 +112,28 @@ router.put('/update-set', async (req, res) => {
         });
     }
 });
+
+
+//Changing isCompleted to true or false
+router.put('/warmupSet', async (req, res) => {
+    try {
+        const set = await Set.findByIdAndUpdate(req.body.setId, {
+            warmupSet: req.body.warmupSet
+        })
+
+        await set.save();
+
+        res.json({
+            success: true,
+            message: "You have updated is Completed for exercise"
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+})
 
 
 

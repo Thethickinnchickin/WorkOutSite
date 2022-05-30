@@ -1,3 +1,4 @@
+const { Date } = require('core-js');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -21,7 +22,12 @@ const WorkoutSchema = new Schema({
     isCompleted: {
         type: Boolean,
         required: true
-    }
+    },
+    dateScheduled: {
+        type: Date,
+        required: true
+    },
+    notes: String
 });
 
 

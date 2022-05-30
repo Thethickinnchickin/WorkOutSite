@@ -102,4 +102,5 @@ router.post('/logout', isLoggedIn,(req, res) => {
     })
 });
 
+
 module.exports = router;
