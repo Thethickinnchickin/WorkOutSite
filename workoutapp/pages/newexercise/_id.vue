@@ -1,8 +1,8 @@
 <template>
-<body class="text-center" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
+<body class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
     
 <main class="form-signin col-4 w-100 m-auto">
-  <form @submit.prevent="createWorkout">
+  <form @submit.prevent="createExercise">
  
     <h1 class="h3 mb-3 fw-normal">Create New Exercise For {{workout.name}}</h1>
     <p class="mb-3">{{workoutDate}}</p>
@@ -40,7 +40,7 @@ export default {
     },
     async asyncData({$axios, params}) {
         try {
-            console.log(params)
+           
             let response = await $axios.$get(`/api/workout/${params.id}`)
 
             let formattedDate = moment(String(response.workout.dateScheduled))
@@ -57,17 +57,17 @@ export default {
         }
     },
       methods: {
-    async createSet() {
+    async createExercise() {
       try {
-        let workoutData = {
+        let exerciseData = {
           name: this.name,
           notes: this.notes,
-          dateScheduled: this.date
+          workoutId: this.workout._id
         }
-        const response = await this.$axios.$post('/api/workout/create', workoutData)
-        
+        const response = await this.$axios.$post('/api/exercise/create', exerciseData)
+        console.log(response)
 
-        this.$router.push(`/newexercise/${response.workout._id}`)
+        this.$router.push(`/newset/${response.exercise._id}`)
 
       } catch (err) {
         return 

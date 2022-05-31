@@ -95,7 +95,9 @@ router.post('/register', async (req, res) => {
 //Logout Route UnAuthenticating user with passport 
 
 router.post('/logout', isLoggedIn,(req, res) => {
-    req.logout();
+    req.logout(() => {
+        console.log("You have logged out")
+    });
     res.json({
         success: true,
         message: 'Logout successful'

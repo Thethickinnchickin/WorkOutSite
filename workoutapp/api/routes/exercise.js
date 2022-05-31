@@ -5,8 +5,36 @@ const User = require('../models/user');
 const Exercise = require('../models/exercise');
 const Set = require('../models/set');
 const verifyToken = require('../middleware/verify-token');
+const exercise = require('../models/exercise');
 
 
+
+//Getting Workouts For user
+router.get('/:id', async(req, res) => {
+    try {
+
+        //Getting all workouts for user
+        const exercise = await Exercise.findById(req.params.id);
+
+            res.json({
+                success: true,
+                exercise: exercise
+            })
+
+        
+        
+
+        
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+
+
+
+})
 
 //Creating new exercise
 router.post('/create', async (req, res) => {
@@ -29,7 +57,7 @@ router.post('/create', async (req, res) => {
 
     res.json({
         success: true,
-        workout: workout
+        exercise: exercise
     })
 
 });

@@ -1,5 +1,5 @@
 <template>
-<body class="text-center" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
+<body class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
     
 <main class="form-signin col-4 w-100 m-auto">
   <form @submit.prevent="createWorkout">

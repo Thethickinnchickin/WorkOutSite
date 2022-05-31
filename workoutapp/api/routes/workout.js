@@ -76,7 +76,8 @@ router.post('/create', async (req, res) => {
         exercises: [],
         userId: user._id,
         isCompleted: false,
-        dateScheduled: req.body.dateScheduled
+        dateScheduled: req.body.dateScheduled,
+        notes: req.body.notes
     });
 
     await workout.save()
