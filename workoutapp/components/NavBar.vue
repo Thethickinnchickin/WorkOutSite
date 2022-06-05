@@ -75,6 +75,7 @@ export default  {
             await this.$auth.logout();
 
             let route = ''
+            console.log($route.name)
             if($route.name == "index") 
             {
                 route = '/'
@@ -82,7 +83,7 @@ export default  {
                 route = $route.name
             }
 
-            this.$router.push(route)
+            this.$router.push('/')
         }
     }
 }

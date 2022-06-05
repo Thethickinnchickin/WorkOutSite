@@ -14,9 +14,13 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ]
   },
+
+  modules: [
+    'bootstrap-vue/nuxt'
+  ],
 
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -43,7 +47,7 @@ export default {
   ],
 
   server: {
-    port: 8000
+    port: 7000
   },
 
   proxy: {

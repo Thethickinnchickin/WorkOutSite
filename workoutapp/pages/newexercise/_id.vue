@@ -14,6 +14,10 @@
       <textarea v-model="notes" type="text" class="form-control" id="floatingPassword" placeholder="notes"></textarea>
       <label for="floatingPassword">Exercise Notes</label>
     </div>
+    <div class="form-floating">
+        <input type="checkbox" id="checkbox" v-model="warmupExercise">
+        <label for="checkbox">warmup Exercise</label>
+    </div>
     <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Exercise</button>
   </form>
 </main>
@@ -32,21 +36,23 @@
 import moment from 'moment';
 
 export default {
+    layout: 'default',
     data() {
         return {
             name: '',
-            notes: ''
+            notes: '',
+            warmupExercise: false
         }
     },
     async asyncData({$axios, params}) {
         try {
            
-            let response = await $axios.$get(`/api/workout/${params.id}`)
+            let response = await $axios.$post(`/api/workout/${params.id}`)
 
             let formattedDate = moment(String(response.workout.dateScheduled))
                 .format('MM/DD/YYYY');
 
-
+            console.log(response)
 
             return {
                 workout: response.workout,
@@ -62,6 +68,7 @@ export default {
         let exerciseData = {
           name: this.name,
           notes: this.notes,
+          warmUpExercise: this.warmupExercise,
           workoutId: this.workout._id
         }
         const response = await this.$axios.$post('/api/exercise/create', exerciseData)

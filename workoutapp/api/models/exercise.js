@@ -18,9 +18,13 @@ const ExerciseSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
+    warmUpExercise: {
+        type: Boolean,
+        required: true
+    },
     notes: String,
     isCompleted: {
-        type: Number,
+        type: Boolean,
         required: true
     }
     

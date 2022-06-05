@@ -7,6 +7,25 @@ const Set = require('../models/set');
 const verifyToken = require('../middleware/verify-token');
 
 
+router.get('/:id', verifyToken, async (req, res) => {
+    try {
+        let set = await Set.findById(req.params.id);
+
+        res.json({
+            success: true,
+            set: set
+        })
+    }catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+
+
+
+})
+
 //Creating new set for exercise
 router.post('/create', async (req, res) => {
     const user = await User.findByUsername("Matt");
@@ -39,6 +58,7 @@ router.post('/create', async (req, res) => {
 //Deleting Workout
 router.delete('/', async(req, res) => {
     try {
+
         const exercise = await Exercise.findById(req.body.exerciseId);
 
         let exerciseSets = exercise.sets;
@@ -49,11 +69,10 @@ router.delete('/', async(req, res) => {
        
 
         //Deleting Sets within Exercises
-        for(let setId of exercise.sets)
-        {
-            await Set.findOneAndDelete({_id: setId});
-        }
-    
+  
+        await Set.findOneAndDelete({_id: req.body.setId});
+        
+        
         
 
         exercise.sets = []
@@ -80,9 +99,11 @@ router.put('/', async (req, res) => {
         if(req.body.updateType === "target")
         {
             const set = await Set.findByIdAndUpdate(req.body.setId, {
-                targetRepAmount: req.body.targetRepAmount,
-                targetWeight: req.body.targetWeight,
-                targetTimeInSeconds: req.body.targetTimeInSeconds
+                $set: {
+                    targetRepAmount: req.body.targetRepAmount,
+                    targetWeight: req.body.targetWeight,
+                    targetTimeinSeconds: req.body.targetTimeInSeconds                    
+                }
             }); 
             await set.save();
 

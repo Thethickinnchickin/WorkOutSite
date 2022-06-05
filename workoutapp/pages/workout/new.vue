@@ -19,7 +19,7 @@
       <label for="floatingPassword">Workout Date</label>
     </div>
 
-    <button  class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Workout</button>
   </form>
 </main>
 
@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  layout: 'default',
   data() {
     return {
       name: '',
@@ -48,7 +49,7 @@ export default {
           notes: this.notes,
           dateScheduled: this.date
         }
-        const response = await this.$axios.$post('/api/workout/create', workoutData)
+        const response = await this.$axios.$post('/api/workout/create/new', workoutData)
         
 
         this.$router.push(`/newexercise/${response.workout._id}`)

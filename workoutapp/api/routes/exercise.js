@@ -12,7 +12,6 @@ const exercise = require('../models/exercise');
 //Getting Workouts For user
 router.get('/:id', async(req, res) => {
     try {
-
         //Getting all workouts for user
         const exercise = await Exercise.findById(req.params.id);
 
@@ -20,11 +19,7 @@ router.get('/:id', async(req, res) => {
                 success: true,
                 exercise: exercise
             })
-
-        
-        
-
-        
+   
     } catch (err) {
         res.status(500).json({
             success: false,
@@ -46,7 +41,8 @@ router.post('/create', async (req, res) => {
         sets: [],
         workoutId: workout._id,
         notes: req.body.notes,
-        isCompleted: false
+        isCompleted: false,
+        warmUpExercise: req.body.warmUpExercise
     });
 
     workout.exercises.push(exercise)
@@ -75,10 +71,13 @@ router.delete('/', async(req, res) => {
         const exercise = await Exercise.findById(req.body.exerciseId);
 
         //Deleting Sets within Exercises
-        for(let setId of exercise.sets)
-        {
-            await Set.findOneAndDelete({_id: setId});
-        }
+        if(exercise.sets.length > 0) {
+            for(let setId of exercise.sets)
+            {
+                await Set.findOneAndDelete({_id: setId});
+            }            
+        } 
+
         await Exercise.findOneAndDelete({_id: req.body.exerciseId});
         
 
@@ -104,15 +103,18 @@ router.delete('/', async(req, res) => {
 router.put('/', async (req, res) => {
     try {
         const exercise = await Exercise.findByIdAndUpdate(req.body.exerciseId, {
-            name: req.body.name, 
-            notes: req.body.notes
+            $set: {
+                name: req.body.name, 
+                notes: req.body.notes,
+                warmUpExercise: req.body.warmUpExercise                
+            }
         });
 
         await exercise.save();
 
         res.json({
             success: true,
-            message: "Successfully updates exercise"
+            message: "Successfully updated exercise"
         })
     } catch(err) {
         res.status(500).json({

@@ -7,23 +7,23 @@
     <h1 class="h3 mb-3 fw-normal">Create New Set For Exercise: {{exercise.name}}</h1>
     <div class="form-floating">
       <input 
-      v-model="name" type="number" class="form-control" id="floatingInput" placeholder="name">
+      v-model="targetRepAmount" type="number" class="form-control" id="floatingInput">
       <label for="floatingInput">Target Rep Amount</label>
     </div>
     <div class="form-floating">
-      <input v-model="name" type="number" class="form-control" id="floatingInput" placeholder="name">
+      <input v-model="targetWeight" type="number" class="form-control" id="floatingInput">
       <label for="floatingInput">Target Weight</label>
     </div>
     <div class="form-floating">
-      <input v-model="name" type="number" class="form-control" id="floatingInput" placeholder="name">
+      <input v-model="targetTimeinSeconds" type="number" class="form-control" id="floatingInput">
       <label for="floatingInput">Target Time In Seconds</label>
     </div>
     <div class="form-floating">
         <input type="checkbox" id="checkbox" v-model="warmupSet">
-        <label for="checkbox">warmupSet{{warmupSet}}</label>
+        <label for="checkbox">warmupSet</label>
     </div>
 
-    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Exercise</button>
+    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Set</button>
   </form>
 </main>
 
@@ -73,7 +73,7 @@ export default {
         }
         const response = await this.$axios.$post('/api/set/create', setData)
 
-        this.$router.push(`/`)
+        this.$router.push(`/workout/${this.exercise.workoutId}`)
 
       } catch (err) {
         return 
