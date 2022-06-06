@@ -12,6 +12,7 @@ const exercise = require('../models/exercise');
 //Getting Workouts For user
 router.get('/:id', async(req, res) => {
     try {
+
         //Getting all workouts for user
         const exercise = await Exercise.findById(req.params.id);
 
@@ -26,14 +27,39 @@ router.get('/:id', async(req, res) => {
             message: err.message
         })
     }
+})
+//Route getting multiple exercises based on params
 
+router.post("/", verifyToken, async (req, res) => {
+    try {
+        if(req.body.searchParams !== null) {
+            if(req.body.searchParams.workoutId !== null 
+                && req.body.searchParams.isWarmup !== null) {
+                const exercises = await Exercise.find({workoutId: req.body.searchParams.workoutId,
+                warmUpExercise: req.body.searchParams.isWarmup}).exec()
 
+                res.json({
+                    success: true,
+                    exercises: exercises
+                })
+            }
+        }
 
+        res.json({
+            success: false,
+            message: "didn't work"
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
 })
 
 //Creating new exercise
-router.post('/create', async (req, res) => {
-    const user = await User.findByUsername("Matt");
+router.post('/create', verifyToken, async (req, res) => {
+    const user = await User.findByUsername(req.decoded.username);
     const workout = await Workout.findById(req.body.workoutId);
 
     const exercise = await new Exercise({

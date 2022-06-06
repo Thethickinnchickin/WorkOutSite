@@ -14,9 +14,11 @@ router.post('/', verifyToken, async(req, res) => {
 
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username)
-        if(req.body.searchParams.isCompleted === true)
+        console.log(req.body)
+        if(req.body.searchParams.isCompleted)
         {
-            const workouts = await Workout.find({userId: user._id, isCompleted: true})
+            const workouts = await Workout.find({userId: user._id})
+            .where({isCompleted: true})
             .limit(req.body.searchParams.totalWorkouts)
             .populate({
                 path: 'exercises',
@@ -25,13 +27,15 @@ router.post('/', verifyToken, async(req, res) => {
                 }
             }).exec(); 
 
+            console.log(workouts);
                     
             res.json({
                 success: true,
                 workouts: workouts
             });
         } else {
-            const workouts = await Workout.find({userId: user._id, isCompleted: false})
+            const workouts = await Workout.find({userId: user._id})
+            .where({isCompleted: false})
             .limit(req.body.searchParams.totalWorkouts)
             .populate({
                 path: 'exercises',
@@ -97,7 +101,7 @@ router.post('/:id', verifyToken, async(req, res) => {
                     success: true,
                     workout: workout
                 })
-            }            
+            } 
         }
 
         //Getting all workouts for user
@@ -128,8 +132,8 @@ router.post('/:id', verifyToken, async(req, res) => {
 
 
 //Creating Workout 
-router.post('/create/new', async (req, res) => {
-    const user = await User.findByUsername("Matt");
+router.post('/create/new', verifyToken, async (req, res) => {
+    const user = await User.findByUsername(req.decoded.username);
 
 
     const workout = await new Workout({
@@ -154,9 +158,9 @@ router.post('/create/new', async (req, res) => {
 });
 
 //Deleting Workout
-router.delete('/', async(req, res) => {
+router.delete('/',verifyToken, async(req, res) => {
     try {
-        const user = await User.findByUsername("Matt");
+        const user = await User.findByUsername(req.decoded.username);
 
         if(user.workouts !== null) {
             let userWorkouts = user.workouts

@@ -27,8 +27,8 @@ router.get('/:id', verifyToken, async (req, res) => {
 })
 
 //Creating new set for exercise
-router.post('/create', async (req, res) => {
-    const user = await User.findByUsername("Matt");
+router.post('/create', verifyToken, async (req, res) => {
+    const user = await User.findByUsername(req.decoded.username);
     const exercise = await Exercise.findById(req.body.exerciseId);
 
     const set = await new Set({

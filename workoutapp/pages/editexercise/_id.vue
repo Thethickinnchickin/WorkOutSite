@@ -42,7 +42,7 @@ export default {
     async asyncData({$axios, params}) {
         try {
            
-            let response = await $axios.$get(`/api/exercise/${params.id}`)
+            let response = await $axios.$get(`/api/exercise/${params.id}`, {data: {something: "Hey"}})
 
 
             return {

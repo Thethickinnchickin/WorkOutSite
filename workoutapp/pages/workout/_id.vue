@@ -8,7 +8,7 @@
         <p>
             <a :href="'/editworkout/' + workout._id" class="btn btn-primary my-2">Edit Workout</a>
             <b-button  class="btn-danger" v-b-modal.modal-1>Delete Workout</b-button>
-            <b-modal :hide-footer="true" id="modal-1" title="Bootstrap">
+            <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
                 <b-button class="btn-danger" @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
@@ -59,7 +59,7 @@
                 <h3 class="text-center" style="font-size: 20px;">Exercise: {{exercise.name}} <p>Notes: {{exercise.notes}}</p><button style="font-size: 15px" class="btn btn-outline-primary ml-3" @click="onRouteChange(`/editexercise/${exercise._id}`)">Edit Exercise</button>
                 <b-button style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-outline-danger ml-3" >Delete</b-button></h3>
 
-                <b-modal :hide-footer="true" id="modal-delete-exercise" title="BootstrapVue">
+                <b-modal :hide-footer="true" id="modal-delete-exercise" title="Wait a seconds...">
                     <p class="my-4">Are You sure about deleting this exercise? It cannot be undone</p>
                     <b-button class="btn-danger" @click="onExerciseDelete(exercise._id, workout._id)">Delete</b-button>
                 </b-modal>
@@ -117,7 +117,7 @@
                 <h3 class="text-center" style="font-size: 20px;">Exercise: {{exercise.name}} <p>Notes: {{exercise.notes}}</p><a style="font-size: 15px" class="btn btn-outline-primary ml-3" href="/editexercise/">Edit Exercise</a>
                 <b-button style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-outline-danger ml-3" >Delete</b-button></h3>
 
-                <b-modal :hide-footer="true" id="modal-delete-exercise" title="BootstrapVue">
+                <b-modal :hide-footer="true" id="modal-delete-exercise" title="Wait a seconds...">
                     <p class="my-4">Are You sure about deleting this exercise? It cannot be undone</p>
                     <b-button class="btn-danger" @click="onExerciseDelete(exercise._id, workout._id)">Delete</b-button>
                 </b-modal>

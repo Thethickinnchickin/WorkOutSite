@@ -74,14 +74,6 @@ export default  {
         async onLogOut() {
             await this.$auth.logout();
 
-            let route = ''
-            console.log($route.name)
-            if($route.name == "index") 
-            {
-                route = '/'
-            } else {
-                route = $route.name
-            }
 
             this.$router.push('/')
         }
