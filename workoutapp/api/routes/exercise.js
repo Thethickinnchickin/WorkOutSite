@@ -32,23 +32,45 @@ router.get('/:id', async(req, res) => {
 
 router.post("/", verifyToken, async (req, res) => {
     try {
-        if(req.body.searchParams !== null) {
-            if(req.body.searchParams.workoutId !== null 
-                && req.body.searchParams.isWarmup !== null) {
+
+        if(req.body.searchParams !== null && req.body.searchParams.workoutId !== null && req.body.searchParams.isWarmup !== null) {
+            try {
                 const exercises = await Exercise.find({workoutId: req.body.searchParams.workoutId,
-                warmUpExercise: req.body.searchParams.isWarmup}).exec()
+                warmUpExercise: req.body.searchParams.isWarmup})
+                .populate('sets')
+                .exec()
+
+                const workout = await Workout.findById({_id:req.body.searchParams.workoutId}).exec();
+
+                res.json({
+                    success: true,
+                    exercises: exercises,
+                    workoutName: workout.name
+                })
+            } catch (err) {
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                })
+            }
+        } else {
+            try {
+                const exercises = await Exercise.find({workoutId: req.body.workoutId})
+                .populate('sets').exec()
 
                 res.json({
                     success: true,
                     exercises: exercises
                 })
+            } catch(err) {
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                })
             }
         }
 
-        res.json({
-            success: false,
-            message: "didn't work"
-        })
+
     } catch (err) {
         res.status(500).json({
             success: false,
@@ -79,7 +101,7 @@ router.post('/create', verifyToken, async (req, res) => {
 
     res.json({
         success: true,
-        exercise: exercise
+        exercise: exercise,
     })
 
 });

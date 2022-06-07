@@ -14,6 +14,10 @@ const SetSchema = new Schema({
     exerciseId: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    isCompleted: {
+        required: true,
+        type: Boolean
     }
 });
 

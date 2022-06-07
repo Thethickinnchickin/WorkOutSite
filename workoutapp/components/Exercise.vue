@@ -1,46 +1,152 @@
 <template>
 <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="#!">Start Bootstrap</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex"><button class="btn btn-outline-dark" type="submit"><i class="bi-cart-fill me-1"></i>Cart<span class="badge bg-dark text-white ms-1 rounded-pill">0</span></button></form>
+    <section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">{{exercise.name}}</h1>
+     </div>
+</section>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-right">Completed</th>
+                            <th scope="col">Sets</th>
+                            <th scope="col">Target Reps</th>
+                            <th scope="col" class="text-center">Actual Reps</th>
+                            <th scope="col" class="text-right">Target Weight</th>
+                            <th scope="col" class="text-right">Actual Weight</th>
+                            <th scope="col" class="text-right">Target Time</th>
+                            <th scope="col" class="text-right">Actual Time</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="set in exercise.sets">
+                            <td v-if="!set.isCompleted" @click="isCompleted(set._id, true)" class="text-right"><button class="btn btn-sm btn-danger">Set Inomplete</button> </td>
+                            <td v-if="set.isCompleted"  class="text-right">
+                            <b-button style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-sm btn-success">Set Complete</b-button>
+
+
+                            <b-modal :hide-footer="true" id="modal-delete-exercise" title="Wait a seconds...">
+                                <p class="my-4">Are you sure you want to mark this exercise as incomplete?</p>
+                                <b-button class="btn-danger" @click="isCompleted(set._id, false)" >Make Incomplete</b-button>
+                            </b-modal>
+
+                             </td>                        
+                            <td>Set: {{exercise.sets.indexOf(set) + 1}}</td>
+                            <td>{{set.targetRepAmount}}</td>
+
+                            <td v-if="!set.isCompleted"><input class="form-control"  v-model="actualRep"
+                            @submit="setTargetAmount(set._id, actualRepAmount, null, null)"  type="number" value="0" /></td>
+                            <td v-else class="text-right">{{set.actualRepAmount}}</td>
+                            <td class="text-right">{{set.targetWeight}}</td>
+
+                            <td v-if="!set.isCompleted"><input v-model="actualWeight"
+                            @submit="setTargetAmount(set._id, null, set.actualWeight, null)" class="form-control" type="number" value="0" /></td>
+                            <td v-else class="text-right">{{set.actualWeight}}</td>
+
+                            <td class="text-right">{{set.targetTimeinSeconds|| 'none'}}</td>
+
+                            <td v-if="!set.isCompleted && set.targetTimeInSeconds"><input v-model="actualTime"
+                            @submit="setTargetAmount(set._id, null, null, set.actualTimeInSeconds)" 
+                            class="form-control" type="text" value="0" /></td>
+
+                            <td v-else-if="set.targetTimeInSeconds" class="text-right">{{set.actualTimeInSeconds || "0" + " sec(s)"}}</td>
+                            <td v-else class="text-right">{{set.actualTimeInSeconds || "0" + " sec(s)"}}</td>
+                            <td></td>
+            
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </nav><!-- Product section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..."></div>
-                <div class="col-md-6">
-                    <div class="small mb-1">SKU: BST-498</div>
-                    <h1 class="display-5 fw-bolder">Shop item template</h1>
-                    <div class="fs-5 mb-5"><span class="text-decoration-line-through">$45.00</span><span>$40.00</span></div>
-                    <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
-                    <div class="d-flex"><input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem"><button class="btn btn-outline-dark flex-shrink-0" type="button"><i class="bi-cart-fill me-1"></i>Add to cart</button></div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
                 </div>
             </div>
         </div>
-    </section><!-- Related items section--> 
+    </div>
+</div>
+
 </body>
 </template>
 
 <script>
 export default {
-    props: ["exercise"]
+    data() {
+        return {
+            actualRep: 0,
+            actualWeight: 0,
+            actualTime: 0
+        }
+    },
+    props: ["exercise"],
+    methods: {
+        async isCompleted(setId, isCompleted) {
+            let response = await this.$axios.$put('/api/set/isCompleted', 
+            {setId: setId, isCompleted: isCompleted});
+
+            for(let i=0; i < this.exercise.sets.length; i++) { 
+                let sets = this.exercise.sets;
+                if(sets[i]._id === setId) {
+                    sets[i].isCompleted = isCompleted
+                }
+            }
+            await this.$axios.$put('/api/set', {updateType: "actual",
+                actualRepAmount: this.actualRep,
+                actualWeight: this.actualWeight,
+                actualTimeInSeconds: this.actualTime,
+                setId: setId
+            })
+
+            for(let i=0; i < this.exercise.sets.length; i++) { 
+                let sets = this.exercise.sets;
+                if(sets[i]._id === setId) {
+                    if(this.actualRep) {
+                        sets[i].actualRepAmount = this.actualRep                  
+                    }
+                    if(this.actualWeight) {
+                        sets[i].actualWeight = this.actualWeight                        
+                    }
+                    if(this.actualTime) {
+                        sets[i].actualTimeInSeconds = this.actualTime                     
+                    }
+                }
+            }
+        },
+        async sendTargetAmounts(setId) {
+            let response = await this.$axios.$put('/api/set', {updateType: "actual",
+                actualRepAmount: this.actualRep,
+                actualWeight: this.actualWeight,
+                actualTimeInSeconds: this.actualTime,
+                setId: setId
+            })
+
+            for(let i=0; i < this.exercise.sets.length; i++) { 
+                let sets = this.exercise.sets;
+                if(sets[i]._id === setId) {
+                    if(this.actualRep) {
+                        sets[i].actualRepAmount = this.actualRep                  
+                    }
+                    if(this.actualWeight) {
+                        sets[i].actualWeight = this.actualWeight                        
+                    }
+                    consol.log()
+                    if(this.actualTime) {
+                        sets[i].actualTimeInSeconds = this.actualTime                     
+                    }
+                }
+            }
+        }
+    }
 }
 </script>

@@ -40,6 +40,7 @@ router.post('/create', verifyToken, async (req, res) => {
         targetTimeinSeconds: req.body.targetTimeinSeconds,
         actualTimeinSeconds: null,
         warmupSet: req.body.warmupSet,
+        isCompleted: false
     });
 
     exercise.sets.push(set);
@@ -115,7 +116,7 @@ router.put('/', async (req, res) => {
             const set = await Set.findByIdAndUpdate(req.body.setId, {
                 actualRepAmount: req.body.actualRepAmount,
                 actualWeight: req.body.actualWeight,
-                actualTimeInSeconds: req.body.actualTimeInSeconds
+                actualTimeinSeconds: req.body.actualTimeInSeconds
             });
             await set.save();
 
@@ -147,6 +148,30 @@ router.put('/warmupSet', async (req, res) => {
         res.json({
             success: true,
             message: "You have updated is Completed for exercise"
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+})
+
+//Changing isCompleted to true or false
+router.put('/isCompleted', async (req, res) => {
+    try {
+        const set = await Set.findByIdAndUpdate(req.body.setId, {
+            $set: {
+                isCompleted: req.body.isCompleted                
+            }
+
+        })
+
+        await set.save();
+
+        res.json({
+            success: true,
+            message: "You have completed this set"
         })
     } catch (err) {
         res.status(500).json({
