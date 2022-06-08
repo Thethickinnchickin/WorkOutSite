@@ -1,7 +1,7 @@
 <template>
-<body class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
+<main class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
     
-<main class="form-signin col-4 w-100 m-auto">
+<div class="form-signin col-4 w-100 m-auto">
   <form @submit.prevent="createSet">
  
     <h1 class="h3 mb-3 fw-normal">Create New Set For Exercise: {{exercise.name}}</h1>
@@ -25,13 +25,13 @@
 
     <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Set</button>
   </form>
-</main>
+</div>
 
 
     
   
 
-</body>
+</main>
 
 </template>
 

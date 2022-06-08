@@ -1,6 +1,6 @@
 <template>
 
-  <div >
+  <main >
     <div class="section_our_solution mt-5 pt-5">
       <h2 class="pb-2 mb-5 mt-4 border-bottom" style="color: #B33F40; text-align: center;" >Workouts to Complete</h2>
     <div class="row mt-4 mx-3 ">
@@ -73,7 +73,7 @@
 
       </div>
     </div>
-    <div v-if="workoutsToComplete.length === 3"  class="col-3 mr-0">
+    <div v-if="workoutsToComplete.length >= 3"  class="col-3 mr-0">
       <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
           <div class="solution_card">
@@ -160,7 +160,7 @@
 
       </div>
     </div>
-    <div v-if="workoutsCompleted.length >= 3" class="col-3 mr-0">
+    <div v-if="workoutsCompleted.length  >= 3" class="col-3 mr-0">
       <div @click="routeRedirect('/completedWorkouts')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
           <div class="solution_card">
@@ -177,7 +177,7 @@
    <div class="row mt-4 mx-3"></div>
 
 </div>
-  </div>
+  </main>
 
 </template>
 

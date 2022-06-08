@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <main>
     <h2 class="pb-2 border-bottom mt-4"  style="color: #82a43a; text-align: center;">Completed Workouts</h2>
     <div class="row mt-4 mx-3 ">
-    <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
+    <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
         <div class="solution_cards_box">
           <div class="solution_card">
@@ -84,7 +84,7 @@
 </div>
    <div class="row mt-4 mx-3"></div>
 
-</div>
+</main>
 
 
 </template>

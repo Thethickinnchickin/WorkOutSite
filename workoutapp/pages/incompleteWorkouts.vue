@@ -1,5 +1,5 @@
 <template>
-<div>
+<main>
     <h2 class="pb-2 border-bottom mt-5 pt-5"  style="color: #82a43a; text-align: center;">Incomplete Workouts</h2>
     <div class="row mt-4 mx-3 ">
         <div v-for="workout in workoutsNotCompleted" :key="workout._id" class="col-3 mt-3 mr-0">
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 </template>
 
 

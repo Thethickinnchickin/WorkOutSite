@@ -1,6 +1,6 @@
 <template>
-    <body class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed=""> 
-        <main class="form-signin col-4 w-100 m-auto">
+    <main class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed=""> 
+        <div class="form-signin col-4 w-100 m-auto">
             <h1 class="h3 mb-3 fw-normal">Update Workout</h1>
             <div class="form-floating">
             <input v-model="name" type="text" class="form-control" id="floatingInput" :placeholder="workout.name">
@@ -18,8 +18,8 @@
 
             <button  class="w-100 btn btn-lg btn-primary" @click="onWorkoutUpdate" type="button">Update Workout</button>
 
-        </main>
-    </body>
+        </div>
+    </main>
 </template>
 
 <script>

@@ -1,25 +1,19 @@
 
 <template>
-    <html style="background-color: #28282B">
-        <main style="height: 100vh;">
+        <main class="mainclass">
             <head>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
             </head>
+            <body >
                 <NavBar/>
-                <nuxt/>     
+                <nuxt/>                 
+            </body>
+    
         </main>        
-    </html>
-
 </template>
 
-<style>
-html, body {
-    height: 100%;
-    background-color: #28282B
-}
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -38,4 +32,9 @@ export default {
     }
 }
 </script>
+<style>
+main {
+    height: 100vh;
+}
+</style>
 

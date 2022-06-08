@@ -45,7 +45,7 @@ export default  {
     },
     async asyncData({$axios, params}) {
         let response = await $axios.$post(`/api/exercise`,
-         {searchParams: {workoutId: params.id, isWarmup: true}});
+         {searchParams: {workoutId: params.id, isWarmup: false}});
 
          return {
              exercises: response.exercises,
@@ -71,4 +71,3 @@ export default  {
     }
 } 
 </script>
-

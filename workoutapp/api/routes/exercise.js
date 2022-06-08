@@ -12,7 +12,6 @@ const exercise = require('../models/exercise');
 //Getting Workouts For user
 router.get('/:id', async(req, res) => {
     try {
-
         //Getting all workouts for user
         const exercise = await Exercise.findById(req.params.id);
 
@@ -28,8 +27,9 @@ router.get('/:id', async(req, res) => {
         })
     }
 })
-//Route getting multiple exercises based on params
 
+
+//Route getting multiple exercises based on params
 router.post("/", verifyToken, async (req, res) => {
     try {
 
@@ -170,9 +170,6 @@ router.put('/', async (req, res) => {
             message: err.message
         });
     }
-
-
-
 });
 
 //Changing isCompleted to true or false

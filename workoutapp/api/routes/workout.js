@@ -14,7 +14,6 @@ router.post('/', verifyToken, async(req, res) => {
 
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username)
-        console.log(req.body)
         if(req.body.searchParams.isCompleted)
         {
             const workouts = await Workout.find({userId: user._id})
@@ -27,7 +26,7 @@ router.post('/', verifyToken, async(req, res) => {
                 }
             }).exec(); 
 
-            console.log(workouts);
+
                     
             res.json({
                 success: true,
@@ -124,9 +123,6 @@ router.post('/:id', verifyToken, async(req, res) => {
             message: err.message
         })
     }
-
-
-
 })
 
 
@@ -245,6 +241,7 @@ router.put('/', async (req, res) => {
 //Changing isCompleted to true or false
 router.put('/isCompleted', async (req, res) => {
     try {
+
         const exercise = await Workout.findByIdAndUpdate(req.body.workoutId, {
             isCompleted: req.body.isCompleted
         })
