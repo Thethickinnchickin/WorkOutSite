@@ -19,13 +19,31 @@
         <input  type="checkbox" id="checkbox"  v-model="warmupExercise">
         <label for="checkbox">warmup Exercise</label>
     </div>
-    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Exercise</button>
+    <button id="createButton" class="w-100 btn btn-lg btn-primary" type="submit">Update Exercise</button>
   </form>
 </div>
 </main>
 </template>
 
+<style scoped>
+#createButton {
+  border: 2px solid rgb(57, 165, 17);
+  border-radius: 3px;
+  background-color: black;
+  color:rgb(57, 165, 17);
+}
+#createButton:hover {
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: rgb(57, 165, 17);
+  color: black;
+}
+input[type="text"], textarea[type="text"] {
+  background-color: black;
+  color: rgb(57, 165, 17);
+}
 
+</style>
 
 <script>
 import moment from 'moment';

@@ -72,7 +72,7 @@ app.use('/api/exercise', exerciseRoutes);
 app.use('/api/set', setRoutes);
 
 //starting up app
-const port = 4000
+const port = 9000
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })

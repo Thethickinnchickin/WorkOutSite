@@ -1,4 +1,4 @@
-const URL = 'http://localhost:4000'
+const URL = 'http://localhost:9000'
 export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -47,7 +47,7 @@ export default {
   ],
 
   server: {
-    port: 7000
+    port: 8000
   },
 
   proxy: {

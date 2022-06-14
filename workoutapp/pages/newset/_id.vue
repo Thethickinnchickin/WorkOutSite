@@ -23,7 +23,7 @@
         <label for="checkbox">warmupSet</label>
     </div>
 
-    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Set</button>
+    <button id="createButton" class="w-100 btn btn-lg btn-primary" type="submit">Create Set</button>
   </form>
 </div>
 
@@ -85,3 +85,22 @@ export default {
 
 
 </script>
+<style scoped>
+#createButton {
+  border: 2px solid rgb(57, 165, 17);
+  border-radius: 3px;
+  background-color: black;
+  color:rgb(57, 165, 17);
+}
+#createButton:hover {
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: rgb(57, 165, 17);
+  color: black;
+}
+input[type="number"], textarea[type="text"] {
+  background-color: black;
+  color: rgb(57, 165, 17);
+}
+
+</style>

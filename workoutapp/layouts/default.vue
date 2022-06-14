@@ -1,17 +1,25 @@
 
 <template>
-        <main class="mainclass">
-            <head>
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-            </head>
-            <body >
-                <NavBar/>
-                <nuxt/>                 
-            </body>
+     <div class="mainclass">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="description" content="Author: M. Reiley,
+            This is a mock fully functional e-commerce site that sells various coffee products and items">
+            <meta name="keywords" content="HTML, CSS, JavaScript">
+            <meta name="author" content="John Doe">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="preload" as="font">
+             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        </head>
+        <body style="background-color: black">
+            <NavBar/>
+            <div class="app">
+                <nuxt/>                      
+            </div>
+           
+        </body>
     
-        </main>        
+        </div>        
 </template>
 
 
@@ -32,9 +40,16 @@ export default {
     }
 }
 </script>
-<style>
-main {
-    height: 100vh;
+<style scoped>
+.mainClass {
+    height: 100%;
+    width: 100%;
+    background-color: black;
 }
+.app {
+    background-color: black;
+    color: rgb(57, 165, 17);
+}
+
 </style>
 

@@ -92,7 +92,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: #F75780;
+  background-color: black;
   position: realtive;
   border: 1px dashed yellow;
   border-radius: 10px;
@@ -115,7 +115,7 @@ export default {
   left: 0%;
   width: 10vw;
   height: 10vw;
-  fill: #1A87AB;
+  fill: #ac1515df;
   transform-origin: 50% 50%;
   filter: drop-shadow(4px 4px 0 black);
   animation: bump 5.5s ease infinite;
@@ -213,7 +213,7 @@ export default {
 p:nth-child(1n) {
   transform: rotate(8deg);
   animation: shake 0.5s ease infinite;
-  color: #F7EA25
+  color: #56c423
 
   }
   p:nth-child(2n) {

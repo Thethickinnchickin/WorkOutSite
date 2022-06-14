@@ -19,17 +19,34 @@
       <label for="floatingPassword">Workout Date</label>
     </div>
 
-    <button  class="w-100 btn btn-lg btn-primary" type="submit">Create Workout</button>
+    <button  class="w-100 btn btn-lg" id="createButton" type="submit">Create Workout</button>
   </form>
 </div>
-
-
-    
-  
-
 </main>
 
 </template>
+
+
+<style scoped>
+#createButton {
+  border: 2px solid rgb(57, 165, 17);
+  border-radius: 3px;
+  background-color: black;
+  color:rgb(57, 165, 17);
+}
+#createButton:hover {
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: rgb(57, 165, 17);
+  color: black;
+}
+input[type="text"],input[type="date"], textarea[type="text"] {
+  background-color: black;
+  color: rgb(57, 165, 17);
+}
+
+</style>
+
 
 <script>
 export default {

@@ -7,7 +7,7 @@
     <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
         <div class="solution_cards_box">
-          <div class="solution_card">
+          <div style="background-color: black; border: 1px solid rgb(12, 247, 255)"  class="solution_card">
             <div class="hover_color_bubble"></div>
             <div class="so_top_icon">
               <svg id="Layer_1" enable-background="new 0 0 512 512" height="50" viewBox="0 0 512 512" width="40" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
               </svg>
             </div>
             <div class="solu_title">
-              <h3>{{workout.name}}</h3>
+              <h3 style="color: rgb(57, 165, 17);">{{workout.name}}</h3>
             </div>
             <div class="solu_description">
               <p>
@@ -76,7 +76,7 @@
     <div v-if="workoutsToComplete.length >= 3"  class="col-3 mr-0">
       <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
-          <div class="solution_card">
+          <div class="solution_card"  id="viewMore2"  style="background-color: black;">
             <div class="hover_color_bubble"></div>
             <h2 class="text-center mt-5 pt-5">View More</h2>
 
@@ -94,7 +94,7 @@
     <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
         <div class="solution_cards_box">
-          <div class="solution_card">
+          <div  style="background-color: black; border: 1px solid rgb(12, 247, 255)"  class="solution_card">
             <div class="hover_color_bubble"></div>
             <div class="so_top_icon">
               <svg id="Layer_1" enable-background="new 0 0 512 512" height="50" viewBox="0 0 512 512" width="40" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +142,7 @@
               </svg>
             </div>
             <div class="solu_title">
-              <h3>{{workout.name}}</h3>
+              <h3 style="color: rgb(57, 165, 17);">{{workout.name}}</h3>
             </div>
             <div class="solu_description">
               <p>
@@ -163,7 +163,7 @@
     <div v-if="workoutsCompleted.length  >= 3" class="col-3 mr-0">
       <div @click="routeRedirect('/completedWorkouts')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
-          <div class="solution_card">
+          <div class="solution_card" id="viewMore2" style="background-color: black">
             <div class="hover_color_bubble"></div>
             <h2 class="text-center mt-5 pt-5">View More</h2>
 
@@ -240,6 +240,13 @@ export default {
 
 
 <style>
+h3 {
+  color: rgb(57, 165, 17);
+}
+.practice {
+  color: rgb(12, 247, 255);
+}
+
 .section_our_solution .row {
   align-items: center;
 }
@@ -297,8 +304,8 @@ export default {
 }
 
 .solution_cards_box .solution_card:hover .solu_description button {
-  background: #fff !important;
-  color: #309df0;
+  background: rgb(12, 247, 255);
+  color: black;
 }
 
 .solution_card .so_top_icon {
@@ -317,14 +324,10 @@ export default {
 }
 
 .solution_card .solu_description button {
-  border: 0;
+  border: 1;
   border-radius: 15px;
-  background: linear-gradient(
-    140deg,
-    #42c3ca 0%,
-    #42c3ca 50%,
-    #42c3cac7 75%
-  ) !important;
+  border-color: rgb(12, 247, 255);
+  background-color: black;
   color: #fff;
   font-weight: 500;
   font-size: 1rem;
@@ -373,6 +376,13 @@ export default {
   width: 40px;
   height: 50px;
   object-fit: contain;
+}
+
+#viewMore1:hover {
+  border: 1px solid rgb(12, 247, 255);
+}
+#viewMore2:hover {
+  border: 1px solid rgb(12, 247, 255);
 }
 
 /*start media query*/
