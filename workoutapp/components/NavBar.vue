@@ -1,9 +1,9 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom border-dark">
+        <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
         <div class="container">
         <a class="navbar-brand" href="#!"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+        <button  id="createButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
         data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
@@ -19,7 +19,7 @@
             <li class="nav-item">
             <a class="nav-link" href="/workouts">Go To Workouts</a>
             </li>
-            <button type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
+            <button id="createButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
             
         </ul>
         </div>
@@ -30,16 +30,17 @@
 </template>
 
 <style>
+
 /* Color of the links BEFORE scroll */
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon,
 .navbar-scroll .navbar-brand {
-  color: #262626;
+  color: rgb(57, 165, 17);
 }
 
 /* Color of the navbar BEFORE scroll */
 .navbar-scroll {
-  background-color: #FFC017;
+  background-color: black;
 }
 
 /* Color of the links AFTER scroll */
@@ -62,6 +63,19 @@
 .navbar-brand {
   font-size: unset;
   height: 3.5rem;
+}
+
+#createButton {
+    border: 2px solid rgb(57, 165, 17);
+    border-radius: 3px;
+    background-color: black;
+    color:rgb(57, 165, 17);
+}
+#createButton:hover {
+    border: 2px solid black;
+    border-radius: 3px;
+    background-color: rgb(57, 165, 17);
+    color: black;
 }
 </style>
 
