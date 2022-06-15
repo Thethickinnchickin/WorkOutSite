@@ -3,7 +3,7 @@
     <li class="page-item">
       <button class="page-link" @click="pageChange('subtract')" tabindex="-1">Previous</button>
     </li>
-    <li v-for="index in exerciseLength" class="page-item"><button class="page-link" @click="pageChange('none',index)">{{index}}</button></li>
+    <li v-for="index in exerciseLength" :key="index" class="page-item"><button class="page-link" @click="pageChange('none',index)">{{index}}</button></li>
     <li class="page-item">
       <button class="page-link" @click="pageChange('add')">Next</button>
     </li>
@@ -11,6 +11,37 @@
   </ul>
 
 </template>
+
+<style>
+.pagination > li > button
+{
+    background-color: black;
+    color: rgb(57, 165, 17);
+}
+
+.pagination > li > button:focus,
+.pagination > li > button:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: black;
+    border-color: #ddd;
+}
+
+.pagination > .active > button
+{
+    color: white;
+    background-color: #5A4181 !Important;
+    border: solid 1px #5A4181 !Important;
+}
+
+.pagination > .active > button:hover
+{
+    background-color: #5A4181 !Important;
+    border: solid 1px #5A4181;
+}
+</style>
 
 
 

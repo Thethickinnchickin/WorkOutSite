@@ -1,8 +1,8 @@
 <template>
    <tr >
-    <td v-if="!set.isCompleted" @click="isCompleted(set._id, true)" class="text-right"><button class="btn btn-sm btn-danger">Set Inomplete</button> </td>
+    <td v-if="!set.isCompleted" @click="isCompleted(set._id, true)" class="text-right"><button class="btn btn-sm btn-outline-danger">Set Inomplete</button> </td>
     <td v-if="set.isCompleted"  class="text-right">
-        <button @click="isCompleted(set._id, false)" style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-sm btn-success">Set Complete</button>
+        <button @click="isCompleted(set._id, false)" style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-sm btn-outline-success">Set Complete</button>
     </td>                        
     <td>{{set.targetRepAmount}}</td>
 
@@ -25,7 +25,7 @@
     class="form-control" type="number" value="0" /></td>
     <td v-else-if="set.targetTimeinSeconds" class="text-right">{{set.actualTimeInSeconds || "0" + " sec(s)"}}</td>
     <td v-else-if="!set.targetTimeinSeconds"></td>
-    <td v-else-if="!set.targetTimeinSeconds"></td>
+    <td v-if="!set.targetTimeinSeconds"></td>
     <td></td>
    </tr>
 </template>

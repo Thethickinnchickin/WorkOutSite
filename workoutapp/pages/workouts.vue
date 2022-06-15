@@ -2,7 +2,7 @@
 
   <main >
     <div class="section_our_solution mt-5 pt-5">
-      <h2 class="pb-2 mb-5 mt-4 border-bottom" style="color: #B33F40; text-align: center;" >Workouts to Complete</h2>
+      <h2 class="pb-2 mb-5 mt-4 border-bottom" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
     <div class="row mt-4 mx-3 ">
     <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
@@ -89,7 +89,7 @@
     </div>
 
 
-    <h2 class="pb-2 border-bottom mt-4"  style="color: #82a43a; text-align: center;">Completed Workouts</h2>
+    <h2 class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17); border-bottom: 1px solid rgb(57, 165, 17); text-align: center;">Completed Workouts</h2>
     <div class="row mt-4 mx-3 ">
     <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
@@ -163,7 +163,7 @@
     <div v-if="workoutsCompleted.length  >= 3" class="col-3 mr-0">
       <div @click="routeRedirect('/completedWorkouts')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
-          <div class="solution_card" id="viewMore2" style="background-color: black">
+          <div class="solution_card" id="viewMore2" style="background-color: black;">
             <div class="hover_color_bubble"></div>
             <h2 class="text-center mt-5 pt-5">View More</h2>
 
@@ -244,7 +244,7 @@ h3 {
   color: rgb(57, 165, 17);
 }
 .practice {
-  color: rgb(12, 247, 255);
+  color: rgb(255, 55, 0);
 }
 
 .section_our_solution .row {

@@ -1,8 +1,8 @@
 <template>
-<body>
-    <section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">{{exercise.name}}</h1>
+<body style="background-color: rgba(57, 165, 17,0);">
+<section style="background: rgba(204, 204, 204, 0.0);" class="jumbotron text-center">
+    <div class="container" >
+        <h1 id="exerciseName" style="color: rgb(57, 165, 17);background-color: black;">Exercise: {{exercise.name}}</h1>
      </div>
 </section>
 
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped" style="color: rgb(57, 165, 17); background-color: black;">
                     <thead>
                         <tr>
                             <th scope="col" class="text-right">Completed</th>
@@ -23,7 +23,7 @@
                             <th> </th>
                         </tr>
                     </thead>
-                    <tbody v-for="set in exercise.sets">
+                    <tbody v-for="set in exercise.sets" :key="set._id">
                         <Set :set="set" :exercise="exercise"/>
                     </tbody>
                 </table>
@@ -32,10 +32,10 @@
         <div class="col mb-2">
             <div class="row">
                 <div v-if="!exercise.isCompleted" class="col-12 text-right">
-                    <button @click="completeExercise(true)" id="buttonComplete" class="btn btn-lg btn-block btn-danger text-uppercase">Complete Exercise</button>
+                    <button @click="completeExercise(true)" id="buttonComplete" class="btn btn-lg btn-block btn-outline-danger text-uppercase">Complete Exercise</button>
                 </div>                
                 <div v-else class="col-12 text-right">
-                    <button disabled class="btn btn-lg btn-block btn-success text-uppercase">Exercise Completed</button>
+                    <button disabled class="btn btn-lg btn-block btn-outline-success text-uppercase">Exercise Completed</button>
                 </div>
             </div>
         </div>
@@ -47,7 +47,18 @@
 
 <style>
 #buttonComplete:hover {
-    background-color: #55AE3A;
+    border: 1px solid rgb(57, 165, 17);
+    color: rgb(57, 165, 17);
+    background-color: black;
+}
+input[type="number"] {
+  background-color: black;
+  color: rgb(57, 165, 17);
+}
+#exerciseName {
+    border: 1px solid rgb(57, 165, 17);
+    border-radius: 50px;
+    padding: none;
 }
 </style>
 

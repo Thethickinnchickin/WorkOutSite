@@ -13,7 +13,7 @@
             <li class="nav-item">
             <a class="nav-link" href="/login">Sign In</a>
             </li>
-            <button type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
+            <button id="createButton" type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
         </ul>
         <ul v-if="$auth.$state.loggedIn" class="navbar-nav ms-auto">
             <li class="nav-item">
@@ -77,6 +77,13 @@
     background-color: rgb(57, 165, 17);
     color: black;
 }
+@media  screen and (max-width: 992px) {
+  #createButton {
+    border: none;
+    background-color: black;
+    color:rgb(57, 165, 17);
+}
+}
 </style>
 
 <script>
@@ -89,7 +96,7 @@ export default  {
             await this.$auth.logout();
 
 
-            this.$router.push('/')
+            await this.$router.push('/')
         }
     }
 }

@@ -31,7 +31,7 @@
                 <div class="col p-4 d-flex flex-column position-static">
                 <h3 class="mb-0">Warmup</h3>
                 <p class="card-text mb-auto">Quote will go here</p>
-                <a  v-if="!workout.isCompleted"  :href="'/warmupExercises/' + workout._id" class="stretched-link">Begin WarmUp</a>
+                <a  v-if="!workout.isCompleted && workout.exercises.length > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link">Begin WarmUp</a>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
             <div class="col p-4 d-flex flex-column position-static">
             <h3 class="mb-0">Workout</h3>
             <p class="mb-auto">Quote</p>
-            <a  v-if="!workout.isCompleted"  :href="'/workoutExercises/' + workout._id" class="stretched-link">Begin Workout</a>
+            <a  v-if="!workout.isCompleted  && workout.exercises.length > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link">Begin Workout</a>
             </div>
         </div>
         </div>
