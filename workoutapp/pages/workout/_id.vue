@@ -2,9 +2,8 @@
 <main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
     <div class="row py-lg-5 mt-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 style="color: rgb(57, 165, 17);">{{workout.dateScheduled}}</h1>
-        <p class="lead text-muted">Notes: {{workout.notes}}</p>
         <h1>{{workout.name}}</h1>
+        <p class="lead text-muted">Notes: {{workout.notes}}</p>
         <p >
             <a v-if="!workout.isCompleted" :href="'/editworkout/' + workout._id" class="btn btn-outline-primary my-2">Edit Workout</a>
             <b-button  class="btn-outline-danger" v-b-modal.modal-1>Delete Workout</b-button>
@@ -21,7 +20,9 @@
     </div>
 
     <div class="row">
-        <div class="col-12 rounded my-2" style="color: rgb(57, 165, 17); height: 65px; border:2px solid rgb(12, 247, 255);"><h1 class="text-center mt-2">Workout: {{workout.dateScheduled}}</h1></div>
+        <div class="col-12 rounded my-2"
+         style="color: rgb(57, 165, 17); height: 65px; border:2px solid rgb(12, 247, 255);">
+         <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
 
     </div>
 
@@ -46,8 +47,10 @@
         </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-6">
+            <p>Warm up Exercises</p>
             <div v-for="exercise in workout.exercises" :key="exercise._id">
                 <div   v-if="exercise.warmUpExercise">
                 <b-dropdown 
@@ -73,7 +76,7 @@
                         <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong>{{set.actualRepAmount}}</strong></li>
                         <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
                         <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong>{{set.actualRepAmount}}</strong></li>
- <button v-if="!workout.isCompleted"  @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button>
+                        <button v-if="!workout.isCompleted"  @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button>
                         <button v-if="!workout.isCompleted" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button>
                     </ul>
                
@@ -89,7 +92,7 @@
                         <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong>{{set.actualRepAmount}}</strong></li>
                         <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
                         <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong>{{set.actualRepAmount}}</strong></li>
- <button v-if="!workout.isCompleted"  @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button>
+                        <button v-if="!workout.isCompleted"  @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button>
                         <button v-if="!workout.isCompleted" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button>
                     </ul>
                 </div>
@@ -108,6 +111,7 @@
 
         </div>
         <div class="col-md-6">
+            <p>Exercises</p>
             <div v-for="exercise in workout.exercises" :key="exercise._id">
                 <div v-if="!exercise.warmUpExercise">
                 <b-dropdown 

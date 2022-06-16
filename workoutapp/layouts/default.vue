@@ -11,11 +11,12 @@
             <link rel="preload" as="font">
              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         </head>
-        <body style="background-color: black">
+        <body style="background-color: black; width: 100%;">
             <NavBar/>
-            <div class="app">
+            <div class="app" style="width: 100%">
                 <nuxt/>                      
             </div>
+            <Footer/>
            
         </body>
     
@@ -33,17 +34,17 @@
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap-vue/dist/bootstrap-vue.js';
 import NavBar from "~/components/NavBar.vue";
+import Footer from "~/components/Footer.vue";
 
 export default {
     components: {
-        NavBar
+        NavBar,
+        Footer
     }
 }
 </script>
 <style scoped>
 .mainClass {
-    height: 100%;
-    width: 100%;
     background-color: black;
 }
 .app {

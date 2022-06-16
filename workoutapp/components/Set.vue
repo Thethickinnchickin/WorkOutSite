@@ -19,11 +19,11 @@
 
 
 
-    <td v-if="set.targetTimeInSeconds" class="text-right">{{set.actualTimeInSeconds || "0" + " sec(s)"}}</td>
+    <td v-if="set.targetTimeInSeconds" class="text-right">{{set.actualTimeInSeconds + " sec(s)" || "0" + " sec(s)"}}</td>
     <td v-if="!set.isCompleted && set.targetTimeinSeconds"><input v-model="actualTime"
     @submit="setTargetAmount(set._id, null, null, set.actualTimeInSeconds)" 
     class="form-control" type="number" value="0" /></td>
-    <td v-else-if="set.targetTimeinSeconds" class="text-right">{{set.actualTimeInSeconds || "0" + " sec(s)"}}</td>
+    <td v-else-if="set.targetTimeinSeconds" class="text-right">{{set.actualTimeInSeconds + " sec(s)" || "0" + " sec(s)"}}</td>
     <td v-else-if="!set.targetTimeinSeconds"></td>
     <td v-if="!set.targetTimeinSeconds"></td>
     <td></td>

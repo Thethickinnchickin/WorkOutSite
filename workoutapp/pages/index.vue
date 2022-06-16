@@ -1,13 +1,13 @@
 <template>
   <main>
-    <div class="container px-4 pt-5 pb-3 my-5" id="custom-cards">
+    <div class="container pt-5 pb-3 mt-5" id="custom-cards">
         <h2 v-if="$auth.$state.loggedIn" class="pb-2 border-bottom" style="color:rgb(57, 165, 17);">Hello {{$auth.user.username}}</h2>
 
     </div>
-    <div class="container my-3 py-3">
+    <div class="container  my-4 pb-3">
         <div class="text-center row">
             <div  class="col-12 d-flex justify-content-center">
-                <div id="beginGame"> 
+                <div id="beginGame" class="px-3"> 
                     Insert Coin to Start Workout
                 </div>
                 <!-- <img style="border-radius: 30px;" height="300px" width="500px" src="images/betterthanyou.jpg" alt="Keven"/>          -->
@@ -67,7 +67,8 @@
 }
 #beginGame {
     animation: blinking 1.5s infinite;
-    border: 2px solid rgb(57, 165, 17);
+    color: rgb(255,215,0);
+    border: 2px solid rgb(255,215,0);
 }
 @keyframes blinking{
     60% {
