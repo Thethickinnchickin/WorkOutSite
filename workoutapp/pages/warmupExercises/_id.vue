@@ -2,7 +2,7 @@
 <main style="background-image: url('/images/wrestler.png'); 
 width: 100%; background-repeat: no-repeat;
 background-position: center top;" class="text-center mt-3 pt-5">
-    <h1 class="mt-5">
+    <h1 class="mt-3">
         {{workoutName}}
     </h1>
     <div  v-for="exercise in exercises" :key="exercise._id">

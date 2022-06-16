@@ -1,6 +1,8 @@
 <template>
-<main class="text-center mt-5 pt-5">
-    <h1 class="mt-5">
+<main style="background-image: url('/images/wrestler.png'); 
+width: 100%; background-repeat: no-repeat;
+background-position: center top;"  class="text-center mt-5 pt-5">
+    <h1 class="mt-3">
         {{workoutName}}
     </h1>
     <div v-for="exercise in exercises" :key="exercise._id">
@@ -14,7 +16,7 @@
                 <li class="page-item">
                     <button class="page-link" @click="pageChange('subtract')" tabindex="-1">Previous</button>
                 </li>
-                <li v-for="index in exercises.length" class="page-item">
+                <li v-for="index in exercises.length" :key="index" class="page-item">
                     <button v-if="index === pageNumber" class="page-link">{{index}}</button>
                     <button v-else class="page-link" @click="pageChange('none',index)">{{index}}</button>
                 </li>

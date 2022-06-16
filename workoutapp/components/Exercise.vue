@@ -32,9 +32,14 @@
         <div class="col mb-2">
             <div class="row">
                 <div v-if="!exercise.isCompleted" class="col-12 text-right">
-                    <button @click="completeExercise(true)" id="buttonComplete" class="btn btn-lg btn-block btn-outline-danger text-uppercase">Complete Exercise</button>
+                    <b-button  v-b-modal.completeExercise-1 id="buttonComplete" class="btn btn-lg btn-block btn-outline-danger text-uppercase">Complete Exercise</b-button>
+                    <b-modal :hide-footer="true" id="completeExercise-1" title="Hold On">
+                        <p class="my-4">Are You sure about completing this workout? It cannot be undone</p>
+                        <b-button class="btn" @click="completeExercise(true)">Complete</b-button>
+                    </b-modal>
                 </div>                
                 <div v-else class="col-12 text-right">
+
                     <button disabled class="btn btn-lg btn-block btn-outline-success text-uppercase">Exercise Completed</button>
                 </div>
             </div>
