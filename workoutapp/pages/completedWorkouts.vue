@@ -62,9 +62,9 @@
             </div>
             <div class="solu_description">
               <p>
-                Notes: {{workout.notes}}
+                Notes: <span class="text-muted">{{workout.notes}}</span>
               </p>
-              <button @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn">Go to Workout</button>
+              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn"><span style="animation: blinking 1.5s infinite">Play</span></button>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
         <div class="solution_cards_box">
           <div style="background-color: black;  border: 1px solid rgb(12, 247, 255);" class="solution_card">
             <div class="hover_color_bubble"></div>
-            <h2 class="text-center mt-5 pt-5">Create Workout</h2>
+            <h2 style="font-size: 1vw"  class="text-center mt-5 pt-5">Create Workout</h2>
           </div>
         </div>
       </div>        
@@ -159,7 +159,9 @@ export default {
   z-index: 1;
   overflow: hidden;
   min-height: 265px;
+  max-width: 200px;
   transition: 0.7s;
+  overflow-wrap: break-word;
 }
 
 .solution_cards_box .solution_card:hover {

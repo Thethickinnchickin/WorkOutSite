@@ -1,7 +1,7 @@
 <template>
    <tr >
-    <td v-if="!set.isCompleted" @click="isCompleted(set._id, true)" class="text-right"><button class="btn btn-sm btn-outline-danger">Set Inomplete</button> </td>
-    <td v-if="set.isCompleted"  class="text-right">
+    <td style="font-size:1vw" v-if="!set.isCompleted" @click="isCompleted(set._id, true)" class="text-right"><button class="btn btn-sm btn-outline-danger">Set Inomplete</button> </td>
+    <td  style="font-size:1vw" v-if="set.isCompleted"  class="text-right">
         <button @click="isCompleted(set._id, false)" style="font-size: 15px" v-b-modal.modal-delete-exercise class="btn btn-sm btn-outline-success">Set Complete</button>
     </td>                        
     <td>{{set.targetRepAmount}}</td>
@@ -27,8 +27,15 @@
     <td v-else-if="!set.targetTimeinSeconds"></td>
     <td v-if="!set.targetTimeinSeconds"></td>
     <td></td>
-   </tr>
+   </tr>    
+
 </template>
+
+<style scoped>
+input {
+    font-size: 1vw;
+}
+</style>
 
 <script>
 export default {

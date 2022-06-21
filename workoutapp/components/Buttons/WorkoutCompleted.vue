@@ -1,6 +1,6 @@
 <template>
     <div class='cont'>
-    <button @click="completeWorkout" class='button'>
+    <b-button v-b-modal.completeWorkout class='button'>
         <div class='blob'>
             <svg
             xmlns:xlink='http://www.w3.org/1999/xlink'
@@ -30,7 +30,11 @@
             <p>T</p>
             <p>!</p>
         </div>
-        </button>
+        </b-button>
+        <b-modal :hide-footer="true" id="completeWorkout" title="Hold On">
+          <p class="my-4" id="workoutWarning">Are You Ready to Finish This Workout?</p>
+          <b-button  @click="completeWorkout" class="btn btn-warning" >Finish</b-button>
+        </b-modal>
         
     
         
@@ -61,6 +65,9 @@ export default {
   margin: 0;
    
 
+}
+#workoutWarning {
+  animation: none;
 }
 
 .bg {

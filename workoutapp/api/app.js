@@ -26,8 +26,10 @@ const store = new MongoStore ({
     }
 })
 
+//adding cors for the nuxtjs aplication
 app.use(cors());
 
+//Using session and mongodb to store session data
 app.use(session({
     store,
     secret: 'super super secret',
@@ -40,6 +42,7 @@ app.use(session({
     }
 }));
 
+//Connecting to mongoose database
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -54,6 +57,7 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }));
 
+//Using body parser to send json data to and from server
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -66,6 +70,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//Adding routes to express
 app.use('/api/workout', workoutRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/exercise', exerciseRoutes);

@@ -1,32 +1,16 @@
 <template>
     <main>
         Test
-        <div v-for="workout in workouts" :key="workout._id">
-        {{workout.name}}
-        </div>        
+        <video controls width="250" class="mt-5 pt-5">
+
+            <source src="/media/cc0-videos/flower.webm"
+                    type="video/webm">
+
+            Sorry, your browser doesn't support embedded videos.
+        </video>      
     </main>
 
 </template>
 
-<script>
-import {mapGetters} from "vuex";
 
 
-export default {
-    async asyncData({$axios}) {
-        let response = await $axios.$get('/api/workout');
-
-        return {
-            workouts: response.workouts
-        }
-    },
-    
-
-
-    // computed: {
-    //     ...mapGetters(['getWorkouts'])
-    // },
-
-}
-  
-</script>

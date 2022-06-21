@@ -3,11 +3,15 @@
     <li class="page-item">
       <button class="page-link" @click="pageChange('subtract')" tabindex="-1">Previous</button>
     </li>
-    <li v-for="index in exerciseLength" :key="index" class="page-item"><button class="page-link" @click="pageChange('none',index)">{{index}}</button></li>
+    <li v-for="index in exerciseLength" :key="index" class="page-item">
+    <button class="page-link" @click="pageChange('none',index)">{{index}}</button></li>
     <li class="page-item">
       <button class="page-link" @click="pageChange('add')">Next</button>
     </li>
-      {{pageNumber}}
+    <span style="color: white">
+        {{pageNumber}}
+    </span>
+
   </ul>
 
 </template>

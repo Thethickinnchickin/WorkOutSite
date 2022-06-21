@@ -4,7 +4,7 @@
 <div class="form-signin col-4 w-100 m-auto">
   <form @submit.prevent="createExercise">
  
-    <h1 class="h3 mb-3 fw-normal">Create New Exercise For {{workout.name}}</h1>
+    <h1 class="h3 mb-3 fw-normal">Create New Exercise For <span style="color: rgb(255, 55, 0);">{{workout.name}}</span></h1>
     <p class="mb-3">{{workoutDate}}</p>
     <div class="form-floating">
       <input required v-model="name" type="text" class="form-control" id="floatingInput" placeholder="name">
@@ -87,6 +87,7 @@ export default {
   border-radius: 3px;
   background-color: black;
   color:rgb(57, 165, 17);
+  font-size: 1.5vw;
 }
 #createButton:hover {
   border: 2px solid black;

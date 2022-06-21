@@ -9,13 +9,18 @@
             <b-button  class="btn-outline-danger" v-b-modal.modal-1>Delete Workout</b-button>
             <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
-                <b-button class="btn"  @click="onWorkoutDelete">Delete</b-button>
+                <b-button class="btn btn-danger"  @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
-
-
-  
+            <b-button  class="btn-outline-success" v-b-modal.duplicate>Duplicate Workout</b-button>
+            <b-modal :hide-footer="true" id="duplicate" title="Hold On">
+                <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
+                <div class="form-floating">
+                    <input required type="date" pattern="\d{4}-\d{2}-\d{2}" v-model="date" class="form-control" id="floatingPassword">
+                    <label for="floatingPassword">Workout Date</label>
+                </div>
+                <b-button class="btn btn-warning"  @click="onWorkoutDuplicate">Duplicate</b-button>
+            </b-modal>
         </p>
-
       </div>
     </div>
 
@@ -194,7 +199,8 @@ export default {
     },
     data() {
         return {
-            modalShow: false
+            modalShow: false,
+            date: null
         }
     },
     async asyncData({$axios, params}) {
@@ -254,6 +260,20 @@ export default {
             this.$router.push(`/workout/${workoutId}`)
 
         },
+        async onWorkoutDuplicate() {
+            const response = await this.$axios.$post('/api/workout/create/new', {
+                duplicate: true,
+                workout: {...this.workout},
+                dateScheduled: this.date
+            });
+
+            
+
+
+
+
+            await this.$router.push('/workouts');
+        }
    
     },
 

@@ -63,10 +63,10 @@
               </p>
             </div>
             <div class="solu_description">
-              <p>
-                Notes: {{workout.notes}}
+              <p  style=" font-size: .5vw;">
+                Notes: <span class="text-muted">{{workout.notes}}</span>
               </p>
-              <button @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn">Go to Workout</button>
+              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn"><span style="animation: blinking 1.5s infinite">Play</span></button>
             </div>
           </div>
         </div>
@@ -150,10 +150,13 @@
               </p>
             </div>
             <div class="solu_description">
-              <p>
-                Notes: {{workout.notes}}
+              <p  style=" font-size: .5vw;">
+                Notes: <span class="text-muted">{{workout.notes}}</span>
               </p>
-              <button @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn">Go to Workout</button>
+              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn">
+              
+              <span style="animation: blinking 2s infinite">View Score</span>
+              </button>
             </div>
           </div>
         </div>
@@ -271,7 +274,9 @@ h3 {
   z-index: 1;
   overflow: hidden;
   min-height: 265px;
+  max-width: 200px;
   transition: 0.7s;
+  overflow-wrap: break-word;
 }
 
 .solution_cards_box .solution_card:hover {
@@ -304,7 +309,7 @@ h3 {
 }
 
 .solution_cards_box .solution_card:hover .solu_description button {
-  background: rgb(12, 247, 255);
+  background:rgb(255, 55, 0);
   color: black;
 }
 

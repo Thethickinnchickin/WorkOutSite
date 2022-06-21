@@ -24,10 +24,9 @@ router.post('/', verifyToken, async(req, res) => {
                 populate: {
                     path: 'sets'
                 }
-            }).exec(); 
-
-
-                    
+            })
+            .sort({dateScheduled: 1})
+            .exec();             
             res.json({
                 success: true,
                 workouts: workouts
@@ -41,27 +40,21 @@ router.post('/', verifyToken, async(req, res) => {
                 populate: {
                     path: 'sets'
                 }
-            }).exec(); 
+            })
+            .sort({dateScheduled: -1})
+            .exec(); 
                     
             res.json({
                 success: true,
                 workouts: workouts
             })
-        }
-
-
-
-
-        
+        }     
     } catch (err) {
         res.status(500).json({
             success: false,
             message: err.message
         })
     }
-
-
-
 })
 
 //Getting Workouts For user
@@ -130,26 +123,97 @@ router.post('/:id', verifyToken, async(req, res) => {
 //Creating Workout 
 router.post('/create/new', verifyToken, async (req, res) => {
     const user = await User.findByUsername(req.decoded.username);
+    let date = new Date(req.body.dateScheduled)
+    date.setDate(date.getDate() + 1);
+
+    if(req.body.duplicate) {
+        try {
+            let duplicateWorkout = new Workout({
+                name: req.body.workout.name,
+                exercises: [],
+                userId: user._id,
+                isCompleted: false,
+                dateScheduled: date,
+                notes: req.body.workout.notes
+            });
+
+            for(let exercise of req.body.workout.exercises){
+                let foundExercise = await Exercise.findById(exercise._id);
+                let newExercise = await new Exercise({
+                    name: foundExercise.name,
+                    workoutId: duplicateWorkout._id,
+                    warmUpExercise: foundExercise.warmUpExercise,
+                    notes: foundExercise.notes,
+                    isCompleted: false,
+                    sets: []
+                })
+
+                if(exercise.sets.length > 0) {
+                    for(let set of exercise.sets) {
+                        let foundSet = await Set.findById(set._id);
+                        let newSet = await new Set({
+                            targetRepAmount: foundSet.targetRepAmount,
+                            targetWeight: foundSet.targetWeight,
+                            targetTimeInSeconds: foundSet.targetTimeInSeconds,
+                            warmUpSet: foundSet.warmUpSet,
+                            exerciseId: newExercise._id,
+                            isCompleted: foundSet.isCompleted,
+                            actualRepAmount: null,
+                            actualWeight: null,
+                            actualTimeinSeconds: null,
+                        });     
+                        
+                        await newSet.save();  
+                        await newExercise.sets.push(newSet._id);       
+                    }      
+                    await newExercise.save()              
+                }
+
+                await newExercise.save();
+                await duplicateWorkout.exercises.push(newExercise._id);
+                await duplicateWorkout.save()
+            }
+
+            res.json({
+                success: true,
+                workout: duplicateWorkout
+            })             
+        } catch (e) {
+            res.status(500).json({
+                success: false,
+                message: e.message
+            })
+        }
+
+    } else {
+        try {
+            let workout = new Workout({
+                name: req.body.name,
+                exercises: [],
+                userId: user._id,
+                isCompleted: false,
+                dateScheduled: date,
+                notes: req.body.notes
+            });
+
+            await workout.save()
+            await user.workouts.push(workout);
+            await user.save()
+            
+
+            res.json({
+                success: true,
+                workout: workout
+            })            
+        } catch(e) {
+            res.status(500).json({
+                success: false,
+                message: e.message
+            })
+        }
+    }
 
 
-    const workout = await new Workout({
-        name: req.body.name,
-        exercises: [],
-        userId: user._id,
-        isCompleted: false,
-        dateScheduled: req.body.dateScheduled,
-        notes: req.body.notes
-    });
-
-    await workout.save()
-    await user.workouts.push(workout);
-    await user.save()
-    
-
-    res.json({
-        success: true,
-        workout: workout
-    })
 
 });
 

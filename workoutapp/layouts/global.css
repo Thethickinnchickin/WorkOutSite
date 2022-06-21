@@ -6,3 +6,9 @@
 * {
     font-family: "Press Start 2P";
 }
+
+@keyframes blinking{
+    60% {
+    opacity: 0.2;
+    }
+}

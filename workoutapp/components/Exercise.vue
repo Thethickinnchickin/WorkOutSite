@@ -12,7 +12,7 @@
             <div class="table-responsive">
                 <table class="table table-striped" style="color: rgb(57, 165, 17); background-color: black;">
                     <thead>
-                        <tr>
+                        <tr  style="font-size:1vw">
                             <th scope="col" class="text-right">Completed</th>
                             <th scope="col">Target Reps</th>
                             <th scope="col" class="text-center">Actual Reps</th>
@@ -23,7 +23,7 @@
                             <th> </th>
                         </tr>
                     </thead>
-                    <tbody v-for="set in exercise.sets" :key="set._id">
+                    <tbody  style="font-size:1vw" v-for="set in exercise.sets" :key="set._id">
                         <Set :set="set" :exercise="exercise"/>
                     </tbody>
                 </table>

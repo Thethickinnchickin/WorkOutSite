@@ -29,14 +29,14 @@
                             <h2  class="fs-4 fw-bold">Welcome to Big Man's League Offical Workout App!</h2>
                             <p class="mb-0">Let's get huge</p>
                             <div  v-if="$auth.$state.loggedIn" class="row">
-                                <button id=createButton @click="$router.push('/workouts')"  class="btn btn-primary mt-3 col-4">Go To Workouts</button>   
+                                <button style="font-size:1vw;" id=createButton @click="$router.push('/workouts')"  class="btn btn-primary mt-3 col-4">Go To Workouts</button>   
                                 <div class="col-4"></div>  
-                                <button id="createButton" @click="$router.push('/workout/new')" class="btn btn-primary mt-3 col-4">Create New Workout </button>                     
+                                <button style="font-size:1vw;" id="createButton" @click="$router.push('/workout/new')" class="btn btn-primary mt-3 col-4">Create New Workout </button>                     
                             </div>
                             <div  v-else class="row">
-                                <button id=createButton @click="$router.push('/login')"  class="btn btn-primary mt-3 col-4">Sign In</button>   
+                                <button style="font-size:1vw;" id=createButton @click="$router.push('/login')"  class="btn btn-primary mt-3 col-4">Sign In</button>   
                                 <div class="col-4"></div>  
-                                <button id="createButton" @click="$router.push('/register')" class="btn btn-primary mt-3 col-4">New User</button>                     
+                                <button style="font-size:1vw;" id="createButton" @click="$router.push('/register')" class="btn btn-primary mt-3 col-4">New User</button>                     
                             </div>
 
 

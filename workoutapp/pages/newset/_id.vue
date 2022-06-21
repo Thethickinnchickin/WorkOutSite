@@ -4,7 +4,7 @@
 <div class="form-signin col-4 w-100 m-auto">
   <form @submit.prevent="createSet">
  
-    <h1 class="h3 mb-3 fw-normal">Create New Set For Exercise: {{exercise.name}}</h1>
+    <h1 class="h3 mb-3 fw-normal">Create New Set For Exercise: <span style="color: rgb(255, 55, 0);">{{exercise.name}}</span></h1>
     <div class="form-floating">
       <input 
       v-model="targetRepAmount" type="number" class="form-control" id="floatingInput">
