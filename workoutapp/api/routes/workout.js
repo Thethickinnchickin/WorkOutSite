@@ -106,6 +106,7 @@ router.post('/:id', verifyToken, async(req, res) => {
         }).exec();
 
 
+
         res.json({
             success: true,
             workout: workout
@@ -155,9 +156,9 @@ router.post('/create/new', verifyToken, async (req, res) => {
                             targetRepAmount: foundSet.targetRepAmount,
                             targetWeight: foundSet.targetWeight,
                             targetTimeInSeconds: foundSet.targetTimeInSeconds,
-                            warmUpSet: foundSet.warmUpSet,
+                            warmupSet: foundSet.warmupSet,
                             exerciseId: newExercise._id,
-                            isCompleted: foundSet.isCompleted,
+                            isCompleted: false,
                             actualRepAmount: null,
                             actualWeight: null,
                             actualTimeinSeconds: null,
@@ -165,8 +166,7 @@ router.post('/create/new', verifyToken, async (req, res) => {
                         
                         await newSet.save();  
                         await newExercise.sets.push(newSet._id);       
-                    }      
-                    await newExercise.save()              
+                    }                 
                 }
 
                 await newExercise.save();

@@ -1,6 +1,7 @@
 <template>
 <main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
-    <div class="row py-lg-5 mt-5">
+<div v-if="!loading" class="loading">
+   <div v-if="!loading" class="row py-lg-5 mt-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1>{{workout.name}}</h1>
         <p class="lead text-muted">Notes: {{workout.notes}}</p>
@@ -11,7 +12,7 @@
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
                 <b-button class="btn btn-danger"  @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
-            <b-button  class="btn-outline-success" v-b-modal.duplicate>Duplicate Workout</b-button>
+            <b-button  class="btn-outline-success mt-2" v-b-modal.duplicate>Duplicate Workout</b-button>
             <b-modal :hide-footer="true" id="duplicate" title="Hold On">
                 <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
                 <div class="form-floating">
@@ -24,14 +25,14 @@
       </div>
     </div>
 
-    <div class="row">
+    <div v-if="!loading"  class="row">
         <div class="col-12 rounded my-2"
          style="color: rgb(57, 165, 17); height: 65px; border:2px solid rgb(12, 247, 255);">
          <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
 
     </div>
 
-    <div class="row my-3">
+    <div v-if="!loading"  class="row my-3">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
@@ -53,28 +54,28 @@
         </div>
     </div>
 
-    <div class="row">
+    <div v-if="!loading" style="font-size: 1.5vw;"  class="row">
         <div class="col-md-6">
             <p>Warm up Exercises</p>
-            <div v-for="exercise in workout.exercises" :key="exercise._id">
-                <div   v-if="exercise.warmUpExercise">
+            <div  v-for="exercise in workout.exercises" :key="exercise._id">
+                <div style="font-size: 1.5vw" v-if="exercise.warmUpExercise">
                 <b-dropdown 
                     :text="`${exercise.name}`"
                     block
-                    variant="black"
+                    variant="none"
                     class="m-2 mt-4"
                     menu-class="w-100"
-                    id="createButton"
+                    :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
                 >
                 <b-dropdown-item  href="#">
-                <h3  v-if="!workout.isCompleted"  class="text-center" style="font-size: 20px;">Exercise: {{exercise.name}} <p>Notes: {{exercise.notes}}</p><button style="font-size: 15px"
+                <h3  v-if="!workout.isCompleted"  class="text-center" style="font-size: 1.5vw;">Exercise: {{exercise.name}} <p>Notes: {{exercise.notes}}</p><button style="font-size: 15px"
                  class="btn btn-outline-primary mb-3 ml-3" @click="onRouteChange(`/editexercise/${exercise._id}`)">Edit Exercise</button>
                     <DeleteExercise :workout="workout" :exercise="exercise"/></h3>
-                <h3 v-if="exercise.sets.length > 0">Warm up sets:</h3>
-                <div v-for="set in exercise.sets" :key="set._id">
-                    <ul class="mb-3" v-if="set.warmupSet === true">
+                <h3 style="font-size: 2w;" v-if="exercise.sets.length > 0">Warm up sets:</h3>
+                <div style="font-size: 1.5vw;" v-for="set in exercise.sets" :key="set._id">
+                    <ul  class="mb-3" v-if="set.warmupSet === true">
                 
-                        <li>Set: <strong>{{exercise.sets.indexOf(set) + 1}}</strong></li>
+                        <li >Set: <strong>{{exercise.sets.indexOf(set) + 1}}</strong></li>
                         <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
                         <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong>{{set.actualRepAmount}}</strong></li>
                         <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
@@ -86,8 +87,8 @@
                     </ul>
                
                 </div>
-                <h3 v-if="exercise.sets.length > 0">Training Sets:</h3>
-                <div v-for="set in exercise.sets" :key="set._id">
+                <h3 style="font-size: 2vw;" v-if="exercise.sets.length > 0">Training Sets:</h3>
+                <div style="font-size: 1.5vw;" v-for="set in exercise.sets" :key="set._id">
                     <ul class="mb-3" v-if="set.warmupSet === false">
                 
                         <li>Set: <strong>{{exercise.sets.indexOf(set) + 1}}</strong></li>
@@ -118,22 +119,25 @@
         <div class="col-md-6">
             <p>Exercises</p>
             <div v-for="exercise in workout.exercises" :key="exercise._id">
-                <div v-if="!exercise.warmUpExercise">
+ 
+                <div v-if="!exercise.warmUpExercise && !exercise.isCompleted">
+
                 <b-dropdown 
                     :text="`${exercise.name}`"
                     block
                     variant="none"
                     class="m-2 mt-4"
                     menu-class="w-100"
-                    id="createButton"
+                    :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
                 >
+
                 <b-dropdown-item  href="#">
-                <h3  v-if="!workout.isCompleted"  class="text-center" style="font-size: 20px;">Exercise: {{exercise.name}} <p>Notes: {{exercise.notes}}</p><button style="font-size: 15px"
+                <h3  v-if="!workout.isCompleted"  class="text-center" style="font-size: 1.5vw; overflow-wrap: break-word;">Exercise: {{exercise.name}} <p style="  overflow-wrap: break-word;">Notes: {{exercise.notes}}</p><button style="font-size: 15px"
                  class="btn btn-outline-primary ml-3" @click="onRouteChange(`/editexercise/${exercise._id}`)">Edit Exercise</button>
                  
                     <DeleteExercise :workout="workout" :exercise="exercise"/></h3>
-                <h3 v-if="exercise.sets.length > 0">Warm up sets:</h3>
-                <div v-for="set in exercise.sets" :key="set._id">
+                <h3 style="font-size: 2vw;">Warm up sets:</h3>
+                <div style="font-size: 12px;" v-for="set in exercise.sets" :key="set._id">
                     <ul class="mb-3" v-if="set.warmupSet === true">
                 
                         <li>Set: <strong>{{exercise.sets.indexOf(set) + 1}}</strong></li>
@@ -148,8 +152,10 @@
                     </ul>
                
                 </div>
-                <h3 v-if="exercise.sets.length > 0">Training Sets:</h3>
-                <div v-for="set in exercise.sets" :key="set._id">
+                <h3 style="font-size: 2vw;">Training Sets:</h3>
+                
+                <div style="font-size: 12px;" v-for="set in exercise.sets" :key="set._id">
+
                     <ul class="mb-3" v-if="set.warmupSet === false">
                 
                         <li>Set: <strong>{{exercise.sets.indexOf(set) + 1}}</strong></li>
@@ -177,12 +183,15 @@
 
         </div>
     </div>
-    <div v-if="!workout.isCompleted" class="row">
+    <div v-if="!workout.isCompleted && !loading" class="row">
         <div class="col-12">          
             <CompleteButton :workoutId="workout._id" />  
         </div>
     </div>
 
+</div>
+<div v-if="loading">Loading</div>
+ 
 </main>
 </template>
 
@@ -203,8 +212,10 @@ export default {
             date: null
         }
     },
-    async asyncData({$axios, params}) {
+    async asyncData({$axios, params, $router}) {
         try {
+            let loading = true;
+
             let response =  await $axios.$post(`/api/workout/${params.id}`);
 
             let workout = response.workout
@@ -214,9 +225,11 @@ export default {
             
 
 
+            loading = false
 
             return {
-                workout: workout
+                workout: workout,
+                loading: loading
             }
         } catch (err) {
             console.log(err);
@@ -295,6 +308,18 @@ export default {
         border: 2px solid black;
         border-radius: 3px;
         background-color: rgb(57, 165, 17);
+        color: black;
+    }    
+    #exerciseComplete {
+        border: 2px solid black;
+        border-radius: 3px;
+        background-color: rgb(57, 165, 17);
+        color:rgb(57, 165, 17);
+    }
+    #exerciseComplete:hover {
+        border: 2px solid rgb(57, 165, 17);
+        border-radius: 3px;
+        background-color: black;
         color: black;
     }
 

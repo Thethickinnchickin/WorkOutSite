@@ -2,9 +2,19 @@
 <main style="background-image: url('/images/wrestler.png'); 
 width: 100%; background-repeat: no-repeat;
 background-position: center top;"  class="text-center mt-5 pt-5">
-    <h1 class="mt-3">
-        {{workoutName}}
-    </h1>
+    <div class="row">
+        <div class="col-2">
+         <button class="mt-5" @click="onRouteReturn" id="backButton">Back To Workout</button>               
+        </div>
+        <div class="col-8">
+        <h1 class="mt-5 float-middle">
+            {{workoutName}}
+        </h1>
+        </div>
+
+
+
+    </div>
     <div v-for="exercise in exercises" :key="exercise._id">
         <div v-if="exercises.indexOf(exercise) + 1 === pageNumber">
                 <Exercise :exercise='exercise'/>        
@@ -51,7 +61,8 @@ export default  {
 
          return {
              exercises: response.exercises,
-             workoutName: response.workoutName
+             workoutName: response.workoutName,
+             workoutId: response.workoutId
          }
 
     },
@@ -69,7 +80,25 @@ export default  {
             } else {
                 this.pageNumber = pageNumber
             }
+        },
+        onRouteReturn() {
+            this.$router.push(`/workout/${this.workoutId}`);
         }
     }
 } 
 </script>
+
+<style scoped>
+#backButton {
+    background-color: rgba(0,0,0,.5);
+    border: 2px soid ;
+    color: rgb(57, 165, 17);
+    border-radius: 5px;
+}
+#backButton:hover {
+    background-color: black;
+    border: 2px soid rgb(57, 165, 17);
+    color: rgb(57, 165, 17);
+    border-radius: 5px;
+}
+</style>

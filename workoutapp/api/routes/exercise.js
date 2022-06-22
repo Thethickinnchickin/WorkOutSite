@@ -45,7 +45,8 @@ router.post("/", verifyToken, async (req, res) => {
                 res.json({
                     success: true,
                     exercises: exercises,
-                    workoutName: workout.name
+                    workoutName: workout.name,
+                    workoutId: workout._id
                 })
             } catch (err) {
                 res.status(500).json({

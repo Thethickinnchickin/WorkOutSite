@@ -220,8 +220,6 @@ export default {
             FormattedInCompletedWorkouts.push(workout);
         }
 
-        console.log(FormattedCompletedWorkouts)
-
         return {
             workoutsCompleted: FormattedCompletedWorkouts,
             workoutsToComplete: FormattedInCompletedWorkouts
