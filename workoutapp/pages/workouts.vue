@@ -2,7 +2,7 @@
 
   <main >
     <div class="section_our_solution mt-5 pt-5">
-      <h2 class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
+      <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
     <div class="row mt-4 mx-3 ">
     <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
@@ -89,7 +89,8 @@
     </div>
 
 
-    <h2 class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17); border-bottom: 1px solid rgb(57, 165, 17); text-align: center;">Completed Workouts</h2>
+    <h2 v-if="workoutsCompleted.length > 0" class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17);
+     border-bottom: 1px solid rgb(57, 165, 17); text-align: center;">Completed Workouts</h2>
     <div class="row mt-4 mx-3 ">
     <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">

@@ -9,10 +9,10 @@
 <div class="container mb-4">
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive">
+            <div class="table-responsive search-table-outter" style="overflow:scroll">
                 <table class="table table-striped" style="color: rgb(57, 165, 17); background-color: black;">
                     <thead>
-                        <tr  style="font-size:1vw">
+                        <tr  style="font-size:10px">
                             <th scope="col" class="text-right">Completed</th>
                             <th scope="col">Target Reps</th>
                             <th scope="col" class="text-center">Actual Reps</th>
@@ -20,7 +20,13 @@
                             <th scope="col" class="text-right">Actual Weight</th>
                             <th scope="col" class="text-right">Target Time</th>
                             <th scope="col" class="text-right">Actual Time</th>
-                            <th> </th>
+                            <th scope="col" class="text-right">target Load</th>
+                            <th scope="col" class="text-right">actual Load</th>
+                            <th scope="col" class="text-right">RPE</th>
+                            <th scope="col" class="text-right">Rest</th>
+                                                        
+                                                        
+
                         </tr>
                     </thead>
                     <tbody  style="font-size:1vw" v-for="set in exercise.sets" :key="set._id">
@@ -65,6 +71,7 @@ input[type="number"] {
     border-radius: 50px;
     padding: none;
 }
+.search-table-outter { overflow-x: scroll; }
 </style>
 
 <script>

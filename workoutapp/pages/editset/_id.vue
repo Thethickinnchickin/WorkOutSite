@@ -19,6 +19,18 @@
       <label for="floatingInput">Target Time In Seconds</label>
     </div>
     <div class="form-floating">
+      <input v-model="targetLoad" :placeholder="set.targetLoad || 0" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">Target Load</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="rpe" :placeholder="set.rpe || 0" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">RPE</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="rest" :placeholder="set.rest || 0" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">Rest (mins)</label>
+    </div>
+    <div class="form-floating">
         <input type="checkbox" id="checkbox" v-model="warmupSet">
         <label for="checkbox">warmupSet</label>
     </div>
@@ -45,6 +57,9 @@ export default {
             targetRepAmount: null,
             targetWeight: null,
             targetTimeinSeconds: null,
+            targetLoad: null,
+            rpe: null,
+            rest: null,
             warmupSet: false,
         }
     },
@@ -68,6 +83,11 @@ export default {
         let updatedRep = this.targetRepAmount
         let updatedWeight = this.targetWeight
         let updatedTime = this.targetTimeinSeconds
+        let updatedLoad = this.targetLoad
+        let updatedRpe = this.rpe
+        let updatedRest = this.rest
+
+
         if(updatedRep === null) {
             updatedRep = this.set.targetRepAmount
         }
@@ -77,6 +97,16 @@ export default {
         if(updatedTime === null) {
             updatedTime = this.set.targetTimeinSeconds
         }
+        if(updatedLoad === null) {
+            updatedLoad = this.set.targetLoad
+        }
+        if(updatedRest === null) {
+          updatedRest = this.set.rest
+        }
+        if(updatedRpe === null) {
+          updatedRpe = this.set.rpe
+        }
+        
 
 
         let setData = {
@@ -84,6 +114,9 @@ export default {
           targetWeight: updatedWeight,
           targetTimeInSeconds: updatedTime,
           warmupSet: this.warmupSet,
+          targetLoad: updatedLoad,
+          rest: updatedRest,
+          rpe: updatedRpe,
           setId: this.set._id,
           updateType: "target"
         }

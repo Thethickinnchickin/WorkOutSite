@@ -40,7 +40,11 @@ router.post('/create', verifyToken, async (req, res) => {
         targetTimeinSeconds: req.body.targetTimeinSeconds,
         actualTimeinSeconds: null,
         warmupSet: req.body.warmupSet,
-        isCompleted: false
+        isCompleted: false,
+        targetLoad: req.body.targetLoad,
+        actualLoad: null,
+        rpe: req.body.rpe,
+        rest: req.body.rest,
     });
 
     exercise.sets.push(set);
@@ -103,7 +107,11 @@ router.put('/', async (req, res) => {
                 $set: {
                     targetRepAmount: req.body.targetRepAmount,
                     targetWeight: req.body.targetWeight,
-                    targetTimeinSeconds: req.body.targetTimeInSeconds                    
+                    targetTimeinSeconds: req.body.targetTimeInSeconds,
+                    targetLoad: req.body.targetLoad,
+                    rpe: req.body.rpe,
+                    rest: req.body.rest,  
+                    warmupSet: req.body.warmupSet                
                 }
             }); 
             await set.save();
@@ -116,9 +124,11 @@ router.put('/', async (req, res) => {
             const set = await Set.findByIdAndUpdate(req.body.setId, {
                 actualRepAmount: req.body.actualRepAmount,
                 actualWeight: req.body.actualWeight,
-                actualTimeinSeconds: req.body.actualTimeInSeconds
+                actualTimeinSeconds: req.body.actualTimeInSeconds,
+                actualLoad: req.body.actualLoad,
             });
             await set.save();
+
 
             res.json({
                 success: true,

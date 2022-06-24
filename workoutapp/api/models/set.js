@@ -11,6 +11,10 @@ const SetSchema = new Schema({
     targetTimeinSeconds: Number,
     actualTimeinSeconds: Number,
     warmupSet: Boolean,
+    targetLoad: Number,
+    actualLoad: Number,
+    rpe: Number,
+    rest: Number,
     exerciseId: {
         type: Schema.Types.ObjectId,
         required: true

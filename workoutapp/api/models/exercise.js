@@ -22,6 +22,7 @@ const ExerciseSchema = new Schema({
         type: Boolean,
         required: true
     },
+
     notes: String,
     isCompleted: {
         type: Boolean,

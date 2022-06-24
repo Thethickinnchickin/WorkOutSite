@@ -19,6 +19,18 @@
       <label for="floatingInput">Target Time In Seconds</label>
     </div>
     <div class="form-floating">
+      <input v-model="targetLoad" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">Target Load</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="rpe" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">RPE</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="rest" type="number" class="form-control" id="floatingInput">
+      <label for="floatingInput">Rest (mins)</label>
+    </div>
+    <div class="form-floating">
         <input type="checkbox" id="checkbox" v-model="warmupSet">
         <label for="checkbox">warmupSet</label>
     </div>
@@ -46,6 +58,9 @@ export default {
             targetWeight: 0,
             targetTimeinSeconds: 0,
             warmupSet: false,
+            targetLoad: 0,
+            rpe: 0,
+            rest: 0
         }
     },
     async asyncData({$axios, params}) {
@@ -68,6 +83,9 @@ export default {
           targetRepAmount: this.targetRepAmount,
           targetWeight: this.targetWeight,
           targetTimeinSeconds: this.targetTimeinSeconds,
+          targetLoad: this.targetLoad,
+          rpe: this.rpe,
+          rest: this.rest,
           warmupSet: this.warmupSet,
           exerciseId: this.exercise._id
         }
