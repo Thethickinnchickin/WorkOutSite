@@ -28,42 +28,80 @@ router.get('/:id', verifyToken, async (req, res) => {
 
 //Creating new set for exercise
 router.post('/create', verifyToken, async (req, res) => {
-    const user = await User.findByUsername(req.decoded.username);
-    const exercise = await Exercise.findById(req.body.exerciseId);
+    try {
+        const user = await User.findByUsername(req.decoded.username);
+        const exercise = await Exercise.findById(req.body.exerciseId);
 
-    const set = await new Set({
-        targetRepAmount: req.body.targetRepAmount,
-        actualRepAmount: null,
-        exerciseId: exercise._id,
-        targetWeight: req.body.targetWeight,
-        actualWeight: null,
-        targetTimeinSeconds: req.body.targetTimeinSeconds,
-        actualTimeinSeconds: null,
-        warmupSet: req.body.warmupSet,
-        isCompleted: false,
-        targetLoad: req.body.targetLoad,
-        actualLoad: null,
-        rpe: req.body.rpe,
-        rest: req.body.rest,
-    });
-
-    exercise.sets.push(set);
-    await set.save();
-    await exercise.save()
-    await user.save()
+        if(req.body.duplicate) {
+            let foundSet = await Set.findById(req.body.setId);
+            const newSet = await new Set({
+                targetRepAmount: foundSet.targetRepAmount,
+                actualRepAmount: null,
+                exerciseId: exercise._id,
+                targetWeight: foundSet.targetWeight,
+                actualWeight: null,
+                targetTimeinSeconds: foundSet.targetTimeinSeconds,
+                actualTimeinSeconds: null,
+                warmupSet: foundSet.warmupSet,
+                isCompleted: false,
+                targetLoad: foundSet.targetLoad,
+                actualLoad: null,
+                rpe: foundSet.rpe,
+                rest: foundSet.rest,
+            });
+            exercise.sets.push(newSet);
+            await newSet.save();
+            await exercise.save()
+            await user.save()
+            
+        
+            res.json({
+                success: true,
+                set: newSet
+            })
+        } else {
+            const set = await new Set({
+                targetRepAmount: req.body.targetRepAmount,
+                actualRepAmount: null,
+                exerciseId: exercise._id,
+                targetWeight: req.body.targetWeight,
+                actualWeight: null,
+                targetTimeinSeconds: req.body.targetTimeinSeconds,
+                actualTimeinSeconds: null,
+                warmupSet: req.body.warmupSet,
+                isCompleted: false,
+                targetLoad: req.body.targetLoad,
+                actualLoad: null,
+                rpe: req.body.rpe,
+                rest: req.body.rest,
+            });     
+            exercise.sets.push(set);
+            await set.save();
+            await exercise.save()
+            await user.save()
+            
     
+            res.json({
+                success: true,
+                exercise: exercise
+            })      
+        }
 
-    res.json({
-        success: true,
-        exercise: exercise
-    })
+
+
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err.message
+        })
+    }
+    
 
 })
 
 //Deleting Workout
 router.delete('/', async(req, res) => {
     try {
-
         const exercise = await Exercise.findById(req.body.exerciseId);
 
         let exerciseSets = exercise.sets;
