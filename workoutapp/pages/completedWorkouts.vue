@@ -64,13 +64,13 @@
               <p>
                 Notes: <span class="text-muted">{{workout.notes}}</span>
               </p>
-              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn"><span style="animation: blinking 1.5s infinite">Play</span></button>
+              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn"><span style="animation: blinking 1.5s infinite">View Score</span></button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="workoutsCompleted.length > 3" class="col-3 mr-0">
+    <div v-if="workoutsCompleted.length >= 3" class="col-3 mr-0">
       <div @click="routeRedirct('/workout/new')" class="our_solution_category mt-3">
         <div class="solution_cards_box">
           <div style="background-color: black;  border: 1px solid rgb(12, 247, 255);" class="solution_card">
