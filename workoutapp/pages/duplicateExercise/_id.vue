@@ -88,6 +88,8 @@ export default {
           isCompleted: false
         }});
 
+        let nothing =0
+
         let FormattedInCompleteWorkouts = []
 
         
