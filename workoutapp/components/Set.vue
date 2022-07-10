@@ -7,28 +7,25 @@
     <td class="text-right">{{set.targetRepAmount}}</td>
 
     <td v-if="!set.isCompleted"><input class="form-control"  v-model="actualRep"
-    @submit="setTargetAmount(set._id, actualRepAmount, null, null)"  type="number" value="0" /></td>
+        @submit="setTargetAmount(set._id, actualRepAmount, null, null)"  type="number" value="0"  max="100" min="0"/></td>
     <td v-else style="color: rgb(255, 49, 49)" class="text-right">{{set.actualRepAmount}}</td>
     <td class="text-right">{{set.targetWeight}}</td>
 
     <td v-if="!set.isCompleted"><input v-model="actualWeight"
-    @submit="setTargetAmount(set._id, null, set.actualWeight, null)" class="form-control" type="number" value="0" /></td>
+        @submit="setTargetAmount(set._id, null, set.actualWeight, null)" class="form-control" type="number" value="0"  max="100" min="0"/></td>
+
     <td v-else  style="color: rgb(255, 49, 49)" class="text-right">{{set.actualWeight}}</td>
-
     <td class="text-right">{{set.targetTimeinSeconds|| 'none'}}</td>
-
-
-
     <td v-if="set.targetTimeInSeconds"  style="color: rgb(255, 49, 49)" class="text-right">{{set.actualTimeInSeconds + " sec(s)" || "0" + " sec(s)"}}</td>
     <td v-if="!set.isCompleted && set.targetTimeinSeconds"><input v-model="actualTime"
-    @submit="setTargetAmount(set._id, null, null, set.actualTimeInSeconds)" 
-    class="form-control" type="number" value="0" /></td>
+        @submit="setTargetAmount(set._id, null, null, set.actualTimeInSeconds)" 
+        class="form-control" type="number" value="0"  max="100" min="0"/></td>
     <td v-else-if="set.targetTimeinSeconds" class="text-right">{{set.actualTimeInSeconds + " sec(s)" || "0" + " sec(s)"}}</td>
     <td v-else-if="!set.targetTimeinSeconds"></td>
     <td v-if="!set.targetTimeinSeconds"></td>
     <td v-if="set.targetLoad" class="text-right">{{set.targetLoad}}</td>
     <td v-if="!set.isCompleted && set.targetLoad"><input v-model="actualLoad"
-    class="form-control" type="number" value="0"/></td>
+        class="form-control" type="number" value="0"  max="100" min="0"/></td>
     <td v-else class="text-right" style="color: rgb(255, 49, 49)">{{set.actualLoad}}</td>
     <td v-if="set.rpe" class="text-right">{{set.rpe}}</td>
     <td v-if="set.rest" class="text-right">{{set.rest}}</td>
@@ -96,7 +93,7 @@ export default {
                 actualWeight: this.actualWeight,
                 actualTimeInSeconds: this.actualTime,
                 setId: setId
-            })
+            });
 
             for(let i=0; i < this.exercise.sets.length; i++) { 
                 let sets = this.exercise.sets;

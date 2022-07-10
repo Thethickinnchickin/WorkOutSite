@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Exercise = require('../models/exercise');
 const Set = require('../models/set');
 const verifyToken = require('../middleware/verify-token');
+const cleanSetInput = require('../helpers/setInput')
 
 
 router.get('/:id', verifyToken, async (req, res) => {
@@ -60,6 +61,8 @@ router.post('/create', verifyToken, async (req, res) => {
                 set: newSet
             })
         } else {
+
+
             const set = await new Set({
                 targetRepAmount: req.body.targetRepAmount,
                 actualRepAmount: null,
@@ -136,11 +139,14 @@ router.delete('/', async(req, res) => {
 
 })
 
-//Editing Set for user targets
+//Updating Set for user targets
 router.put('/', async (req, res) => {
     try {
         if(req.body.updateType === "target")
         {
+            const updatedSet = cleanSetInput(req.body);
+            console.log(updatedSet)
+
             const set = await Set.findByIdAndUpdate(req.body.setId, {
                 $set: {
                     targetRepAmount: req.body.targetRepAmount,
@@ -159,11 +165,13 @@ router.put('/', async (req, res) => {
                 message: "Successfully updates set for target"
             })
         } else {
-            const set = await Set.findByIdAndUpdate(req.body.setId, {
-                actualRepAmount: req.body.actualRepAmount,
-                actualWeight: req.body.actualWeight,
-                actualTimeinSeconds: req.body.actualTimeInSeconds,
-                actualLoad: req.body.actualLoad,
+            const updatedSet = cleanSetInput(req.body);
+
+            const set = await Set.findByIdAndUpdate(updatedSet.setId, {
+                actualRepAmount: updatedSet.actualRepAmount,
+                actualWeight: updatedSet.actualWeight,
+                actualTimeinSeconds: updatedSet.actualTimeInSeconds,
+                actualLoad: updatedSet.actualLoad,
             });
             await set.save();
 

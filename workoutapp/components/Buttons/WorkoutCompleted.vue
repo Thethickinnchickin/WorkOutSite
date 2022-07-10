@@ -208,7 +208,7 @@ export default {
   display: flex;
   position: absolute;
   top: 20%;
-  font-size: 4vw;
+  font-size: 3vw;
   text-shadow: 2px 2px black;
   font-family: 'Anton', sans-serif;
 

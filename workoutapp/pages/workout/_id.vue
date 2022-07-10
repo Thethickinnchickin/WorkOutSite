@@ -10,7 +10,7 @@
             <b-button  class="btn-outline-danger" v-b-modal.modal-1>Delete Workout</b-button>
             <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
-                <b-button class="btn btn-danger"  @click="onWorkoutDelete">Delete</b-button>
+                <b-button class="btn btn-danger" :disabled="!canDelete"  @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
             <b-button  class="btn-outline-success mt-2" v-b-modal.duplicate>Duplicate Workout</b-button>
             <b-modal :hide-footer="true" id="duplicate" title="Hold On">
@@ -19,7 +19,7 @@
                     <input required type="date" pattern="\d{4}-\d{2}-\d{2}" v-model="date" class="form-control" id="floatingPassword">
                     <label for="floatingPassword">Workout Date</label>
                 </div>
-                <b-button class="btn btn-warning"  @click="onWorkoutDuplicate">Duplicate</b-button>
+                <b-button class="btn btn-warning" @click="onWorkoutDuplicate">Duplicate</b-button>
             </b-modal>
         </p>
       </div>
@@ -110,9 +110,9 @@
                                 <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
                                 <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
                                 <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
+                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
+                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;"
                                 @click="onSetDuplication(set, exercise, workout._id)"
                                 class="btn btn-sm btn-outline-warning mt-2">Duplicate Set</button></li>
                             </ul>
@@ -146,7 +146,7 @@
                             Edit Exercise</button>
                         </div>
                         <div class="col mt-2">
-                            <DeleteExercise :workout="workout" :exercise="exercise"/>
+                            <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
                         </div>  
                         <div class="col mt-2">
                              <button v-if="!workout.isCompleted"  style="font-size: 10px;"
@@ -297,7 +297,8 @@ export default {
     data() {
         return {
             modalShow: false,
-            date: null
+            date: null,
+            canDelete: true
         }
     },
     async asyncData({$axios, params, $router}) {
@@ -343,11 +344,14 @@ export default {
             this.$router.push(`/workout/${workoutId}`)
         },
         async onWorkoutDelete() {
+            this.canDelete = false;
             await this.$axios.$delete('/api/workout', {data: {workoutId: this.workout._id}});
 
-            this.$router.push('/workouts')
+            await this.$router.push('/workouts')
+            this.canDelete = true;
         },
         async onExerciseDelete(exerciseId, workoutId) {
+            this.canDelete = false;
             await this.$axios.$delete('/api/exercise', {data: {workoutId: this.workout._id, exerciseId: exerciseId}});
 
             var filtered = this.workout.exercises.filter(function(value, index, arr){ 
@@ -356,7 +360,9 @@ export default {
 
             this.workout.exercises = filtered
 
-            this.$router.push(`/workout/${workoutId}`)
+            await this.$router.push(`/workout/${workoutId}`)
+
+            this.canDelete = true;
 
         },
         async onWorkoutDuplicate() {
@@ -417,7 +423,6 @@ export default {
             }
 
             const response = await this.$axios.$post('/api/exercise/create', exerciseData);
-            console.log(response.sets)
             let newExercise = response.exercise;
             newExercise.sets = [];
             for(let set of response.sets) {

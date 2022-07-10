@@ -7,27 +7,27 @@
     <h1 class="h3 mb-3 fw-normal">Create New Set For Exercise: <span style="color: rgb(255, 55, 0);">{{exercise.name}}</span></h1>
     <div class="form-floating">
       <input 
-      v-model="targetRepAmount" type="number" class="form-control" id="floatingInput">
+      v-model="targetRepAmount" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Rep Amount</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetWeight" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetWeight" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Weight</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetTimeinSeconds" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetTimeinSeconds" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Time In Seconds</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetLoad" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetLoad" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Load</label>
     </div>
     <div class="form-floating">
-      <input v-model="rpe" type="number" class="form-control" id="floatingInput">
+      <input v-model="rpe" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">RPE</label>
     </div>
     <div class="form-floating">
-      <input v-model="rest" type="number" class="form-control" id="floatingInput">
+      <input v-model="rest" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Rest (mins)</label>
     </div>
     <div class="form-floating">

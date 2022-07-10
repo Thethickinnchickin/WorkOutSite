@@ -7,27 +7,27 @@
     <h1 class="h3 mb-3 mt-3 fw-normal">Update Set</h1>
     <div class="form-floating">
       <input 
-      v-model="targetRepAmount" :placeholder="set.targetRepAmount || 0" type="number" class="form-control" id="floatingInput">
+      v-model="targetRepAmount" :placeholder="set.targetRepAmount || 0" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Rep Amount</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetWeight" :placeholder="set.targetWeight || 0" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetWeight" :placeholder="set.targetWeight || 0" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Weight</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetTimeinSeconds" :placeholder="set.targetTimeinSeconds || 0" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetTimeinSeconds" :placeholder="set.targetTimeinSeconds || 0" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Target Time In Seconds</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetLoad" :placeholder="set.targetLoad || 0" type="number" class="form-control" id="floatingInput">
+      <input v-model="targetLoad" :placeholder="set.targetLoad || 0" type="number" class="form-control" id="floatingInput" max="100" min="0">
       <label for="floatingInput">Target Load</label>
     </div>
     <div class="form-floating">
-      <input v-model="rpe" :placeholder="set.rpe || 0" type="number" class="form-control" id="floatingInput">
+      <input v-model="rpe" :placeholder="set.rpe || 0" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">RPE</label>
     </div>
     <div class="form-floating">
-      <input v-model="rest" :placeholder="set.rest || 0" type="number" class="form-control" id="floatingInput">
+      <input v-model="rest" :placeholder="set.rest || 0" type="number" class="form-control" id="floatingInput"  max="100" min="0">
       <label for="floatingInput">Rest (mins)</label>
     </div>
     <div class="form-floating">
