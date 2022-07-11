@@ -15,6 +15,7 @@ export default {
     methods: {
         async onExerciseDelete(exerciseId, workoutId) {
             this.canDelete = false;
+            let f = 0
             await this.$axios.$delete('/api/exercise', {data: {workoutId: this.workout._id, exerciseId: exerciseId}});
 
             var filtered = this.workout.exercises.filter(function(value, index, arr){ 

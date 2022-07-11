@@ -61,10 +61,7 @@
               </p>
             </div>
             <div class="solu_description">
-              <p>
-                Notes: <span class="text-muted">{{workout.notes}}</span>
-              </p>
-              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn"><span style="animation: blinking 1.5s infinite">View Score</span></button>
+              <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn mt-3"><span style="animation: blinking 1.5s infinite">View Score</span></button>
             </div>
           </div>
         </div>

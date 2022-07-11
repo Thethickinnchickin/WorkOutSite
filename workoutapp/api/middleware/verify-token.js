@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+//Verfying user has token and sending deconded token in request
+
 module.exports = function(req, res, next) {
     let token = req.headers["x-access-token"] || req.headers["authorization"];
     let checkBearer = "Bearer "

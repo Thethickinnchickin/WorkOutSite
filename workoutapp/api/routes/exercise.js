@@ -122,8 +122,6 @@ router.post('/create', verifyToken, async (req, res) => {
                 sentSets.push(newSet);
             }
 
-            console.log(sentSets)
-
 
             await newExercise.save();
             await workout.exercises.push(newExercise);

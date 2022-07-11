@@ -19,7 +19,7 @@
                     <input required type="date" pattern="\d{4}-\d{2}-\d{2}" v-model="date" class="form-control" id="floatingPassword">
                     <label for="floatingPassword">Workout Date</label>
                 </div>
-                <b-button class="btn btn-warning" @click="onWorkoutDuplicate">Duplicate</b-button>
+                <b-button class="btn btn-warning" @click="onWorkoutDuplicate" :disabled="!canDelete">Duplicate</b-button>
             </b-modal>
         </p>
       </div>
@@ -37,7 +37,8 @@
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                 <h3 class="mb-0">Warmup</h3>
-                <a  v-if="!workout.isCompleted && workout.exercises.length > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link">Begin WarmUp</a>
+                <a  v-if="!workout.isCompleted && warmupCount > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link">Begin WarmUp</a>
+                 <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
                 </div>
             </div>
 
@@ -46,7 +47,8 @@
         <div  class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
             <h3 class="mb-0">Workout</h3>
-            <a  v-if="!workout.isCompleted  && workout.exercises.length > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link">Begin Workout</a>
+            <a  v-if="!workout.isCompleted  && workoutCount > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link">Begin Workout</a>
+             <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
             </div>
         </div>
         </div>
@@ -311,6 +313,17 @@ export default {
 
             workout.dateScheduled = moment(String(workout.dateScheduled))
                 .format('MM/DD/YYYY');
+
+            let warmupCount = 0;
+            let workoutCount = 0;
+
+            for(let exercise of workout.exercises) {
+                if(exercise.warmUpExercise) {
+                    warmupCount ++;
+                } else {
+                    workoutCount ++;
+                }
+            }
             
 
 
@@ -318,6 +331,8 @@ export default {
 
             return {
                 workout: workout,
+                warmupCount: warmupCount,
+                workoutCount: workoutCount,
                 loading: loading
             }
         } catch (err) {
@@ -366,7 +381,8 @@ export default {
 
         },
         async onWorkoutDuplicate() {
-            const response = await this.$axios.$post('/api/workout/create/new', {
+            this.canDelete = false;
+            await this.$axios.$post('/api/workout/create/new', {
                 duplicate: true,
                 workout: {...this.workout},
                 dateScheduled: this.date
@@ -374,6 +390,7 @@ export default {
 
             
             await this.$router.push('/workouts');
+            this.canDelete = true;
         },
         async onSetDuplication(set, exercise, workoutId) {
             const response = await this.$axios.$post('/api/set/create', {

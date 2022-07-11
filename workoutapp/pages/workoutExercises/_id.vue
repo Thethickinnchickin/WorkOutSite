@@ -11,6 +11,9 @@ background-position: center top;"  class="text-center mt-5 pt-5">
             {{workoutName}}
         </h1>
         </div>
+        <div class="col-2">
+            Page:{{pageNumber}}
+        </div>
 
 
 

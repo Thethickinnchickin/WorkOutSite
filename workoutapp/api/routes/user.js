@@ -96,12 +96,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/logout', isLoggedIn,(req, res) => {
     req.logout(() => {
-        console.log("You have logged out")
+        res.json({
+            success: true,
+            message: 'Logout successful'
+        })        
     });
-    res.json({
-        success: true,
-        message: 'Logout successful'
-    })
+
 });
 
 
