@@ -80,6 +80,26 @@
             </div>
         </div>
     </div>
+
+      <div class="row mt-5">
+        <div class="col">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <button class="page-link" tabindex="-1" @click="pageChange(pageNumber - 1)">Previous</button>
+                </li>
+                <li v-for="index in totalPages" :key="index" class="page-item">
+                    <button v-if="index === pageNumber" class="page-link" @click="pageChange(index)">{{index}}</button>
+                    <button v-else class="page-link" @click="pageChange(index)">{{index}}</button>
+                </li>
+
+            
+
+                <li class="page-item">
+                    <button class="page-link" @click="pageChange(pageNumber + 1)">Next</button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </main>
 </template>
 
@@ -90,9 +110,13 @@ import moment from 'moment';
 
 export default {
     async asyncData({$axios}) {
+        let pageNumber = 1;
+        let totalPages = 1;
+
         let incompletedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 9999,
-          isCompleted: false
+          isCompleted: false,
+          pageNumber: pageNumber
         }});
 
         let FormattedInCompleteWorkouts = []
@@ -105,9 +129,14 @@ export default {
             FormattedInCompleteWorkouts.push(workout);
         }
 
+        totalPages = Math.ceil(incompletedWorkoutsresponse.workouts.length / 5)
+
+
 
         return {
             workoutsNotCompleted: FormattedInCompleteWorkouts,
+            pageNumber: pageNumber,
+            totalPages: totalPages
         }
     },
     methods: {
@@ -115,8 +144,32 @@ export default {
         this.$router.push(`/workout/${id}`)
       },
      routeRedirct(route) {
-          this.$router.push(route)
-      } 
+        this.$router.push(route)
+      },
+      async loadWorkouts() {
+        let incompletedWorkoutsresponse = await this.$axios.$post('/api/workout', {searchParams: {
+          totalWorkouts: 9999,
+          isCompleted: false,
+          pageNumber: this.pageNumber
+        }});
+
+          let FormattedInCompleteWorkouts = []
+
+        
+        for(let workout of incompletedWorkoutsresponse.workouts)
+        {
+            workout.dateScheduled = moment(String(workout.dateScheduled))
+                .format('MM/DD/YYYY');
+            FormattedInCompleteWorkouts.push(workout);
+        }
+
+        this.workoutsNotCompleted = FormattedInCompleteWorkouts
+
+      },
+      pageChange(page) {
+        this.pageNumber = page;
+        this.loadWorkouts()
+      }
     }
     
 

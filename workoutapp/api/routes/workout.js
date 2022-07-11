@@ -11,11 +11,21 @@ const verifyToken = require('../middleware/verify-token');
 //Getting Workouts For user
 router.post('/', verifyToken, async(req, res) => {
     try {
-
+        //setting total items for pagination
+        const pageSize = 7;
+        console.log(req.body)
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username)
         if(req.body.searchParams.isCompleted)
         {
+            if(req.body.searchParams.pageNumber) {
+                const workouts = await Workout
+                    .where({isCompleted: true})
+                    .skip((req.body.searchParams.pageNumber - 1) * pageSize)
+                    .limit(pageSize)
+                    .exec();
+                res.json(workouts);
+            }
             const workouts = await Workout.find({userId: user._id})
             .where({isCompleted: true})
             .limit(req.body.searchParams.totalWorkouts)
@@ -31,7 +41,20 @@ router.post('/', verifyToken, async(req, res) => {
                 success: true,
                 workouts: workouts
             });
-        } else {
+        } else if(req.body.searchParams.pageNumber) {
+
+                let pageNumber = req.body.searchParams.pageNumber;
+                let completeWorkout = req.body.searchParams.isCompleted;
+                const workouts = await Workout
+                    .where({isCompleted: completeWorkout})
+                    .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * pageSize ) : 0 )
+                    .limit(pageSize)
+                    .exec();
+                res.json({
+                    success: true,
+                    workouts: workouts
+                });
+        }  else {
             const workouts = await Workout.find({userId: user._id})
             .where({isCompleted: false})
             .limit(req.body.searchParams.totalWorkouts)
