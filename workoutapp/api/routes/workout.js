@@ -13,48 +13,41 @@ router.post('/', verifyToken, async(req, res) => {
     try {
         //setting total items for pagination
         const pageSize = 7;
-        console.log(req.body)
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username)
         if(req.body.searchParams.isCompleted)
         {
+            console.log("adsfasdfafs")
             if(req.body.searchParams.pageNumber) {
                 const workouts = await Workout
-                    .where({isCompleted: true})
+                    .where({isCompleted: req.body.searchParams.isCompleted})
                     .skip((req.body.searchParams.pageNumber - 1) * pageSize)
-                    .limit(pageSize)
-                    .exec();
-                res.json(workouts);
-            }
-            const workouts = await Workout.find({userId: user._id})
-            .where({isCompleted: true})
-            .limit(req.body.searchParams.totalWorkouts)
-            .populate({
-                path: 'exercises',
-                populate: {
-                    path: 'sets'
-                }
-            })
-            .sort({dateScheduled: 1})
-            .exec();             
-            res.json({
-                success: true,
-                workouts: workouts
-            });
-        } else if(req.body.searchParams.pageNumber) {
-
-                let pageNumber = req.body.searchParams.pageNumber;
-                let completeWorkout = req.body.searchParams.isCompleted;
-                const workouts = await Workout
-                    .where({isCompleted: completeWorkout})
-                    .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * pageSize ) : 0 )
                     .limit(pageSize)
                     .exec();
                 res.json({
                     success: true,
                     workouts: workouts
                 });
-        }  else {
+            } else {
+                const workouts = await Workout.find({userId: user._id})
+                .where({isCompleted: true})
+                .limit(req.body.searchParams.totalWorkouts)
+                .populate({
+                    path: 'exercises',
+                    populate: {
+                        path: 'sets'
+                    }
+                })
+                .sort({dateScheduled: 1})
+                .exec();             
+                res.json({
+                    success: true,
+                    workouts: workouts
+                });                
+            }
+
+        }  else if(!req.body.searchParams.pageNumber) {
+            console.log("adsfasdfafs")
             const workouts = await Workout.find({userId: user._id})
             .where({isCompleted: false})
             .limit(req.body.searchParams.totalWorkouts)
@@ -71,7 +64,7 @@ router.post('/', verifyToken, async(req, res) => {
                 success: true,
                 workouts: workouts
             })
-        }     
+        }   
     } catch (err) {
         res.status(500).json({
             success: false,

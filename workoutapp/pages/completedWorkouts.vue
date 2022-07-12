@@ -79,7 +79,25 @@
     </div>
 
 </div>
-   <div class="row mt-4 mx-3"></div>
+    <div class="row mt-5">
+        <div class="col">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <button class="page-link" tabindex="-1" @click="pageChange(pageNumber, 'last')">Previous</button>
+                </li>
+                <li v-for="index in totalPages" :key="index" class="page-item">
+                    <button v-if="index === pageNumber" class="page-link" @click="pageChange(index)">{{index}}</button>
+                    <button v-else class="page-link" @click="pageChange(index)">{{index}}</button>
+                </li>
+
+            
+
+                <li class="page-item">
+                    <button class="page-link" @click="pageChange(pageNumber, 'next')">Next</button>
+                </li>
+            </ul>
+        </div>
+    </div>
 
 </main>
 
@@ -96,9 +114,14 @@ import moment from 'moment';
 
 export default {
     async asyncData({$axios}) {
+        let pageNumber = 1;
+        let totalPages = 1;
+
+
         let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 9999,
-          isCompleted: true
+          isCompleted: true,
+          pageNumber: pageNumber
         }});
 
         let FormattedCompletedWorkouts = []
@@ -111,9 +134,13 @@ export default {
             FormattedCompletedWorkouts.push(workout);
         }
 
+        totalPages = Math.ceil(completedWorkoutsresponse.workouts.length / 5)
+
 
         return {
             workoutsCompleted: FormattedCompletedWorkouts,
+            pageNumber: pageNumber,
+            totalPages: totalPages     
         }
     },
     methods: {
@@ -122,7 +149,44 @@ export default {
       },
       routeRedirct(route) {
           this.$router.push(route)
-      } 
+      },
+      async loadWorkouts() {
+        let completedWorkoutsresponse = await this.$axios.$post('/api/workout', {searchParams: {
+          totalWorkouts: 9999,
+          isCompleted: true,
+          pageNumber: this.pageNumber
+        }});
+
+        let FormattedCompleteWorkouts = []
+
+        
+        for(let workout of completedWorkoutsresponse.workouts)
+        {
+            workout.dateScheduled = moment(String(workout.dateScheduled))
+                .format('MM/DD/YYYY');
+            FormattedCompleteWorkouts.push(workout);
+        }
+
+        this.workoutsCompleted = FormattedCompleteWorkouts
+
+      },
+      pageChange(page, type) {
+        if(type === 'next') {
+          if(this.pageNumber !== this.totalPages) {
+            this.pageNumber = page + 1;
+            this.loadWorkouts();
+          }
+        } else if(type === 'last') {
+          if(this.pageNumber >= 2) {
+            this.pageNumber = page - 1;
+            this.loadWorkouts()
+          }
+        } else {
+          this.pageNumber = page;
+          this.loadWorkouts()          
+        }
+
+      }
     }
     
 

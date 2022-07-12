@@ -81,11 +81,11 @@
         </div>
     </div>
 
-      <div class="row mt-5">
+    <div class="row mt-5">
         <div class="col">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <button class="page-link" tabindex="-1" @click="pageChange(pageNumber - 1)">Previous</button>
+                    <button class="page-link" tabindex="-1" @click="pageChange(pageNumber, 'last')">Previous</button>
                 </li>
                 <li v-for="index in totalPages" :key="index" class="page-item">
                     <button v-if="index === pageNumber" class="page-link" @click="pageChange(index)">{{index}}</button>
@@ -95,12 +95,12 @@
             
 
                 <li class="page-item">
-                    <button class="page-link" @click="pageChange(pageNumber + 1)">Next</button>
+                    <button class="page-link" @click="pageChange(pageNumber, 'next')">Next</button>
                 </li>
             </ul>
         </div>
     </div>
-</main>
+    </main>
 </template>
 
 
@@ -153,7 +153,7 @@ export default {
           pageNumber: this.pageNumber
         }});
 
-          let FormattedInCompleteWorkouts = []
+      let FormattedInCompleteWorkouts = []
 
         
         for(let workout of incompletedWorkoutsresponse.workouts)
@@ -167,8 +167,20 @@ export default {
 
       },
       pageChange(page) {
-        this.pageNumber = page;
-        this.loadWorkouts()
+        if(type === 'next') {
+          if(this.pageNumber !== this.totalPages) {
+            this.pageNumber = page + 1;
+            this.loadWorkouts();
+          }
+        } else if(type === 'last') {
+          if(this.pageNumber >= 2) {
+            this.pageNumber = page - 1;
+            this.loadWorkouts()
+          }
+        } else {
+          this.pageNumber = page;
+          this.loadWorkouts()          
+        }
       }
     }
     
