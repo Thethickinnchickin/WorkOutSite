@@ -47,7 +47,6 @@ export default {
             let formattedDate = moment(String(response.workout.dateScheduled))
                 .format('MM/DD/YYYY');
 
-            console.log(response)
 
             return {
                 workout: response.workout,
@@ -67,7 +66,7 @@ export default {
           workoutId: this.workout._id
         }
         const response = await this.$axios.$post('/api/exercise/create', exerciseData)
-        console.log(response)
+
 
         this.$router.push(`/newset/${response.exercise._id}`)
 

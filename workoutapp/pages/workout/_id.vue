@@ -27,27 +27,27 @@
 
     <div v-if="!loading"  class="row">
         <div class="col-12 rounded my-2"
-         style="color: rgb(57, 165, 17); height: 65px; border:2px solid rgb(12, 247, 255);">
+         style="color: rgb(57, 165, 17); height: 65px;">
          <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
 
     </div>
 
-    <div v-if="!loading"  class="row my-3">
+    <div v-if="!loading"  class="row my-3" style="border: none">
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                 <h3 class="mb-0">Warmup</h3>
-                <a  v-if="!workout.isCompleted && warmupCount > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link">Begin WarmUp</a>
+                <a  v-if="!workout.isCompleted && warmupCount > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link" id="beginWorkout">Begin WarmUp</a>
                  <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
                 </div>
             </div>
 
         </div>
         <div class="col-md-6">
-        <div  class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div  class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
             <h3 class="mb-0">Workout</h3>
-            <a  v-if="!workout.isCompleted  && workoutCount > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link">Begin Workout</a>
+            <a  v-if="!workout.isCompleted  && workoutCount > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link" id="beginWorkout">Begin Workout</a>
              <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
             </div>
         </div>
@@ -508,7 +508,15 @@ export default {
     background-color: rgba(0, 0, 0, .5);
     }
 
+    @keyframes blinking{
+        60% {
+            opacity: 0.2;
+        }
+    }
 
+    #beginWorkout {
+        animation: blinking 1.5s infinite;
+    }
 
 
 </style>

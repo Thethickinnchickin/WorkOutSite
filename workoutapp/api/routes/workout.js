@@ -15,22 +15,23 @@ router.post('/', verifyToken, async(req, res) => {
         const pageSize = 7;
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username)
-        if(req.body.searchParams.isCompleted)
+        if(req.body.searchParams.isCompleted !== null || req.body.searchParams.isCompleted !== undefined)
         {
-            console.log("adsfasdfafs")
+
             if(req.body.searchParams.pageNumber) {
                 const workouts = await Workout
                     .where({isCompleted: req.body.searchParams.isCompleted})
                     .skip((req.body.searchParams.pageNumber - 1) * pageSize)
                     .limit(pageSize)
                     .exec();
-                res.json({
+                return res.json({
                     success: true,
                     workouts: workouts
                 });
             } else {
+                console.log(req.body.searchParams)
                 const workouts = await Workout.find({userId: user._id})
-                .where({isCompleted: true})
+                .where({isCompleted: req.body.searchParams.isCompleted})
                 .limit(req.body.searchParams.totalWorkouts)
                 .populate({
                     path: 'exercises',
@@ -40,16 +41,15 @@ router.post('/', verifyToken, async(req, res) => {
                 })
                 .sort({dateScheduled: 1})
                 .exec();             
-                res.json({
+                return res.json({
                     success: true,
                     workouts: workouts
                 });                
             }
 
-        }  else if(!req.body.searchParams.pageNumber) {
-            console.log("adsfasdfafs")
+        }  else {
+
             const workouts = await Workout.find({userId: user._id})
-            .where({isCompleted: false})
             .limit(req.body.searchParams.totalWorkouts)
             .populate({
                 path: 'exercises',
@@ -60,7 +60,7 @@ router.post('/', verifyToken, async(req, res) => {
             .sort({dateScheduled: -1})
             .exec(); 
                     
-            res.json({
+            return res.json({
                 success: true,
                 workouts: workouts
             })

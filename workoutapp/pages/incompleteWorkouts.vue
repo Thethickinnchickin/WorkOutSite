@@ -166,7 +166,7 @@ export default {
         this.workoutsNotCompleted = FormattedInCompleteWorkouts
 
       },
-      pageChange(page) {
+      pageChange(page, type) {
         if(type === 'next') {
           if(this.pageNumber !== this.totalPages) {
             this.pageNumber = page + 1;

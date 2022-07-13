@@ -73,7 +73,6 @@ export default {
     methods: {
     async updateExercise() {
       try {
-        console.log(this.warmupExercise)
         let updatedName = this.name
         let updatedNotes = this.notes
         if(this.name === "") {
