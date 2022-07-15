@@ -6,13 +6,13 @@
         <h1>{{workout.name}}</h1>
         <p class="lead text-muted">Notes: {{workout.notes}}</p>
         <p >
-            <a v-if="!workout.isCompleted" :href="'/editworkout/' + workout._id" class="btn btn-outline-primary my-2">Edit Workout</a>
-            <b-button  class="btn-outline-danger" v-b-modal.modal-1>Delete Workout</b-button>
+            <a v-if="!workout.isCompleted" :href="'/editworkout/' + workout._id" class="btn btn-outline-primary my-2">Edit</a>
+            <b-button  class="btn btn-outline-danger" v-b-modal.modal-1>Delete</b-button>
             <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
                 <b-button class="btn btn-danger" :disabled="!canDelete"  @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
-            <b-button  class="btn-outline-success mt-2" v-b-modal.duplicate>Duplicate Workout</b-button>
+            <b-button  class="btn btn-outline-success" v-b-modal.duplicate>Duplicate</b-button>
             <b-modal :hide-footer="true" id="duplicate" title="Hold On">
                 <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
                 <div class="form-floating">
@@ -107,7 +107,7 @@
                                 <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
                                 <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
                                 <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong style="color:rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetTimeinSeconds && exercise.isCompleted">Actual Time: <strong style="color:rgb(255, 49, 49)">{{set.actualTimeinSeconds}} sec(s)</strong></li>
                                 <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
                                 <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
                                 <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
@@ -187,11 +187,11 @@
                             <ul class="mb-3" v-if="set.warmupSet === true">                                                            
                                 <li>Set: <strong>{{findSetNumber(set, "warmUp", exercise)}}</strong></li>
                                 <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong   style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
                                 <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
                                 <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong></li>
+                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} sec(s)</strong></li>
                                 <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
                                 <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color: rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
                                 <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
@@ -213,13 +213,13 @@
                             <ul class="mb-3" v-if="set.warmupSet === false">                                                            
                                 <li>Set: <strong>{{findSetNumber(set, "training", exercise)}}</strong></li>
                                 <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong>{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
                                 <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong>{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong>{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong></li>
+                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Time: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} sec(s)</strong></li>
                                 <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
-                                <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong>{{set.actualLoad}}</strong></li>
+                                <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color: rgb(255, 49, 49)"> {{set.actualLoad}}</strong></li>
                                 <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
                                 <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
                                 <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;"  @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>

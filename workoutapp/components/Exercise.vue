@@ -9,7 +9,7 @@
 <div class="container mb-4">
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive search-table-outter" style="overflow:scroll">
+            <div class="table-responsive search-table-outter" >
                 <table class="table table-striped" style="color: rgb(57, 165, 17); background-color: black;">
                     <thead>
                         <tr  style="font-size:10px">

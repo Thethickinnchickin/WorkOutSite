@@ -1,5 +1,5 @@
 <template>
-<main style="background-image: url('/images/wrestler.png'); 
+<main style="
 width: 100%; background-repeat: no-repeat;
 background-position: center top;"  class="text-center mt-5 pt-5">
     <div class="row">
