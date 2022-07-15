@@ -8,6 +8,7 @@ const verifyToken = require('../middleware/verify-token');
 const cleanSetInput = require('../helpers/setInput')
 
 
+//Getting set by id
 router.get('/:id', verifyToken, async (req, res) => {
     try {
         let set = await Set.findById(req.params.id);

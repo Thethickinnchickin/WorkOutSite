@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-//Creating User model with passport for authentication
+//User model with passport for authentication
 
 const UserSchema = new Schema({
     email: {

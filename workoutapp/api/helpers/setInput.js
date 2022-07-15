@@ -1,3 +1,5 @@
+//Function to clean up input for a set
+// returns: set object
 const cleanSetInput = (set) => {
     //Checking target set amount
     if(set.targetRepAmount < 0) {

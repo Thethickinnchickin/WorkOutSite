@@ -78,27 +78,6 @@ export default {
     base: '/'
   },
 
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       endpoints: {
-  //         login: {
-  //           propertyName:'token',
-  //           required: true
-  //         },  
-  //         user:{
-  //           propertyName: 'user'
-  //         },
-  //         endpoints: {
-  //           login: { url: '/login', method: 'POST' },
-  //           logout: { url: '/logout', method: 'POST' },
-  //           user: { url: '/user', method: 'get' }
-  //         },
-  //         logout: true
-  //       }
-  //     }
-  //   }
-  // },  
   auth: {
     strategies: {
       local: {
@@ -124,5 +103,9 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+
+
+  // serverMiddleware: ['~/api/app.js']
 }

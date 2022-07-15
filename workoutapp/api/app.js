@@ -14,15 +14,17 @@ const userRoutes = require('./routes/user');
 const workoutRoutes = require('./routes/workout');
 const exerciseRoutes = require('./routes/exercise');
 const setRoutes = require('./routes/set');
+const dotenv = require('dotenv');
+dotenv.config();
 
-const dbUrl = "mongodb+srv://workout-user:OaklandA's54@cluster0.vnc1b.mongodb.net/?retryWrites=true&w=majority";
+const dbUrl = process.env.DB_URL;
 
 //Creating mongo store with session
 const store = new MongoStore ({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'super super secret'
+        secret: process.env.SECRET
     }
 })
 
@@ -32,7 +34,7 @@ app.use(cors());
 //Using session and mongodb to store session data
 app.use(session({
     store,
-    secret: 'super super secret',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -61,6 +63,7 @@ app.use(mongoSanitize({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+//Location of static folder
 app.use(express.static(path.join(__dirname,"public")));
 
 //Adding passport to express and authenticating user

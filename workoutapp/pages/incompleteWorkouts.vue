@@ -1,6 +1,9 @@
 <template>
 <main>
     <h2 class="pb-2 border-bottom mt-5 pt-5"  style="color: #B33F40; text-align: center;">Incomplete Workouts</h2>
+    <div class="float-right">
+      <h3 class="mr-3 mt-3">Page: {{pageNumber}}</h3>
+    </div>
     <div class="row mt-4 mx-3 ">
         <div v-for="workout in workoutsNotCompleted" :key="workout._id" class="col-3 mt-3 mr-0">
         <div class="our_solution_category mt-3">
@@ -129,7 +132,9 @@ export default {
             FormattedInCompleteWorkouts.push(workout);
         }
 
-        totalPages = Math.ceil(incompletedWorkoutsresponse.workouts.length / 5)
+        totalPages = incompletedWorkoutsresponse.totalPages;
+        console.log(incompletedWorkoutsresponse)
+
 
 
 

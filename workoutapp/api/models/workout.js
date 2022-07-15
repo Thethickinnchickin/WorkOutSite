@@ -2,7 +2,7 @@ const { Date } = require('core-js');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Creating Workout Model
+//Workout Model
 
 const WorkoutSchema = new Schema({
     name: {

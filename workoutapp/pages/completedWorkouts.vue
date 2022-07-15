@@ -1,8 +1,12 @@
 <template>
   <main>
     <h2 class="pb-2 border-bottom mt-4"  style="color: #82a43a; text-align: center;">Completed Workouts</h2>
+    <div class="float-right">
+      <h3 class="mr-3 mt-3">Page: {{pageNumber}}</h3>
+    </div>
     <div class="row mt-4 mx-3 ">
-    <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
+
+      <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
       <div class="our_solution_category mt-3">
         <div class="solution_cards_box">
           <div style="background-color: black; border: 1px solid rgb(12, 247, 255)" class="solution_card">
@@ -66,20 +70,19 @@
           </div>
         </div>
       </div>
-    </div>
-    <div v-if="workoutsCompleted.length >= 3" class="col-3 mr-0">
-      <div @click="routeRedirct('/workout/new')" class="our_solution_category mt-3">
-        <div class="solution_cards_box">
-          <div style="background-color: black;  border: 1px solid rgb(12, 247, 255);" class="solution_card">
-            <div class="hover_color_bubble"></div>
-            <h2 style="font-size: 1vw"  class="text-center mt-5 pt-5">Create Workout</h2>
+      </div>
+      <div v-if="workoutsCompleted.length >= 3" class="col-3 mr-0">
+        <div @click="routeRedirct('/workout/new')" class="our_solution_category mt-3">
+          <div class="solution_cards_box">
+            <div style="background-color: black;  border: 1px solid rgb(12, 247, 255);" class="solution_card">
+              <div class="hover_color_bubble"></div>
+              <h2 style="font-size: 1vw"  class="text-center mt-5 pt-5">Create Workout</h2>
+            </div>
           </div>
-        </div>
-      </div>        
+        </div>        
+      </div>
     </div>
-
-</div>
-    <div class="row mt-5">
+    <div class="row mt-5" style="background-color: black">
         <div class="col">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
@@ -100,13 +103,7 @@
     </div>
 
 </main>
-
-
 </template>
-
-<style>
-
-</style>
 
 <script>
 import moment from 'moment';
@@ -134,7 +131,7 @@ export default {
             FormattedCompletedWorkouts.push(workout);
         }
 
-        totalPages = Math.ceil(completedWorkoutsresponse.workouts.length / 5)
+        totalPages = completedWorkoutsresponse.totalPages
 
 
         return {

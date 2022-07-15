@@ -1,3 +1,7 @@
+//Middlewear Checking if the request was sent by a user that has been authenticated and logged in
+
+//returns  error if user is not logged in
+
 
 module.exports.isLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
@@ -10,4 +14,3 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
-//Middlewear Checking if the request was sent by a user that has been authenticated and logged in

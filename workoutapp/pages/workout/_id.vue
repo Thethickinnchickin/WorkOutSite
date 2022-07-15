@@ -36,9 +36,10 @@
         <div class="col-md-6">
             <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                <h3 class="mb-0">Warmup</h3>
+                <h3 v-if="!workout.isCompleted"  class="mb-0">Warmup</h3>
                 <a  v-if="!workout.isCompleted && warmupCount > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link" id="beginWorkout">Begin WarmUp</a>
-                 <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
+                 <a  v-else-if="!workout.isCompleted"  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
+                
                 </div>
             </div>
 
@@ -46,9 +47,9 @@
         <div class="col-md-6">
         <div  class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-            <h3 class="mb-0">Workout</h3>
+            <h3 v-if="!workout.isCompleted" class="mb-0">Workout</h3>
             <a  v-if="!workout.isCompleted  && workoutCount > 0"  :href="'/workoutExercises/' + workout._id" class="stretched-link" id="beginWorkout">Begin Workout</a>
-             <a  v-else  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
+             <a  v-else-if="!workout.isCompleted"  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
             </div>
         </div>
         </div>

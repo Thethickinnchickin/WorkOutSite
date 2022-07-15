@@ -7,6 +7,7 @@ const {isLoggedIn} = require('../middleware/authentication')
 const verifyToken = require('../middleware/verify-token')
 
 
+//Getting User from web token
 router.post('/user', verifyToken, async (req, res) => {
     try {
         let foundUser = await User.findOne({_id: req.decoded._id})
@@ -22,11 +23,10 @@ router.post('/user', verifyToken, async (req, res) => {
             message: "didnt work"
         })
     }
-})
+});
 
 //Login Route, Authentication done using passport
 //Using session to return user to their previous url or /restaurants if that is null
-
 router.post('/login', passport.authenticate('local'), async (req, res) => {
     try {
         let user = await User.findByUsername(req.body.username);
@@ -55,7 +55,7 @@ router.post('/login', passport.authenticate('local'), async (req, res) => {
             message: err.message
         })
     }
-})
+});
 
 //Registering user
 router.post('/register', async (req, res) => {
@@ -89,11 +89,7 @@ router.post('/register', async (req, res) => {
     }    
 });
 
-
-
-
 //Logout Route UnAuthenticating user with passport 
-
 router.post('/logout', isLoggedIn,(req, res) => {
     req.logout(() => {
         res.json({

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Creating Workout Model
+//Set Model
 
 const SetSchema = new Schema({
     targetRepAmount: Number,

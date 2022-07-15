@@ -187,7 +187,6 @@
 <script>
 import moment from 'moment';
 
-
 export default {
     async asyncData({$axios}) {
         let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {

@@ -9,7 +9,7 @@ const exercise = require('../models/exercise');
 
 
 
-//Getting Workouts For user
+//Getting Exercise from id
 router.get('/:id', async(req, res) => {
     try {
         //Getting all workouts for user
@@ -29,7 +29,7 @@ router.get('/:id', async(req, res) => {
 })
 
 
-//Route getting multiple exercises based on params
+//Route getting multiple exercises based on search params
 router.post("/", verifyToken, async (req, res) => {
     try {
 
@@ -168,7 +168,7 @@ router.post('/create', verifyToken, async (req, res) => {
 
 });
 
-//Deleting Workout
+//Deleting Exercise and its sets
 router.delete('/', async(req, res) => {
     try {
         const workout = await Workout.findById(req.body.workoutId);
@@ -209,7 +209,7 @@ router.delete('/', async(req, res) => {
 
 })
 
-//Editing Workout for user
+//Editing Exercise
 router.put('/', async (req, res) => {
     try {
         const exercise = await Exercise.findByIdAndUpdate(req.body.exerciseId, {

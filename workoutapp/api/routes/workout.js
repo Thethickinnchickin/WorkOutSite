@@ -24,12 +24,18 @@ router.post('/', verifyToken, async(req, res) => {
                     .skip((req.body.searchParams.pageNumber - 1) * pageSize)
                     .limit(pageSize)
                     .exec();
+
+                let workoutsForLength = await Workout.where({isCompleted: req.body.searchParams.isCompleted});
+                let workoutLength = workoutsForLength.length;
+                const totalPages = Math.ceil(workoutLength / 7);
+
+
                 return res.json({
                     success: true,
-                    workouts: workouts
+                    workouts: workouts,
+                    totalPages: totalPages
                 });
             } else {
-                console.log(req.body.searchParams)
                 const workouts = await Workout.find({userId: user._id})
                 .where({isCompleted: req.body.searchParams.isCompleted})
                 .limit(req.body.searchParams.totalWorkouts)
@@ -39,11 +45,12 @@ router.post('/', verifyToken, async(req, res) => {
                         path: 'sets'
                     }
                 })
-                .sort({dateScheduled: 1})
-                .exec();             
+                .sort({dateScheduled: -1})
+                .exec();     
+                
                 return res.json({
                     success: true,
-                    workouts: workouts
+                    workouts: workouts,
                 });                
             }
 
@@ -71,12 +78,11 @@ router.post('/', verifyToken, async(req, res) => {
             message: err.message
         })
     }
-})
+});
 
 //Getting Workouts For user
 router.post('/:id', verifyToken, async(req, res) => {
     try {
-
         if(req.body.searchParams) {
             if(req.body.searchParams.isWarmup === true)
             {
@@ -121,8 +127,6 @@ router.post('/:id', verifyToken, async(req, res) => {
                 }
         }).exec();
 
-
-
         res.json({
             success: true,
             workout: workout
@@ -133,9 +137,7 @@ router.post('/:id', verifyToken, async(req, res) => {
             message: err.message
         })
     }
-})
-
-
+});
 
 //Creating Workout 
 router.post('/create/new', verifyToken, async (req, res) => {
@@ -339,7 +341,5 @@ router.put('/isCompleted', async (req, res) => {
         })
     }
 })
-
-
 
 module.exports = router;

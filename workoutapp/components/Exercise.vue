@@ -25,8 +25,7 @@
                             <th scope="col" class="text-right">RPE</th>
                             <th scope="col" class="text-right">Rest</th>
                                                         
-                                                        
-
+                                                    
                         </tr>
                     </thead>
                     <tbody  style="font-size:1vw" v-for="set in exercise.sets" :key="set._id">
