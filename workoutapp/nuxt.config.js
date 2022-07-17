@@ -1,4 +1,5 @@
-const URL = 'http://localhost:9000'
+
+const URL = process.env.PORT
 export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -23,7 +24,7 @@ export default {
   },
 
   modules: [
-    'bootstrap-vue/nuxt'
+
   ],
 
 
@@ -34,6 +35,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,31 +53,27 @@ export default {
     '@nuxtjs/auth'
   ],
 
-  server: {
-    port: 8000
-  },
-
-  proxy: {
-    "/": URL
-  },
-
-  // serverMiddleware: 
-  // [{path: '/', handler: '~/api/app.js'}],
-
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: URL,
-    proxy: true
+    proxy: true,
+    
+
   
   },
 
+
   proxy: {
-    "/api": URL
+    "/api": process.env.BASE_URL
+
   },
 
+
+
+  
   router: {
-    base: '/'
+    base: "/",
+  
   },
 
   auth: {
@@ -101,11 +99,17 @@ export default {
       }
     }
   },
+
+  serverMiddleware: 
+  ['~/api/app.js'],
+
+  server: {
+    port: 8080
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
 
 
-
-  // serverMiddleware: ['~/api/app.js']
 }

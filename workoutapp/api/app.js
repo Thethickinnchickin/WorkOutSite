@@ -80,9 +80,9 @@ app.use('/api/exercise', exerciseRoutes);
 app.use('/api/set', setRoutes);
 
 //starting up app
-const port = 9000
+const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${process.env.PORT}`);
 })
 
 module.exports = app;
