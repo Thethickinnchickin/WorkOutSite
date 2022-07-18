@@ -15,9 +15,12 @@ const workoutRoutes = require('./routes/workout');
 const exerciseRoutes = require('./routes/exercise');
 const setRoutes = require('./routes/set');
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config();    
 
-const dbUrl = process.env.DB_URL;
+
+
+
+const dbUrl = process.env.DB_URL || "mongodb+srv://workout-user:OaklandA's54@cluster0.vnc1b.mongodb.net/?retryWrites=true&w=majority"
 
 //Creating mongo store with session
 const store = new MongoStore ({
@@ -80,7 +83,7 @@ app.use('/api/exercise', exerciseRoutes);
 app.use('/api/set', setRoutes);
 
 //starting up app
-const port = process.env.API_PORT;
+const port = process.env.API_PORT || 7000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
