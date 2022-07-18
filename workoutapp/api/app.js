@@ -14,20 +14,23 @@ const userRoutes = require('./routes/user');
 const workoutRoutes = require('./routes/workout');
 const exerciseRoutes = require('./routes/exercise');
 const setRoutes = require('./routes/set');
-const dotenv = require('dotenv');
-dotenv.config();    
+if(process.env.NODE_ENV !== 'production') {
+    const dotenv = require('dotenv');
+    dotenv.config();        
+}
 
 
 
 
-const dbUrl = process.env.DB_URL || "mongodb+srv://workout-user:OaklandA's54@cluster0.vnc1b.mongodb.net/?retryWrites=true&w=majority"
+
+const dbUrl = process.env.DB_URL 
 
 //Creating mongo store with session
 const store = new MongoStore ({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: process.env.SECRET
+        secret: process.env.SECRET 
     }
 })
 
