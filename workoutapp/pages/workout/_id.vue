@@ -58,12 +58,12 @@
         <div class="col-md-12">
             <p>Warm up Exercises</p>
             <div  v-for="exercise in workout.exercises" :key="exercise._id" >
-                <div style="font-size: 1.5vw" v-if="exercise.warmUpExercise">
+                <div style="font-size: 1.5vw;" v-if="exercise.warmUpExercise">
                 <b-dropdown 
                     :text="`${exercise.name}`"
                     block
                     variant="none"
-                    class="m-2 mt-4"
+                    class="m-2 mt-4 text-light"
                     menu-class="w-100"
                     :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
                 >

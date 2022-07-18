@@ -10,7 +10,7 @@
                 <div id="beginGame" class="px-3"> 
                     Insert Coin to Start Workout
                 </div>
-                <!-- <img style="border-radius: 30px;" height="300px" width="500px" src="images/betterthanyou.jpg" alt="Keven"/>          -->
+    
             </div>
         </div>        
     </div>
@@ -25,7 +25,7 @@
                     <div style="background-color: black; color: white;" class="card border-0 h-100">
                         <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                             <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
-                            <img width="100px" src="/images/workout.png" alt="" class="my-3">
+                            <img height="auto" width="100px" src="/images/workout.png" alt="" class="my-3">
                             <h2  class="fs-4 fw-bold">Welcome to Big Man's League Offical Workout App!</h2>
                             <p class="mb-0">Let's get huge</p>
                             <div  v-if="$auth.$state.loggedIn" class="row">
@@ -77,27 +77,3 @@
 }
 </style>
 
-<script>
-import { mapActions } from "vuex";
-
-export default {
-  name: 'IndexPage',
-
-
-  async asyncData({$axios}) {
-      try {
-          let response = await $axios.$get('/api/workout');
-          let workouts = JSON.parse(JSON.stringify(response.workouts))
-
-          return {
-            workouts: workouts
-          }
-      } catch (err) {
-          return
-      }
-  },
-  methods: {
-      ...mapActions(["addAllWorkouts"])
-  }
-}
-</script>
