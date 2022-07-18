@@ -1,5 +1,5 @@
 
-const URL = process.env.PORT
+const URL = `http://localhost:${process.env.PORT}`
 export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -56,17 +56,15 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    proxy: true,
+    baseURL: 'https://calm-brushlands-65146.herokuapp.com/'
     
+
 
   
   },
 
 
-  proxy: {
-    "/api": process.env.BASE_URL
 
-  },
 
 
 
