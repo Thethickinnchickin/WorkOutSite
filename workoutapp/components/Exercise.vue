@@ -14,7 +14,7 @@
                     <thead>
                         <tr  style="font-size:10px">
                             <th scope="col" class="text-right">Completed</th>
-                            <th scope="col">Target Reps</th>
+                            <th scope="col" class="text-center">Target Reps</th>
                             <th scope="col" class="text-center">Actual Reps</th>
                             <th scope="col" class="text-right">Target Weight</th>
                             <th scope="col" class="text-right">Actual Weight</th>
