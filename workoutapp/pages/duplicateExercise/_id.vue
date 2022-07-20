@@ -80,7 +80,6 @@
 <script>
 import moment from 'moment';
 
-
 export default {
     async asyncData({$axios, params}) {
         let incompletedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
@@ -88,11 +87,8 @@ export default {
           isCompleted: false
         }});
 
-        let nothing =0
-
         let FormattedInCompleteWorkouts = []
 
-        
         for(let workout of incompletedWorkoutsresponse.workouts)
         {
             workout.dateScheduled = moment(String(workout.dateScheduled))
@@ -101,7 +97,6 @@ export default {
         }
 
         const exerciseId = params.id;
-
 
         return {
             workoutsNotCompleted: FormattedInCompleteWorkouts,
@@ -119,8 +114,7 @@ export default {
         console.log(this.exerciseId)
       }
     }
-    
-
+  
 }
   
 </script>

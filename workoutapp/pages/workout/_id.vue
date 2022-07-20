@@ -54,7 +54,9 @@
         </div>
         </div>
     </div>
-<button  v-if="!workout.isCompleted"  @click="onRouteChange(`/newexercise/${workout._id}`)" class="text-center btn btn-sm btn-success mb-5" id="createButton" >Add Exercise +</button>
+    <button  v-if="!workout.isCompleted"  @click="onRouteChange(`/newexercise/${workout._id}`)"
+    class="text-center btn btn-sm btn-success mb-5" id="addExercise">Add Exercise +</button>
+        <!-- Warm up exercises -->
         <div class="col-md-12">
             <p>Warm up Exercises</p>
             <div  v-for="exercise in workout.exercises" :key="exercise._id" >
@@ -62,12 +64,13 @@
                 <b-dropdown 
                     :text="`${exercise.name}`"
                     block
-                    variant="none"
+                    variant="warning"
                     class="m-2 mt-4 text-light"
                     menu-class="w-100"
                     :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
                 >
                 <b-dropdown-item id="b-item" style="overflow-x: auto;">
+                    <h4 class="text-center">{{exercise.name}}</h4>
                     <h1 class="pt-5 mt-5 text-center"  style="color: rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
                     <h1 class="pt-5 mt-5 text-center"  style="color: rgb(255, 49, 49)" v-else>Incomplete</h1>
                     <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Warm up sets:</h3>
@@ -163,6 +166,7 @@
                 
             </div>
         </div>
+        <!-- Exercises -->
         <div class="col-md-12">
             <p>Exercises</p>
             <div v-for="exercise in workout.exercises" :key="exercise._id">
@@ -179,8 +183,9 @@
                 >
 
                 <b-dropdown-item id="b-item" style="overflow: auto; ">
-                <h1 class="pt-5 text-center"  style="color: rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
-                <h1 class="pt-5 mt-5 text-center"  style="color: rgb(255, 49, 49)" v-else>Incomplete</h1>
+                <h4 class="pt-5 text-center">{{exercise.name}}</h4>
+                <h1 class="text-center"  style="color: rgb(57, 165, 17); border: 2px soid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
+                <h1 class="text-center"  style="color: rgb(255, 49, 49); border: 2px solid red" v-else>Incomplete</h1>
                 <h3  style="font-size: 12px;">Warm up sets:</h3>
                 <div class="row">
 
@@ -274,14 +279,14 @@
         
         </div>
     
-    <div v-if="!workout.isCompleted && !loading" class="row">
-        <div class="col-12">          
-            <CompleteButton :workoutId="workout._id" />  
+        <div v-if="!workout.isCompleted && !loading" class="row">
+            <div class="col-12">          
+                <CompleteButton :workoutId="workout._id" />  
+            </div>
         </div>
-    </div>
 
-</div>
-<div v-if="loading">Loading</div>
+    </div>
+    <div v-if="loading">Loading</div>
  
 </main>
 </template>
@@ -474,27 +479,39 @@ export default {
     #createButton {
         border: 2px solid rgb(57, 165, 17);
         border-radius: 3px;
-        background-color: black;
+        background-color: rgb(216, 121, 76);
         color:rgb(57, 165, 17);
     }
     #createButton:hover {
-        border: 2px solid black;
+        border: 2px solid rgb(216, 121, 76);
         border-radius: 3px;
         background-color: rgb(57, 165, 17);
         color: black;
     }    
-    #exerciseComplete {
-        border: 2px solid black;
-        border-radius: 3px;
-        background-color: rgb(57, 165, 17);
-        color:rgb(57, 165, 17);
-    }
-    #exerciseComplete:hover {
+    #addExercise {
         border: 2px solid rgb(57, 165, 17);
         border-radius: 3px;
         background-color: black;
+        color:rgb(57, 165, 17);
+    }
+    #addExercise:hover {
+        border: 2px solid rgb(57, 165, 17);
+        border-radius: 3px;
+        background-color: rgb(57, 165, 17);
         color: black;
     }
+    #addExercise {
+        border: 2px solid rgb(216, 121, 76);
+        border-radius: 3px;
+        background-color: black;
+        color: rgb(57, 165, 17);
+    }  
+    #addExercise:hover {
+        border: 2px solid rgb(216, 121, 76);
+        border-radius: 3px;
+        background-color: rgb(57, 165, 17);
+        color: black;
+    }  
     #b-item {
         pointer-events: none;
     }

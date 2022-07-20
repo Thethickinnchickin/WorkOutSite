@@ -11,7 +11,7 @@
       <label for="floatingInput">Target Rep Amount</label>
     </div>
     <div class="form-floating">
-      <input v-model="targetWeight" type="number" class="form-control" id="floatingInput"  max="100" min="0">
+      <input v-model="targetWeight" type="number" class="form-control" id="floatingInput"  max="1000" min="0">
       <label for="floatingInput">Target Weight</label>
     </div>
     <div class="form-floating">

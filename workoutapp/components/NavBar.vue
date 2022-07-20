@@ -19,7 +19,7 @@
             <li class="nav-item">
             <a class="nav-link" href="/workouts">Go To Workouts</a>
             </li>
-            <button id="createButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
+            <button style="background-color: black;" id="createButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
             
         </ul>
         </div>
