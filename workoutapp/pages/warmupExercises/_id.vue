@@ -1,6 +1,7 @@
 <template>
 <main style="width: 100%; background-repeat: no-repeat;
 background-position: center top;" class="text-center mt-3 pt-5">
+<div v-if="!loading">
     <div class="row">
         <div class="col-2">
          <button class="mt-5"
@@ -10,6 +11,9 @@ background-position: center top;" class="text-center mt-3 pt-5">
         <h1 class="mt-5 float-middle">
             {{workoutName}}
         </h1>
+        </div>
+        <div class="col-2 mt-4">
+            Page:{{pageNumber}}
         </div>
 
 
@@ -39,20 +43,29 @@ background-position: center top;" class="text-center mt-3 pt-5">
             </ul>
         </div>
     </div>
+</div>
+<div v-else  class="my-5 py-5">
+    <Loading/>
+</div>
+
 </main>
 </template>
 
 
 <script>
 import Exercise from '~/components/Exercise.vue';
+import Loading from '~/components/Loading.vue';
+import { mapGetters, mapActions } from "vuex";
 
 export default  {
     components: {
         Exercise,
+        Loading
     },
     data() {
         return {
-            pageNumber: 1
+            pageNumber: 1,
+            loading: false
         }
     },
     async asyncData({$axios, params}) {
@@ -66,24 +79,41 @@ export default  {
          }
 
     },
+    beforeCreate() {
+        this.loading = true;
+    },
+    created() {
+        this.loading = true;
+    },
+    mounted() {
+        this.loading = false;
+    },
     methods: {
+        ...mapActions(['newPageNumber']),
         pageChange(changeType, pageNumber) {
             if(changeType === "add") {
                 if(this.pageNumber >= 1 && this.pageNumber < this.exercises.length) {
                     this.pageNumber++;
+                    this.newPageNumber(this.pageNumber)
                 }
             } else if (changeType === "subtract") {
                 if(this.pageNumber > 1 && this.pageNumber <= this.exercises.length) {
                     this.pageNumber--;
+                    this.newPageNumber(this.pageNumber)
                 }
 
             } else {
                 this.pageNumber = pageNumber
+                this.newPageNumber(this.pageNumber)
             }
         },
         onRouteReturn() {
+            this.newPageNumber(1)
             this.$router.push(`/workout/${this.workoutId}`);
         }
+    },
+    computed: {
+        ...mapGetters(["getPageNumber"])
     },
 
 } 

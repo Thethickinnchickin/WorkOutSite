@@ -2,7 +2,7 @@
     <div>
         <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
         <div class="container">
-        <a class="navbar-brand" href="#!"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
+        <a class="navbar-brand" @click="goToRoute('/')"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
         <button  id="createButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
         data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -17,7 +17,7 @@
         </ul>
         <ul v-if="$auth.$state.loggedIn" class="navbar-nav ms-auto">
             <li class="nav-item">
-            <a class="nav-link" href="/workouts">Go To Workouts</a>
+            <button class="nav-link" style="border: none; background-color: black" @click="goToRoute('/workouts')">Go To Workouts</button>
             </li>
             <button style="background-color: black;" id="createButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
             
@@ -87,17 +87,21 @@
 </style>
 
 <script>
+import { mapActions } from "vuex";
+
 export default  {
     methods: {
         goToRoute(route) {
+          this.newPageNumber(1)
             this.$router.push(route);
         },
         async onLogOut() {
             await this.$auth.logout();
-
+            this.newPageNumber(1)
 
             await this.$router.push('/')
-        }
+        },
+        ...mapActions(['newPageNumber']),
     }
 }
 </script>

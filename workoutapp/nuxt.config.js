@@ -27,6 +27,7 @@ export default {
   ],
 
 
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~layouts/global.css'
@@ -34,7 +35,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    
+    { src: '~/plugins/vuex-persist.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -91,7 +92,8 @@ export default {
   },
 
   serverMiddleware: 
-  ['~/api/app.js'],
+  {"/":'~/api/app.js', 
+  "redis":"~/redis/count.js"},
 
   server: {
     port: process.env.PORT
