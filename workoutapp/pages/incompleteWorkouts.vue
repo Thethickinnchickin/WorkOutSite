@@ -1,9 +1,8 @@
 <template>
 <main>
+  <div v-if="!loading">
     <h2 class="pb-2 border-bottom mt-5 pt-5"  style="color: #B33F40; text-align: center;">Incomplete Workouts</h2>
-    <div class="float-right">
-      <h3 class="mr-3 mt-3">Page: {{pageNumber}}</h3>
-    </div>
+    <h3 class="mr-3 mt-3 text-center">Page: {{pageNumber}}</h3>        
     <div class="row mt-4 mx-3 ">
         <div v-for="workout in workoutsNotCompleted" :key="workout._id" class="col-3 mt-3 mr-0">
         <div class="our_solution_category mt-3">
@@ -65,7 +64,7 @@
                 </div>
                 <div class="solu_description text-center">
 
-               <button style="color: rgb(255,215,0);" @click="$router.push(`/workout/${workout._id}`)" type="button" class="read_more_btn mt-3"><span style="animation: blinking 1.5s infinite">Play</span></button>
+               <button style="color: rgb(255,215,0);" @click="goToWorkout(workout._id)" type="button" class="read_more_btn mt-3"><span style="animation: blinking 1.5s infinite">Play</span></button>
                 </div>
             </div>
             </div>
@@ -102,24 +101,41 @@
                 </li>
             </ul>
         </div>
-    </div>
-    </main>
+    </div>    
+  </div>
+  <div v-else class="text-center mt-5 pt-5">
+    <Loading/>
+  </div>
+
+</main>
 </template>
 
 
 <script>
 import moment from 'moment';
-
+import Loading from '~/components/Loading.vue'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-    async asyncData({$axios}) {
-        let pageNumber = 1;
-        let totalPages = 1;
+  components: {
+    Loading
+  },
+    async asyncData({$axios, store}) {
 
-        let incompletedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
+        let totalPages = 1;
+        return {
+            workoutsNotCompleted: [],
+            totalPages: totalPages,
+            loading: false,
+            pageNumber: 1
+        }
+    },
+    async created() {
+        this.loading = true;
+        let incompletedWorkoutsresponse = await this.$axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 9999,
           isCompleted: false,
-          pageNumber: pageNumber
+          pageNumber: this.$store.getters.getPageNumber
         }});
 
         let FormattedInCompleteWorkouts = []
@@ -132,26 +148,23 @@ export default {
             FormattedInCompleteWorkouts.push(workout);
         }
 
-        totalPages = incompletedWorkoutsresponse.totalPages;
-        console.log(incompletedWorkoutsresponse)
-
-
-
-
-        return {
-            workoutsNotCompleted: FormattedInCompleteWorkouts,
-            pageNumber: pageNumber,
-            totalPages: totalPages
-        }
+        this.totalPages = incompletedWorkoutsresponse.totalPages;
+        this.workoutsNotCompleted = incompletedWorkoutsresponse.workouts
+        this.pageNumber = this.$store.getters.getPageNumber
+        this.loading = false
     },
     methods: {
+      ...mapActions(['newPageNumber']),
       goToWorkout(id) {
+        this.newPageNumber(1)
         this.$router.push(`/workout/${id}`)
       },
      routeRedirct(route) {
+      this.newPageNumber(1);
         this.$router.push(route)
       },
       async loadWorkouts() {
+        this.loading = true;
         let incompletedWorkoutsresponse = await this.$axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 9999,
           isCompleted: false,
@@ -169,24 +182,30 @@ export default {
         }
 
         this.workoutsNotCompleted = FormattedInCompleteWorkouts
-
+        this.loading = false;
       },
       pageChange(page, type) {
         if(type === 'next') {
           if(this.pageNumber !== this.totalPages) {
             this.pageNumber = page + 1;
+            this.newPageNumber(this.pageNumber);
             this.loadWorkouts();
           }
         } else if(type === 'last') {
           if(this.pageNumber >= 2) {
             this.pageNumber = page - 1;
+            this.newPageNumber(this.pageNumber);
             this.loadWorkouts()
           }
         } else {
           this.pageNumber = page;
+          this.newPageNumber(this.pageNumber);
           this.loadWorkouts()          
         }
-      }
+      },
+      computed: {
+        ...mapGetters(["getPageNumber"])
+      },
     }
     
 
