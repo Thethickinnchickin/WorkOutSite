@@ -337,7 +337,7 @@
                             Edit Exercise</button>
                         </div>
                         <div class="col mt-2">
-                            <DeleteExercise :workout="workout" :exercise="exercise"/>
+                            <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
                         </div>  
                         <div class="col mt-2">
                              <button v-if="!workout.isCompleted"  style="font-size: 10px;"
