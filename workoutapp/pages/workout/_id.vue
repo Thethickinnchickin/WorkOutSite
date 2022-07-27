@@ -6,13 +6,13 @@
         <h1>{{workout.name}}</h1>
         <p class="lead text-muted">Notes: {{workout.notes}}</p>
         <p >
-            <a v-if="!workout.isCompleted" :href="'/editworkout/' + workout._id" class="btn btn-outline-primary my-2">Edit</a>
-            <b-button  class="btn btn-outline-danger" v-b-modal.modal-1>Delete</b-button>
+            <button style="background-color: blue" v-if="!workout.isCompleted" @click=editWorkout(workout._id) class="glow-on-hover">Edit</button>
+            <button style="background-color:  #FF0800" class="glow-on-hover" v-b-modal.modal-1>Delete</button>
             <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
                 <b-button class="btn btn-danger" :disabled="!canDelete"  @click="onWorkoutDelete">Delete</b-button>
             </b-modal>
-            <b-button  class="btn btn-outline-success" v-b-modal.duplicate>Duplicate</b-button>
+            <button  class="glow-on-hover" v-b-modal.duplicate>Duplicate</button>
             <b-modal :hide-footer="true" id="duplicate" title="Hold On">
                 <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
                 <div class="form-floating">
@@ -25,6 +25,7 @@
       </div>
     </div>
 
+    
     <div v-if="!loading"  class="row">
         <div class="col-12 rounded my-2"
          style="color: rgb(57, 165, 17); height: 65px;">
@@ -39,10 +40,8 @@
                 <h3 v-if="!workout.isCompleted"  class="mb-0">Warmup</h3>
                 <a  v-if="!workout.isCompleted && warmupCount > 0"  :href="'/warmupExercises/' + workout._id" class="stretched-link" id="beginWorkout">Begin WarmUp</a>
                  <a  v-else-if="!workout.isCompleted"  :href="'/newexercise/' + workout._id" class="stretched-link">Add Exercise</a>
-                
                 </div>
             </div>
-
         </div>
         <div class="col-md-6">
         <div  class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -64,15 +63,15 @@
                 <b-dropdown 
                     :text="`${exercise.name}`"
                     block
-                    variant="warning"
+                    variant="none"
                     class="m-2 mt-4 text-light"
                     menu-class="w-100"
                     :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
                 >
                 <b-dropdown-item id="b-item" style="overflow-x: auto;">
                     <h4 class="text-center">{{exercise.name}}</h4>
-                    <h1 class="pt-5 mt-5 text-center"  style="color: rgb(57, 165, 17); border: 2px soid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
-                    <h1 class="pt-5 mt-5 text-center"  style="color: rgb(255, 49, 49);  border: 2px soid red" v-else>Incomplete</h1>
+                    <h1 class="text-center"  style="color: rgb(57, 165, 17); border: 2px solid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
+                    <h1 class="text-center"  style="color: rgb(255, 49, 49);  border: 2px solid red" v-else>Incomplete</h1>
                     <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Warm up sets:</h3>
                     <div class="row">
                         <div  style="font-size: 8px; display: inline-block; overflow-x: scroll;" v-for="set in exercise.sets" :key="set._id">
@@ -392,7 +391,7 @@ export default {
             let workout = response.workout
 
             workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+                .format('MMMM d');
 
             let warmupCount = 0;
             let workoutCount = 0;
@@ -422,6 +421,9 @@ export default {
     methods: {
         onRouteChange(route) {
             this.$router.push(route);
+        },
+        editWorkout(route) {
+            this.$router.push("/editWorkout/" + route);
         },
         async onSetDelete(exerciseId, workoutId, setId) {
             let response = await this.$axios.$delete('/api/set', {data: {exerciseId: exerciseId, setId: setId}});
@@ -551,25 +553,26 @@ export default {
        color: rgb(57, 165, 17)
     }
     #createButton {
-        border: 2px solid rgb(57, 165, 17);
+        border: 2px solid rgb(0, 0, 0);
         border-radius: 3px;
-        background-color: 	rgba(255,215,0);
+        background-color: 	#D21F3C;
         color:rgb(57, 165, 17);
+        justify-content: center;
     }
     #createButton:hover {
-        border: 2px solid 	rgb(57, 165, 17);
+        border: 2px solid 	#D21F3C;
         border-radius: 3px;
-        background-color: 	rgba(255,215,0, .5);
-        color: black;
+        background-color: 	rgba(255,215,0, 0);
+        color: white;
     }    
     #exerciseComplete:hover {
-        border: 2px solid rgba(255,215,0);
+        border: 2px solid rgb(57, 165, 17);
         border-radius: 3px;
-        background-color: rgba(57, 165, 17, .5);;
+        background-color: black;
         color:rgba(57, 165, 17);
     }
     #exerciseComplete {
-        border: 2px solid 	rgb(255,215,0);
+        border: 2px solid 	black;
         border-radius: 3px;
         background-color: rgb(57, 165, 17);
         color: black;
@@ -610,5 +613,65 @@ export default {
     #beginWorkout {
         animation: blinking 1.5s infinite;
     }
+
+    .glow-on-hover {
+    width: auto;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(57, 165, 17, .5);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
 
 </style>

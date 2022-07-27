@@ -2,7 +2,9 @@
 <body style="background-color: rgba(57, 165, 17,0);">
 <section style="background: rgba(204, 204, 204, 0.0);" class="jumbotron text-center">
     <div class="container" >
-        <h1 id="exerciseName" style="color: rgb(57, 165, 17);background-color: black;">Exercise: {{exercise.name}}</h1>
+        <h1 id="exerciseName"
+         style="color: rgb(57, 165, 17);background-color: black;"
+         >{{exercise.name}}</h1>
      </div>
 </section>
 

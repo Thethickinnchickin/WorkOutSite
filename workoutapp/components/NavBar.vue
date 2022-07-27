@@ -3,7 +3,7 @@
         <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
         <div class="container">
         <a class="navbar-brand" @click="goToRoute('/')"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
-        <button  id="createButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+        <button  id="createNavButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
         data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
@@ -13,13 +13,13 @@
             <li class="nav-item">
             <a class="nav-link" href="/login">Sign In</a>
             </li>
-            <button id="createButton" type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
+            <button id="createNavButton" type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
         </ul>
         <ul v-if="$auth.$state.loggedIn" class="navbar-nav ms-auto">
             <li class="nav-item">
             <button class="nav-link" style="border: none; background-color: black" @click="goToRoute('/workouts')">Go To Workouts</button>
             </li>
-            <button style="background-color: black;" id="createButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
+            <button style="background-color: black;" id="createNavButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
             
         </ul>
         </div>
@@ -65,20 +65,20 @@
   height: 3.5rem;
 }
 
-#createButton {
+#createNavButton {
     border: 2px solid rgb(57, 165, 17);
     border-radius: 3px;
     background-color: black;
     color:rgb(57, 165, 17);
 }
-#createButton:hover {
-    border: 2px solid black;
+#createNavButton:hover {
+    border: 2px solid green;
     border-radius: 3px;
     background-color: rgb(57, 165, 17);
-    color: black;
+    color: rgb(57, 165, 17, .5);
 }
 @media  screen and (max-width: 992px) {
-  #createButton {
+  #createNavButton {
     border: none;
     background-color: black;
     color:rgb(57, 165, 17);

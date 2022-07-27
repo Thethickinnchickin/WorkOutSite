@@ -9,7 +9,7 @@ background-position: center top;"  class="text-center mt-5 pt-5">
             <button class="mt-5" @click="onRouteReturn" id="backButton">Back To Workout</button>               
             </div>
             <div class="col-8">
-            <h1 class="mt-5 float-middle">
+            <h1 class="mt-5 float-middle" id="workoutName">
                 {{workoutName}}
             </h1>
             </div>
@@ -233,5 +233,15 @@ p, li, a{
 
 .is-active {
   color: white
+}
+
+#workoutName {
+    animation: blinking 1.5s infinite;
+    color: rgb(255,215,0);
+}
+@keyframes blinking{
+    60% {
+    opacity: 0.2;
+    }
 }
 </style>

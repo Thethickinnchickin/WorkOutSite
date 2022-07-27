@@ -1,7 +1,9 @@
 <template>
   <main>
     <div class="container pt-5 pb-3 mt-5" id="custom-cards">
-        <h2 v-if="$auth.$state.loggedIn" class="pb-2 border-bottom" style="color:rgb(57, 165, 17);">Hello {{$auth.user.username}}</h2>
+        <h2 v-if="$auth.$state.loggedIn"
+         class="pb-2 border-bottom text-center"
+          style="color:rgb(57, 165, 17);">Hello {{$auth.user.username}}</h2>
 
     </div>
     <div class="container  my-4 pb-3">
@@ -10,7 +12,6 @@
                 <div id="beginGame" class="px-3"> 
                     Insert Coin to Start Workout
                 </div>
-    
             </div>
         </div>        
     </div>
