@@ -12,9 +12,7 @@ export const actions = {
 
 export const mutations = {
     setPageNumber(state, value) {
-        console.log(state)
         state.pageNumber = value
-        console.log("hey")
     }
 }
  

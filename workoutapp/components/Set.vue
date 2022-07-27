@@ -188,7 +188,7 @@ export default {
         startCountdown(rest) {
             console.log(this.countdownActive)
             if(this.countdownActive === 'active') {
-                console.log(this.countdownActive)
+                return
             } else {
                 let totalRest = 10;
                 this.restTimeInSeconds = totalRest;
