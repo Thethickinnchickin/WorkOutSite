@@ -579,6 +579,9 @@ export default {
         border-radius: 3px;
         background-color: rgb(57, 165, 17);
         color: black;
+        display: flex;
+        justify-content: center;
+        width: 50%
     }    
     #addExercise {
         border: 2px solid rgb(57, 165, 17);
