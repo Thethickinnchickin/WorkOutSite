@@ -91,9 +91,7 @@ export default {
     }
   },
 
-  serverMiddleware: 
-  {"/":'~/api/app.js', 
-  "redis":"~/redis/count.js"},
+  serverMiddleware: ['~/api/app.js'],
 
   server: {
     port: process.env.PORT

@@ -59,108 +59,109 @@
         <div class="col-md-12">
             <p>Warm up Exercises</p>
             <div  v-for="exercise in workout.exercises" :key="exercise._id" >
-                <div style="font-size: 1.5vw;" v-if="exercise.warmUpExercise">
-                <b-dropdown 
-                    :text="`${exercise.name}`"
-                    block
-                    variant="none"
-                    class="m-2 mt-4 text-light"
-                    menu-class="w-100"
-                    :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
-                >
-                <b-dropdown-item id="b-item" style="overflow-x: auto;">
-                    <h4 class="text-center">{{exercise.name}}</h4>
-                    <h1 class="text-center"  style="color: rgb(57, 165, 17); border: 2px solid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
-                    <h1 class="text-center"  style="color: rgb(255, 49, 49);  border: 2px solid red" v-else>Incomplete</h1>
-                    <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Warm up sets:</h3>
-                    <div class="row">
-                        <div  style="font-size: 8px; display: inline-block; overflow-x: scroll;" v-for="set in exercise.sets" :key="set._id">
-                            <ul class="mb-3" v-if="set.warmupSet === true">
-                                                
-                                <li>Set: <strong>{{findSetNumber(set, "warmUp", exercise)}}</strong></li>
-                                <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
-                                <li v-if="set.actualTimeinSeconds && exercise.isCompleted">Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
-                                <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
-                                <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
-                                <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                @click="onSetDuplication(set, exercise, workout._id)"
-                                class="btn btn-sm btn-outline-warning mt-2">Duplicate Set</button></li>
-                            </ul>
-                    
-                        </div>                        
-                    </div>
-
-                    <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Training Sets:</h3>
-                    <div class="row">
-                        <div style="font-size: 8px; display: inline-block;" v-for="set in exercise.sets" :key="set._id">
-                            <ul  class="mb-3" v-if="set.warmupSet === false">
+                <div style="font-size: 1.5vw; justify-content: center; display: flex;" v-if="exercise.warmUpExercise">
+                    <b-dropdown 
+                        :text="`${exercise.name}`"
+                        block
+                        variant="none"
+                        class="m-2 mt-4 text-light"
+                        menu-class="w-100"
+                        :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
+                    >
+                    <b-dropdown-item id="b-item" style="overflow-x: auto;">
+                        <h4 class="text-center">{{exercise.name}}</h4>
+                        <h1 class="text-center"  style="color: rgb(57, 165, 17); border: 2px solid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
+                        <h1 class="text-center"  style="color: rgb(255, 49, 49);  border: 2px solid red" v-else>Incomplete</h1>
+                        <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Warm up sets:</h3>
+                        <div class="row">
+                            <div  style="font-size: 8px; display: inline-block;" v-for="set in exercise.sets" :key="set._id">
+                                <ul class="mb-3" v-if="set.warmupSet === true">
+                                                    
+                                    <li>Set: <strong>{{findSetNumber(set, "warmUp", exercise)}}</strong></li>
+                                    <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                    <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                    <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
+                                    <li v-if="set.actualTimeinSeconds && exercise.isCompleted">Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                    <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
+                                    <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
+                                    <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
+                                    <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                    @click="onSetDuplication(set, exercise, workout._id)"
+                                    class="btn btn-sm btn-outline-warning mt-2">Duplicate Set</button></li>
+                                </ul>
                         
-                                                
-                                <li>Set: <strong>{{findSetNumber(set, "training", exercise)}}</strong></li>
-                                <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
-                                <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
-                                <li v-if="set.actualTimeinSeconds && exercise.isCompleted">Actual Time: <strong style="color:rgb(255, 49, 49)">{{set.actualTimeinSeconds}} sec(s)</strong></li>
-                                <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
-                                <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
-                                <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
-                                <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
-                                <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;"
-                                @click="onSetDuplication(set, exercise, workout._id)"
-                                class="btn btn-sm btn-outline-warning mt-2">Duplicate Set</button></li>
-                            </ul>
-                        </div>                            
-                    </div>
-                
-                
+                            </div>                        
+                        </div>
+
+                        <h3  style="font-size: 12px;" v-if="exercise.sets.length > 0">Training Sets:</h3>
+                        <div class="row">
+                            <div style="font-size: 8px; display: inline-block;" v-for="set in exercise.sets" :key="set._id">
+                                <ul  class="mb-3" v-if="set.warmupSet === false">
+                            
+                                                    
+                                    <li>Set: <strong>{{findSetNumber(set, "training", exercise)}}</strong></li>
+                                    <li v-if="set.targetRepAmount">Target Reps: <strong>{{set.targetRepAmount}}</strong></li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                    <li v-if="set.targetWeight">Target Weight: <strong>{{set.targetWeight}}</strong></li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">Actual Weight: <strong style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong></li>
+                                    <li v-if="set.targetTimeinSeconds">Target Time: <strong>{{set.targetTimeinSeconds}} secs</strong></li>
+                                    <li v-if="set.actualTimeinSeconds && exercise.isCompleted">Actual Time: <strong style="color:rgb(255, 49, 49)">{{set.actualTimeinSeconds}} sec(s)</strong></li>
+                                    <li v-if="set.targetLoad">Target Load: <strong>{{set.targetLoad}}</strong></li>
+                                    <li v-if="set.targetLoad && exercise.isCompleted">Actual Load: <strong style="color:rgb(255, 49, 49)">{{set.actualLoad}}</strong></li>
+                                    <li v-if="set.rpe">RPE: <strong>{{set.rpe}}</strong></li>
+                                    <li v-if="set.rest">Rest: <strong>{{set.rest}}</strong> min(s)</li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  class="btn btn-sm btn-outline-danger mt-2">Delete Set -</button></li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;" @click="onRouteChange(`/editset/${set._id}`)" class="btn btn-sm btn-outline-primary mt-2">Edit Set</button></li>
+                                    <li style="list-style: none"><button v-if="!workout.isCompleted && !exercise.isCompleted"  style="font-size: 6px;"
+                                    @click="onSetDuplication(set, exercise, workout._id)"
+                                    class="btn btn-sm btn-outline-warning mt-2">Duplicate Set</button></li>
+                                </ul>
+                            </div>                            
+                        </div>
+                    
+                    
 
 
 
-                </b-dropdown-item>
-                <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item  v-if="!workout.isCompleted"  >
-                    <div class="row mb-1">
-                        <div class="col">
-                            <h3  v-if="!workout.isCompleted"   style="font-size: 12px;
-                            overflow-wrap: break-word;">
-                                Exercise: {{exercise.name}} 
-                            </h3>                   
-                            <p style="  overflow-wrap: break-word;">Notes: {{exercise.notes}}</p>
+                    </b-dropdown-item>
+                    <b-dropdown-divider></b-dropdown-divider>
+                    <b-dropdown-item  v-if="!workout.isCompleted"  >
+                        <div class="row mb-1">
+                            <div class="col">
+                                <h3  v-if="!workout.isCompleted"   style="font-size: 12px;
+                                overflow-wrap: break-word;">
+                                    Exercise: {{exercise.name}} 
+                                </h3>                   
+                                <p style="  overflow-wrap: break-word;">Notes: {{exercise.notes}}</p>
+                            </div>
+                            <div class="col mt-2 float-right">
+                                <button  @click="onRouteChange(`/newset/${exercise._id}`)"
+                                style="font-size: 10px;" class="btn btn-sm btn-outline-success">Add Set +</button>
+                            </div>
                         </div>
-                        <div class="col mt-2 float-right">
-                            <button  @click="onRouteChange(`/newset/${exercise._id}`)"
-                             style="font-size: 10px;" class="btn btn-sm btn-outline-success">Add Set +</button>
+                        <b-dropdown-divider></b-dropdown-divider>
+                        <div class="row mb-1">
+                            <div class="col mt-2">
+                                <button style="font-size: 10px"
+                                class="btn btn-outline-primary" @click="onRouteChange(`/editexercise/${exercise._id}`)">
+                                Edit Exercise</button>
+                            </div>
+                            <div class="col mt-2">
+                                <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
+                            </div>  
+                            <div class="col mt-2">
+                                <button v-if="!workout.isCompleted"  style="font-size: 10px;"
+                                @click="onExerciseDuplication(exercise, workout._id)"  class="btn btn-sm btn-outline-warning">
+                                Duplicate Exercise ></button>
+                            </div>          
                         </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="col mt-2">
-                            <button style="font-size: 10px"
-                            class="btn btn-outline-primary" @click="onRouteChange(`/editexercise/${exercise._id}`)">
-                            Edit Exercise</button>
-                        </div>
-                        <div class="col mt-2">
-                            <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
-                        </div>  
-                        <div class="col mt-2">
-                             <button v-if="!workout.isCompleted"  style="font-size: 10px;"
-                               @click="onExerciseDuplication(exercise, workout._id)"  class="btn btn-sm btn-outline-warning">
-                             Duplicate Exercise ></button>
-                        </div>          
-                    </div>
-                </b-dropdown-item>                
-                </b-dropdown>
+                    </b-dropdown-item>                
+                    </b-dropdown>
                 </div>
                 
             </div>
@@ -170,183 +171,183 @@
             <p>Exercises</p>
             <div v-for="exercise in workout.exercises" :key="exercise._id">
  
-                <div v-if="!exercise.warmUpExercise">
+                <div style="font-size: 1.5vw; justify-content: center; display: flex;" v-if="!exercise.warmUpExercise">
 
-                <b-dropdown 
-                    :text="`${exercise.name}`"
-                    block
-                    variant="none"
-                    class="m-2 mt-4"
-                    menu-class="w-100"
-                    :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
-                >
+                    <b-dropdown 
+                        :text="`${exercise.name}`"
+                        block
+                        variant="none"
+                        class="m-2 mt-4"
+                        menu-class="w-100"
+                        :id="!exercise.isCompleted ? 'createButton' : 'exerciseComplete'"
+                    >
 
-                <b-dropdown-item id="b-item" style="overflow: auto; ">
-                <h4 class="pt-5 text-center">{{exercise.name}}</h4>
-                <h1 class="text-center"  style="color: rgb(57, 165, 17);
-                 border: 2px solid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
-                <h1 class="text-center"  style="color: rgb(255, 49, 49); border: 2px solid red" v-else>Incomplete</h1>
-                <h3  style="font-size: 12px;">Warm up sets:</h3>
-                <div class="row">
+                    <b-dropdown-item id="b-item" style="overflow: auto; ">
+                    <h4 class="pt-5 text-center">{{exercise.name}}</h4>
+                    <h1 class="text-center"  style="color: rgb(57, 165, 17);
+                    border: 2px solid rgb(57, 165, 17)" v-if="exercise.isCompleted">Completed!</h1>
+                    <h1 class="text-center"  style="color: rgb(255, 49, 49); border: 2px solid red" v-else>Incomplete</h1>
+                    <h3  style="font-size: 12px;">Warm up sets:</h3>
+                    <div class="row">
 
-                    <div style="font-size: 8px;  display: inline-block;" v-for="set in exercise.sets" :key="set._id">
-                            <ul class="mb-3" v-if="set.warmupSet === true">                                                            
-                                <li>
-                                    Set: <strong>{{findSetNumber(set, "warmUp", exercise)}}</strong>
-                                </li>
-                                <li v-if="set.targetRepAmount">
-                                    Target Reps: <strong>{{set.targetRepAmount}}</strong>
-                                </li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">
-                                    Actual Reps: <strong   style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong>
-                                </li>
-                                <li v-if="set.targetWeight">
-                                    Target Weight: <strong>{{set.targetWeight}} </strong>lbs
-                                </li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">
-                                    Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} </strong>lbs
-                                </li>
-                                <li v-if="set.targetTimeinSeconds">
-                                    Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong>
-                                </li>
-                                <li v-if="set.actualTimeinSeconds && exercise.isCompleted">
-                                    Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualTimeinSeconds}} </strong>sec(s)
-                                </li>
-                                <li v-if="set.targetLoad">
-                                    Target Load: <strong>{{set.targetLoad}}</strong>
-                                </li>
-                                <li v-if="set.targetLoad && exercise.isCompleted">
-                                    Actual Load: <strong style="color: rgb(255, 49, 49)">{{set.actualLoad}}</strong>
-                                </li>
-                                <li v-if="set.rpe">
-                                    RPE: <strong>{{set.rpe}}</strong>
-                                </li>
-                                <li v-if="set.rest">
-                                    Rest: <strong>{{set.rest}}</strong> min(s)
-                                </li>
-                                <li  style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                      @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"
+                        <div style="font-size: 8px;  display: inline-block;" v-for="set in exercise.sets" :key="set._id">
+                                <ul class="mb-3" v-if="set.warmupSet === true">                                                            
+                                    <li>
+                                        Set: <strong>{{findSetNumber(set, "warmUp", exercise)}}</strong>
+                                    </li>
+                                    <li v-if="set.targetRepAmount">
+                                        Target Reps: <strong>{{set.targetRepAmount}}</strong>
+                                    </li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">
+                                        Actual Reps: <strong   style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong>
+                                    </li>
+                                    <li v-if="set.targetWeight">
+                                        Target Weight: <strong>{{set.targetWeight}} </strong>lbs
+                                    </li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">
+                                        Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} </strong>lbs
+                                    </li>
+                                    <li v-if="set.targetTimeinSeconds">
+                                        Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong>
+                                    </li>
+                                    <li v-if="set.actualTimeinSeconds && exercise.isCompleted">
+                                        Actual Time: <strong style="color: rgb(255, 49, 49)">{{set.actualTimeinSeconds}} </strong>sec(s)
+                                    </li>
+                                    <li v-if="set.targetLoad">
+                                        Target Load: <strong>{{set.targetLoad}}</strong>
+                                    </li>
+                                    <li v-if="set.targetLoad && exercise.isCompleted">
+                                        Actual Load: <strong style="color: rgb(255, 49, 49)">{{set.actualLoad}}</strong>
+                                    </li>
+                                    <li v-if="set.rpe">
+                                        RPE: <strong>{{set.rpe}}</strong>
+                                    </li>
+                                    <li v-if="set.rest">
+                                        Rest: <strong>{{set.rest}}</strong> min(s)
+                                    </li>
+                                    <li  style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"
+                                            class="btn btn-sm btn-outline-danger mt-2">
+                                            Delete Set -
+                                        </button>
+                                        
+                                    </li>
+                                    <li style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onRouteChange(`/editset/${set._id}`)"
+                                        class="btn btn-sm btn-outline-primary mt-2">
+                                            Edit Set
+                                        </button>
+                                    </li>
+                                    <li style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onSetDuplication(set, exercise, workout._id)"
+                                        class="btn btn-sm btn-outline-warning mt-2">
+                                            Duplicate Set
+                                        </button>
+                                    </li>
+                                </ul>
+                        
+                            </div>                    
+                    </div>
+    
+                    <h3 style="font-size: 12px;">Training Sets:</h3>
+                    <div class="row">
+
+                        <div style="font-size: 8px;  display: inline-block;" v-for="set in exercise.sets" :key="set._id">
+                                <ul class="mb-3" v-if="set.warmupSet === false">                                                            
+                                    <li>
+                                        Set: <strong>{{findSetNumber(set, "training", exercise)}}</strong>
+                                    </li>
+                                    <li v-if="set.targetRepAmount">
+                                        Target Reps: <strong>{{set.targetRepAmount}}</strong>
+                                    </li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">
+                                        Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong>
+                                    </li>
+                                    <li v-if="set.targetWeight">
+                                        Target Weight: <strong>{{set.targetWeight}} </strong>lbs
+                                    </li>
+                                    <li v-if="set.targetRepAmount && exercise.isCompleted">
+                                        Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} </strong>lbs
+                                    </li>
+                                    <li v-if="set.targetTimeinSeconds">
+                                        Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong>
+                                    </li>
+                                    <li v-if="set.actualTimeinSeconds && exercise.isCompleted">
+                                        Actual Time: <strong  style="color: rgb(255, 49, 49)">{{set.actualTimeinSeconds}} </strong>sec(s)
+                                    </li>
+                                    <li v-if="set.targetLoad">
+                                        Target Load: <strong>{{set.targetLoad}}</strong>
+                                    </li>
+                                    <li v-if="set.targetLoad && exercise.isCompleted">
+                                        Actual Load: <strong style="color: rgb(255, 49, 49)"> {{set.actualLoad}}</strong>   
+                                    </li>
+                                    <li v-if="set.rpe">
+                                        RPE: <strong>{{set.rpe}}</strong>
+                                    </li>
+                                    <li v-if="set.rest">
+                                        Rest: <strong>{{set.rest}}</strong> min(s)
+                                    </li>
+                                    <li style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  
                                         class="btn btn-sm btn-outline-danger mt-2">
-                                        Delete Set -
-                                    </button>
+                                            Delete Set -
+                                        </button>
+                                    </li>
+                                    <li style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onRouteChange(`/editset/${set._id}`)"
+                                        class="btn btn-sm btn-outline-primary mt-2">
+                                            Edit Set
+                                        </button>
+                                    </li>
+                                    <li style="list-style: none">
+                                        <button v-if="!workout.isCompleted"  style="font-size: 6px;"
+                                        @click="onSetDuplication(set, exercise, workout._id)"
+                                        class="btn btn-sm btn-outline-warning mt-2">
+                                            Duplicate Set
+                                        </button>
+                                    </li>
                                     
-                                </li>
-                                <li style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                     @click="onRouteChange(`/editset/${set._id}`)"
-                                      class="btn btn-sm btn-outline-primary mt-2">
-                                        Edit Set
-                                    </button>
-                                </li>
-                                <li style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                    @click="onSetDuplication(set, exercise, workout._id)"
-                                    class="btn btn-sm btn-outline-warning mt-2">
-                                        Duplicate Set
-                                    </button>
-                                </li>
-                            </ul>
-                    
-                        </div>                    
-                </div>
- 
-                <h3 style="font-size: 12px;">Training Sets:</h3>
-                <div class="row">
-
-                    <div style="font-size: 8px;  display: inline-block;" v-for="set in exercise.sets" :key="set._id">
-                            <ul class="mb-3" v-if="set.warmupSet === false">                                                            
-                                <li>
-                                    Set: <strong>{{findSetNumber(set, "training", exercise)}}</strong>
-                                </li>
-                                <li v-if="set.targetRepAmount">
-                                    Target Reps: <strong>{{set.targetRepAmount}}</strong>
-                                </li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">
-                                    Actual Reps: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}}</strong>
-                                </li>
-                                <li v-if="set.targetWeight">
-                                    Target Weight: <strong>{{set.targetWeight}} </strong>lbs
-                                </li>
-                                <li v-if="set.targetRepAmount && exercise.isCompleted">
-                                    Actual Weight: <strong  style="color: rgb(255, 49, 49)">{{set.actualRepAmount}} </strong>lbs
-                                </li>
-                                <li v-if="set.targetTimeinSeconds">
-                                    Target Time: <strong>{{set.targetTimeinSeconds}} sec(s)</strong>
-                                </li>
-                                <li v-if="set.actualTimeinSeconds && exercise.isCompleted">
-                                    Actual Time: <strong  style="color: rgb(255, 49, 49)">{{set.actualTimeinSeconds}} </strong>sec(s)
-                                </li>
-                                <li v-if="set.targetLoad">
-                                    Target Load: <strong>{{set.targetLoad}}</strong>
-                                </li>
-                                <li v-if="set.targetLoad && exercise.isCompleted">
-                                    Actual Load: <strong style="color: rgb(255, 49, 49)"> {{set.actualLoad}}</strong>   
-                                </li>
-                                <li v-if="set.rpe">
-                                    RPE: <strong>{{set.rpe}}</strong>
-                                </li>
-                                <li v-if="set.rest">
-                                    Rest: <strong>{{set.rest}}</strong> min(s)
-                                </li>
-                                <li style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                    @click="onSetDelete(exercise._id, exercise.workoutId, set._id)"  
-                                    class="btn btn-sm btn-outline-danger mt-2">
-                                        Delete Set -
-                                    </button>
-                                </li>
-                                <li style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                     @click="onRouteChange(`/editset/${set._id}`)"
-                                      class="btn btn-sm btn-outline-primary mt-2">
-                                        Edit Set
-                                    </button>
-                                </li>
-                                <li style="list-style: none">
-                                    <button v-if="!workout.isCompleted"  style="font-size: 6px;"
-                                    @click="onSetDuplication(set, exercise, workout._id)"
-                                    class="btn btn-sm btn-outline-warning mt-2">
-                                        Duplicate Set
-                                    </button>
-                                </li>
-                                
-                            </ul>
-                    
-                        </div>                    
-                </div>
-
-
-
-                </b-dropdown-item>
-                <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item  v-if="!workout.isCompleted"  >
-                    <div class="row mb-1">
-                        <div class="col">               
-                            <p style="  overflow-wrap: break-word;">Notes: {{exercise.notes}}</p>
-                        </div>
-                        <div class="col mt-2 float-right">
-                            <button  @click="onRouteChange(`/newset/${exercise._id}`)"
-                             style="font-size: 10px;" class="btn btn-sm btn-outline-success">Add Set +</button>
-                        </div>
+                                </ul>
+                        
+                            </div>                    
                     </div>
-                    <div class="row mb-1">
-                        <div class="col mt-2">
-                            <button style="font-size: 10px"
-                            class="btn btn-outline-primary" @click="onRouteChange(`/editexercise/${exercise._id}`)">
-                            Edit Exercise</button>
+
+
+
+                    </b-dropdown-item>
+                    <b-dropdown-divider></b-dropdown-divider>
+                    <b-dropdown-item  v-if="!workout.isCompleted"  >
+                        <div class="row mb-1">
+                            <div class="col">               
+                                <p style="  overflow-wrap: break-word;">Notes: {{exercise.notes}}</p>
+                            </div>
+                            <div class="col mt-2 float-right">
+                                <button  @click="onRouteChange(`/newset/${exercise._id}`)"
+                                style="font-size: 10px;" class="btn btn-sm btn-outline-success">Add Set +</button>
+                            </div>
                         </div>
-                        <div class="col mt-2">
-                            <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
-                        </div>  
-                        <div class="col mt-2">
-                             <button v-if="!workout.isCompleted"  style="font-size: 10px;"
-                               @click="onExerciseDuplication(exercise, workout._id)"  class="btn btn-sm btn-outline-warning">
-                             Duplicate Exercise ></button>
-                        </div>          
-                    </div>
-                </b-dropdown-item>                
-                </b-dropdown>
+                        <div class="row mb-1">
+                            <div class="col mt-2">
+                                <button style="font-size: 10px"
+                                class="btn btn-outline-primary" @click="onRouteChange(`/editexercise/${exercise._id}`)">
+                                Edit Exercise</button>
+                            </div>
+                            <div class="col mt-2">
+                                <DeleteExercise :workout="workout" :exercise="exercise" :canDelete="canDelete"/>
+                            </div>  
+                            <div class="col mt-2">
+                                <button v-if="!workout.isCompleted"  style="font-size: 10px;"
+                                @click="onExerciseDuplication(exercise, workout._id)"  class="btn btn-sm btn-outline-warning">
+                                Duplicate Exercise ></button>
+                            </div>          
+                        </div>
+                    </b-dropdown-item>                
+                    </b-dropdown>
                 </div> 
             </div>
         
@@ -557,7 +558,9 @@ export default {
         border-radius: 3px;
         background-color: 	#D21F3C;
         color:rgb(57, 165, 17);
+        display: flex;
         justify-content: center;
+        width: 50%
     }
     #createButton:hover {
         border: 2px solid 	#D21F3C;
