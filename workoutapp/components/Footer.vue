@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="footer">
   <footer >
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
       <li class="nav-item"><button @click="goToRoute('/')" style="background-color: black; border: none" class="nav-link px-2 text-muted">Home</button></li>
@@ -27,6 +27,15 @@ export default  {
     }
 }
 </script>
+
+<style>
+#footer {
+
+  bottom: 0;
+  width: 100%;
+  height: auto;            /* Footer height */
+}
+</style>
 
 
 

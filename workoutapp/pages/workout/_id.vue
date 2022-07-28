@@ -1,11 +1,17 @@
 <template>
 <main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
 <div v-if="!loading" class="loading">
-   <div v-if="!loading" class="row py-lg-5 mt-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1>{{workout.name}}</h1>
-        <p class="lead text-light">Notes: {{workout.notes}}</p>
-        <p >
+    <div v-if="!loading"  class="row">
+        <div class="col-12 rounded my-2"
+         style="color: rgb(57, 165, 17); height: 65px;">
+         <h1 class="text-center mt-2 text-light
+         ">{{workout.dateScheduled}}</h1></div>
+
+    </div>
+    <div v-if="!loading" class="row py-lg-5 mt-5">
+      <div class="col-lg-6 col-md-8 mx-auto" style="width: 50%">
+        <h1 class="text-center" v-for="line of name">{{line}}<br/></h1>
+            <p class="text-light">Notes:</p><p class="text-center text-light" v-for="line in notes">{{line}}<br></p>
             <button style="background-color: blue" v-if="!workout.isCompleted" @click=editWorkout(workout._id) class="glow-on-hover">Edit</button>
             <button style="background-color:  #FF0800" class="glow-on-hover" v-b-modal.modal-1>Delete</button>
             <b-modal :hide-footer="true" id="modal-1" title="Hold On">
@@ -21,17 +27,12 @@
                 </div>
                 <b-button class="btn btn-warning" @click="onWorkoutDuplicate" :disabled="!canDelete">Duplicate</b-button>
             </b-modal>
-        </p>
+
       </div>
     </div>
 
     
-    <div v-if="!loading"  class="row">
-        <div class="col-12 rounded my-2"
-         style="color: rgb(57, 165, 17); height: 65px;">
-         <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
 
-    </div>
 
     <div v-if="!loading"  class="row my-3" style="border: none">
         <div class="col-md-6">
@@ -406,6 +407,41 @@ export default {
             }
             
 
+            // Separating Notes List to display on window
+            let notesSeparated = [];
+
+            let noteLine = '';
+            for(let index = 0; index < workout.notes.length; index++) {
+                
+                
+                if(index %  30 === 0 && index !== 0) {
+                    notesSeparated.push(noteLine);
+                    noteLine = '';
+                } else {
+                    noteLine = noteLine + workout.notes.charAt(index)
+                }
+            }
+            if(noteLine.length > 0) {
+                notesSeparated.push(noteLine);
+            }
+
+
+            // Separating Name List to display on window
+            let nameSeparated = [];
+
+            let nameLine = '';
+            for(let index = 0; index < workout.name.length; index++) {
+                if(index % 10 === 0 && index !== 0) {
+                    nameSeparated.push(nameLine);
+                    nameLine = '';
+                } else {
+                    nameLine = nameLine + workout.name.charAt(index);
+                }
+            }
+            if(nameLine.length > 0) {
+                nameSeparated.push(nameLine)
+            }
+
 
             loading = false
 
@@ -413,7 +449,9 @@ export default {
                 workout: workout,
                 warmupCount: warmupCount,
                 workoutCount: workoutCount,
-                loading: loading
+                loading: loading,
+                notes: notesSeparated,
+                name: nameSeparated
             }
         } catch (err) {
             console.log(err);

@@ -7,11 +7,11 @@
     <h1 class="h3 mb-3 fw-normal">Create New Exercise For <span style="color: rgb(255, 55, 0);">{{workout.name}}</span></h1>
     <p class="mb-3">{{workoutDate}}</p>
     <div class="form-floating">
-      <input required v-model="name" type="text" class="form-control" id="floatingInput" placeholder="name">
+      <input maxlength="20" required v-model="name" type="text" class="form-control" id="floatingInput" placeholder="name">
       <label for="floatingInput">Exercise Name</label>
     </div>
     <div class="form-floating">
-      <textarea v-model="notes" type="text" class="form-control" id="floatingPassword" placeholder="notes"></textarea>
+      <textarea maxlength="120" v-model="notes" type="text" class="form-control" id="floatingPassword" placeholder="notes"></textarea>
       <label for="floatingPassword">Exercise Notes</label>
     </div>
     <div class="form-floating">

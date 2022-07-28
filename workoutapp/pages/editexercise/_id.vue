@@ -4,15 +4,14 @@
 <div class="form-signin col-4 w-100 m-auto">
   <form @submit.prevent="updateExercise">
  
-    <!-- <h1 class="h3 mb-3 fw-normal">Create New Exercise For {{workout.name}}</h1>
-    <p class="mb-3">{{workoutDate}}</p> -->
+
     <h1>Edit Exercise: <strong>{{exercise.name}}</strong></h1>
     <div class="form-floating">
-      <input v-model="name" type="text" class="form-control" id="floatingInput" :placeholder="exercise.name">
+      <input maxlength="20" v-model="name" type="text" class="form-control" id="floatingInput" :placeholder="exercise.name">
       <label for="floatingInput">Exercise Name</label>
     </div>
     <div class="form-floating">
-      <textarea v-model="notes" type="text" class="form-control" id="floatingPassword" :placeholder="exercise.notes"></textarea>
+      <textarea maxlength="120" v-model="notes" type="text" class="form-control" id="floatingPassword" :placeholder="exercise.notes"></textarea>
       <label for="floatingPassword">Exercise Notes</label>
     </div>
     <div class="form-floating">

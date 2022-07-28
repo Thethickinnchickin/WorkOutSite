@@ -7,11 +7,11 @@
     <h1 class="h3 mb-3 fw-normal">Create New Workout</h1>
 
     <div class="form-floating">
-      <input required v-model="name" type="text" class="form-control" id="floatingInput" placeholder="name">
+      <input maxlength="20" required v-model="name" type="text" class="form-control" id="floatingInput" placeholder="name">
       <label for="floatingInput">Workout Name</label>
     </div>
     <div class="form-floating">
-      <textarea v-model="notes" type="text" class="form-control" id="floatingPassword" placeholder="notes"></textarea>
+      <textarea maxlength="140" v-model="notes" type="text" class="form-control" id="floatingPassword" placeholder="notes"></textarea>
       <label for="floatingPassword">Notes</label>
     </div>
     <div class="form-floating">
