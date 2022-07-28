@@ -141,7 +141,7 @@ export default {
         for(let workout of completedWorkoutsresponse.workouts)
         {
             workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+                .format('MMMM D');
             FormattedCompleteWorkouts.push(workout);
         }
 
