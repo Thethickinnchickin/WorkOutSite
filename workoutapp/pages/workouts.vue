@@ -1,7 +1,7 @@
 <template>
 
   <main >
-    <div class="section_our_solution mt-5 pt-5">
+    <div v-if="!loading" class="section_our_solution mt-5 pt-5">
       <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
     <div class="row mt-4 mx-3 ">
     <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
@@ -175,7 +175,10 @@
     </div>
    <div class="row mt-4 mx-3"></div>
 
-</div>
+    </div>
+    <div v-else>
+      <Loading/>
+    </div>
   </main>
 
 </template>
@@ -186,9 +189,14 @@
 
 <script>
 import moment from 'moment';
+import Loading from '~/components/Loading.vue';
 
 export default {
+    components: {
+      Loading
+    },
     async asyncData({$axios}) {
+        let loading = true;
         let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 3,
           isCompleted: true
@@ -204,20 +212,24 @@ export default {
         
         for(let workout of completedWorkoutsresponse.workouts)
         {
-            workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+            let date = new Date(workout.dateScheduled)
+            workout.dateScheduled = moment(date)
+                .format('MMMM D');
             FormattedCompletedWorkouts.push(workout);
         }
         for(let workout of incompletedWorkoutsresponse.workouts)
         {
-            workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+            let date = new Date(workout.dateScheduled)
+            workout.dateScheduled = moment(date)
+                .format('MMMM D');
             FormattedInCompletedWorkouts.push(workout);
         }
+        loading = false;
 
         return {
             workoutsCompleted: FormattedCompletedWorkouts,
-            workoutsToComplete: FormattedInCompletedWorkouts
+            workoutsToComplete: FormattedInCompletedWorkouts,
+            loading: loading
         }
     },
     methods: {

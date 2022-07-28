@@ -392,7 +392,7 @@ export default {
             let workout = response.workout
 
             workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MMMM d');
+                .format('MMMM D');
 
             let warmupCount = 0;
             let workoutCount = 0;
