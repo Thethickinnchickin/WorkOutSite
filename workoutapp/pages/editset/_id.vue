@@ -135,7 +135,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #createButton {
   border: 2px solid rgb(57, 165, 17);
   border-radius: 3px;
