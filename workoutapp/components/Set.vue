@@ -190,7 +190,7 @@ export default {
             if(this.countdownActive === 'active') {
                 return
             } else {
-                let totalRest = 10;
+                let totalRest = Math.floor(rest * 60);
                 this.restTimeInSeconds = totalRest;
                 this.countdownActive = 'active';     
                 document.getElementById('startTimer').setAttribute('disabled', true)
