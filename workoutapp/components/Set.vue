@@ -3,17 +3,17 @@
     <td style="font-size:1vw" v-if="!set.isCompleted"
       class="text-right">
         <div v-if="set.rest">
-            <b-button  type="button" class="btn btn-sm btn-outline-danger" v-b-modal="`${set._id}`">
+            <b-button  @click="stopCountdown()" type="button" class="btn btn-sm btn-outline-danger" v-b-modal="'modal-1'">
                 Set Incomplete
             </b-button>
-            <b-modal :hide-footer="true" :id="`${set._id}`" title="Hold On">
+            <b-modal :hide-footer="true" id="modal-1" title="Hold On">
                 <p class="my-4 text-center">Rest Timer</p>
-                <h3 v-if="countdownActive !== 'active'" class="text-center" id="countdownTimer">{{set.rest}} mins</h3>
+                <h3 v-if="countdownActive !== 'active'" class="text-center" :id="`${set._id}:countdownTimer`">{{set.rest}} mins</h3>
                 <h3 v-else-if="restTimeInSeconds > 0 && countdown !== 'active'" 
                 class="text-center">{{restTimeInSeconds}} secs</h3>
                 <b-button  
                     class="btn btn-warning text-center" id="startTimer" 
-                    @click="startCountdown(set.rest)">
+                    @click="startCountdown(set.rest, set._id)">
                         Start Timer
                 </b-button>
                 <b-button  @click="isCompleted(set._id, true)" class="btn btn-danger text-center">Complete Set</b-button>
@@ -113,16 +113,24 @@ input {
 </style>
 
 <script>
+var timer;
+
 export default {
     data() {
         return {
             actualRep: 0,
             actualWeight: 0,
             actualTime: 0,
-            actualLoad: 0,
-            countdownActive: 'inactive',
-            restTimeInSeconds: 0
+            actualLoad: 0
         }
+    },
+    asyncData() {
+        return {
+            countdownActive: 'inactive',
+            restTimeInSeconds: 0,
+            timer: null
+        }
+
     },
     props: ["set", "setNumber", "exercise"],
     methods: {
@@ -185,43 +193,41 @@ export default {
                 }
             }
         },
-        startCountdown(rest) {
-            console.log(this.countdownActive)
+        startCountdown(rest, setId) {
+
             if(this.countdownActive === 'active') {
-                return
+                console.log("GOT YA")
             } else {
                 let totalRest = Math.floor(rest * 60);
                 this.restTimeInSeconds = totalRest;
                 this.countdownActive = 'active';     
                 document.getElementById('startTimer').setAttribute('disabled', true)
+                let countType = this.countdownActive
      
-                let timer = setInterval(function() {
-  
+                timer = setInterval(function() {
+                    if(countType === "active") {
                         totalRest --;
                         this.restTimeInSeconds = totalRest;   
-                        document.getElementById('countdownTimer').innerHTML = this.restTimeInSeconds + " secs"
-                       
-                        
+                        document.getElementById(`${setId}:countdownTimer`).innerHTML = this.restTimeInSeconds + " secs"
+        
                         if(this.restTimeInSeconds <= 0) {
-                            
-
-                            document.getElementById('countdownTimer').innerHTML = 'All Done';
+                            document.getElementById(`${setId}:countdownTimer`).innerHTML = 'All Done';
                             document.getElementById('startTimer').innerHTML = 'Start Again'
                             document.getElementById('startTimer').removeAttribute('disabled')
                             clearInterval(timer);
+                            this.countdownActive = 'inactive'
                         }
-                }, 1000) 
-                
-                if(this.countdownActive !== 'inactive') {
-                    this.countdownActive = 'inactive'                    
-                }
-  
 
-            }
-      
-            
-            
-            
+                }
+            } , 1000) 
+
+            this.countdownActive = 'inactive'
+
+        }  
+        },
+        stopCountdown() {
+            clearInterval(timer)
+            this.countdownActive = 'inactive'
         }
     }
 }
