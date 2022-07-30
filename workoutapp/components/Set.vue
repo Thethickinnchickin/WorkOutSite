@@ -3,20 +3,22 @@
     <td style="font-size:1vw" v-if="!set.isCompleted"
       class="text-right">
         <div v-if="set.rest">
-            <b-button  @click="stopCountdown()" type="button" class="btn btn-sm btn-outline-danger" v-b-modal="'modal-1'">
+            <b-button  @click="stopCountdown()" type="button"
+             class="btn btn-sm btn-outline-danger" v-b-modal="`${set._id}`">
                 Set Incomplete
             </b-button>
-            <b-modal :hide-footer="true" id="modal-1" title="Hold On">
+            <b-modal :hide-footer="true" :id="`${set._id}`" title="Hold On">
                 <p class="my-4 text-center">Rest Timer</p>
                 <h3 v-if="countdownActive !== 'active'" class="text-center" :id="`${set._id}:countdownTimer`">{{set.rest}} mins</h3>
                 <h3 v-else-if="restTimeInSeconds > 0 && countdown !== 'active'" 
                 class="text-center">{{restTimeInSeconds}} secs</h3>
                 <b-button  
-                    class="btn btn-warning text-center" id="startTimer" 
+                    class="btn btn-warning text-center" :id="`${set._id}:startTimer`" 
                     @click="startCountdown(set.rest, set._id)">
                         Start Timer
                 </b-button>
-                <b-button  @click="isCompleted(set._id, true)" class="btn btn-danger text-center">Complete Set</b-button>
+                <b-button  @click="isCompleted(set._id, true)" 
+                class="btn btn-danger text-center">Complete Set</b-button>
             </b-modal>            
         </div>
         <button @click="isCompleted(set._id, true)"  v-else class="btn btn-sm btn-outline-danger">
@@ -201,7 +203,8 @@ export default {
                 let totalRest = Math.floor(rest * 60);
                 this.restTimeInSeconds = totalRest;
                 this.countdownActive = 'active';     
-                document.getElementById('startTimer').setAttribute('disabled', true)
+                document.getElementById(`${setId}:startTimer`).setAttribute('disabled', true)
+
                 let countType = this.countdownActive
      
                 timer = setInterval(function() {
@@ -212,8 +215,8 @@ export default {
         
                         if(this.restTimeInSeconds <= 0) {
                             document.getElementById(`${setId}:countdownTimer`).innerHTML = 'All Done';
-                            document.getElementById('startTimer').innerHTML = 'Start Again'
-                            document.getElementById('startTimer').removeAttribute('disabled')
+                            document.getElementById(`${setId}:startTimer`).innerHTML = 'Start Again'
+                            document.getElementById(`${setId}:startTimer`).removeAttribute('disabled')
                             clearInterval(timer);
                             this.countdownActive = 'inactive'
                         }
@@ -222,12 +225,14 @@ export default {
             } , 1000) 
 
             this.countdownActive = 'inactive'
+            this.restTimeInSeconds = 0;
 
         }  
         },
         stopCountdown() {
             clearInterval(timer)
             this.countdownActive = 'inactive'
+            this.restTimeInSeconds = 0
         }
     }
 }
