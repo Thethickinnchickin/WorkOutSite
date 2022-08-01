@@ -39,8 +39,8 @@
         <div class="col mb-2">
             <div class="row">
                 <div v-if="!exercise.isCompleted" class="col-12 text-right">
-                    <b-button  v-b-modal.completeExercise-1 id="buttonComplete" class="btn btn-lg btn-block btn-outline-danger text-uppercase">Complete Exercise</b-button>
-                    <b-modal :hide-footer="true" id="completeExercise-1" title="Hold On">
+                    <b-button  v-b-modal="`${exercise._id}`" id="buttonComplete" class="btn btn-lg btn-block btn-outline-danger text-uppercase">Complete Exercise</b-button>
+                    <b-modal :hide-footer="true" :id="`${exercise._id}`" title="Hold On">
                         <p class="my-4">Are You sure about completing this exercise? It cannot be undone</p>
                         <b-button class="btn btn-danger" @click="completeExercise(true)">Complete</b-button>
                     </b-modal>
