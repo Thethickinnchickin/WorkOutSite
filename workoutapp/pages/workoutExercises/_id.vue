@@ -5,8 +5,7 @@ background-position: center top;"  class="text-center mt-5 pt-5">
 
     <div v-if="!loading">    
         <div class="row">
-            <div class="col-2">
-            <button class="mt-5" @click="onRouteReturn" id="backButton">Back To Workout</button>               
+            <div class="col-2">   
             </div>
             <div class="col-8">
             <h1 class="mt-5 float-middle" id="workoutName">
@@ -14,11 +13,17 @@ background-position: center top;"  class="text-center mt-5 pt-5">
             </h1>
             </div>
             <div class="col-2">
-                Page:{{pageNumber}}
+                <p class="mt-5 ml-3">Page:{{pageNumber}}</p>
             </div>
         
 
 
+        </div>
+        <div class="row">
+            <div class="col">
+                <button
+                @click="onRouteReturn" id="backButton">Back To Workout</button>     
+            </div>
         </div>
         <div v-for="exercise in exercises" :key="exercise._id">
             <div v-if="exercises.indexOf(exercise) + 1 === pageNumber">

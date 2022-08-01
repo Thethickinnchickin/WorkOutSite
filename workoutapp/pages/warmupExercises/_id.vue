@@ -2,22 +2,27 @@
 <main style="width: 100%; background-repeat: no-repeat;
 background-position: center top;" class="text-center mt-3 pt-5">
 <div v-if="!loading">
-    <div class="row">
+    <div class="row d-flex">
         <div class="col-2">
-         <button class="mt-5"
-          @click="onRouteReturn" id="backButton">Back To Workout</button>               
+          
         </div>
         <div class="col-8">
-        <h1 class="mt-5 float-middle">
+        <h1 class="mt-5 float-middle" id="workoutName">
             {{workoutName}}
         </h1>
         </div>
-        <div class="col-2 mt-4">
-            Page:{{pageNumber}}
+        <div class="col-2">
+            <p class="mt-5 ml-3">Page:{{pageNumber}}</p>
         </div>
 
 
 
+    </div>
+    <div class="row">
+        <div class="col">
+        <button
+          @click="onRouteReturn" id="backButton">Back To Workout</button>     
+        </div>
     </div>
     <div  v-for="exercise in exercises" :key="exercise._id">
         <div  v-if="exercises.indexOf(exercise) + 1 === pageNumber">
@@ -230,5 +235,14 @@ p, li, a{
 
 .is-active {
   color: white
+}
+#workoutName {
+    animation: blinking 1.5s infinite;
+    color: rgb(255,215,0);
+}
+@keyframes blinking{
+    60% {
+    opacity: 0.2;
+    }
 }
 </style>

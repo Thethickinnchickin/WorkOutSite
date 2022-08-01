@@ -80,7 +80,7 @@ router.post('/', verifyToken, async(req, res) => {
     }
 });
 
-//Getting Workouts For user
+//Getting Workout For user
 router.post('/:id', verifyToken, async(req, res) => {
     try {
         if(req.body.searchParams) {
@@ -116,7 +116,7 @@ router.post('/:id', verifyToken, async(req, res) => {
                     workout: workout
                 })
             } 
-        }
+        } 
 
         //Getting all workouts for user
         const workout = await Workout.findById(req.params.id)

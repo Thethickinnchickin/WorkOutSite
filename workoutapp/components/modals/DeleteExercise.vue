@@ -24,7 +24,7 @@ export default {
 
             this.workout.exercises = filtered
 
-            await this.$router.push(`/workout/${workoutId}`)
+            await window.location.reload()
             this.canDelete = true;
 
         },

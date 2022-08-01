@@ -38,7 +38,7 @@
     <td v-else></td>
 
     <!-- Actual Reps -->
-    <td v-if="!set.isCompleted">
+    <td v-if="!set.isCompleted && set.targetRepAmount">
         <input class="form-control"  v-model="actualRep"
         @submit="setTargetAmount(set._id, actualRepAmount, null, null)"
           type="number" value="0"  max="100" min="0"/>
@@ -56,7 +56,7 @@
     <td v-else></td>
 
     <!-- Actual Weight-->
-    <td v-if="!set.isCompleted"><input v-model="actualWeight"
+    <td v-if="!set.isCompleted && set.targetWeight"><input v-model="actualWeight"
         @submit="setTargetAmount(set._id, null, set.actualWeight, null)"
          class="form-control" type="number" value="0"  max="100" min="0"/>
     </td>
