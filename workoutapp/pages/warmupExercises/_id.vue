@@ -12,7 +12,7 @@ background-position: center top;" class="text-center mt-3 pt-5">
         </h1>
         </div>
         <div class="col-2">
-            <p class="mt-5 ml-3">Page:{{pageNumber}}</p>
+            <p class="mt-5 ml-3">Page:{{getPageNumber}}</p>
         </div>
 
 
@@ -25,7 +25,7 @@ background-position: center top;" class="text-center mt-3 pt-5">
         </div>
     </div>
     <div  v-for="exercise in exercises" :key="exercise._id">
-        <div  v-if="exercises.indexOf(exercise) + 1 === pageNumber">
+        <div  v-if="exercises.indexOf(exercise) + 1 === getPageNumber">
                 <Exercise :exercise='exercise'/>        
         </div>
     </div>
@@ -35,7 +35,7 @@ background-position: center top;" class="text-center mt-3 pt-5">
                 <ul>
                     <a @click="pageChange('subtract', pageNumber)"><li>&lt;</li></a>
                     <a style="color: white" :class="index === pageNumber ? 'is-active' :''" 
-                    :disabled="index === pageNumber ? true : false"
+                    :disabled="index === getPageNumber ? true : false"
                     v-for="index in exercises.length" :key="index" @click="pageChange('none', index)"><li>{{index}}</li></a>
                     <a @click="pageChange('add', pageNumber)"><li>></li></a>
                 </ul>

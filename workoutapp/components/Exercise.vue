@@ -77,6 +77,7 @@ input[type="number"] {
 
 <script>
 import Set from '~/components/Set.vue';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     components: {
@@ -91,12 +92,15 @@ export default {
     },
     props: ["exercise"],
     methods: {
+        ...mapActions(['newPageNumber']),
         completeExercise(isCompleted) {
             this.$axios.$put('/api/exercise/isCompleted',
              {exerciseId: this.exercise._id, isCompleted: isCompleted })
 
             this.exercise.isCompleted = isCompleted;
-        }
+        },
+
+
     }
 }
 </script>

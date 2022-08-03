@@ -3,31 +3,26 @@
     <td style="font-size:1vw" v-if="!set.isCompleted"
       class="text-right">
         <div v-if="set.rest">
-            <b-button  @click="stopCountdown()" type="button"
-             class="btn btn-sm btn-outline-danger" v-b-modal="`${set._id}`">
+            <button  type="button"
+             class="btn btn-sm btn-outline-danger"
+              @click="showModal(set._id)">
                 Set Incomplete
-            </b-button>
-            <b-modal :hide-footer="true" :id="`${set._id}`" title="Hold On">
-                <p class="my-4 text-center">Rest Timer</p>
-                <h3 v-if="countdownActive !== 'active'" class="text-center" :id="`${set._id}:countdownTimer`">{{set.rest}} mins</h3>
-                <h3 v-else-if="restTimeInSeconds > 0 && countdown !== 'active'" 
-                class="text-center">{{restTimeInSeconds}} secs</h3>
-                <b-button  
-                    class="btn btn-warning text-center" :id="`${set._id}:startTimer`" 
-                    @click="startCountdown(set.rest, set._id)">
-                        Start Timer
-                </b-button>
-                <b-button  @click="isCompleted(set._id, true)" 
-                class="btn btn-danger text-center">Complete Set</b-button>
-            </b-modal>            
+            </button>
+            <SetTimerModal
+            :set="set"
+            :restTimeinSeconds="restTimeinSeconds"
+            v-show="modalId === set._id"
+            @startTimer="startCountdown"
+            @completeSet="isCompleted(set._id, true)"
+            />         
         </div>
         <button @click="isCompleted(set._id, true)"  v-else class="btn btn-sm btn-outline-danger">
-            Set Inomplete
+            Set Incomplete
         </button> 
     </td>
     <td  style="font-size:1vw" v-if="set.isCompleted"  class="text-right">
         <button @click="isCompleted(set._id, false)"
-         style="font-size: 15px" v-b-modal.modal-delete-exercise
+         style="font-size: 15px" 
           class="btn btn-sm btn-outline-success">
           Set Complete
         </button>
@@ -115,22 +110,27 @@ input {
 </style>
 
 <script>
+import SetTimerModal from '~/components/modals/SetTimerModal.vue';
 var timer;
 
 export default {
+    components: {
+        SetTimerModal
+    },
     data() {
         return {
             actualRep: 0,
             actualWeight: 0,
             actualTime: 0,
-            actualLoad: 0
+            actualLoad: 0,
+            modalId: null
         }
     },
     asyncData() {
         return {
             countdownActive: 'inactive',
             restTimeInSeconds: 0,
-            timer: null
+            timer: null,
         }
 
     },
@@ -139,6 +139,8 @@ export default {
         async isCompleted(setId, isCompleted) {
             let response = await this.$axios.$put('/api/set/isCompleted', 
             {setId: setId, isCompleted: isCompleted});
+
+            clearInterval(timer);
 
             for(let i=0; i < this.exercise.sets.length; i++) { 
                 let sets = this.exercise.sets;
@@ -153,6 +155,9 @@ export default {
                 actualLoad: this.actualLoad,
                 setId: setId
             })
+
+            this.closeModal()
+
 
             for(let i=0; i < this.exercise.sets.length; i++) { 
                 let sets = this.exercise.sets;
@@ -233,6 +238,13 @@ export default {
             clearInterval(timer)
             this.countdownActive = 'inactive'
             this.restTimeInSeconds = 0
+        },
+        showModal(setId) {
+            this.modalId = setId
+
+        },
+        closeModal() {
+            this.modalId = null
         }
     }
 }

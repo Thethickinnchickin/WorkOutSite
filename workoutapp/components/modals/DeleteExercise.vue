@@ -1,6 +1,6 @@
 <template>
     <section>
-        <b-button  v-if="!workout.isCompleted"  style="font-size: 10px" v-b-modal="`${workout.exercises.indexOf(exercise)}`" class="btn btn-outline-danger ml-3" >Delete Exercise</b-button>
+        <b-button  v-if="!workout.isCompleted"  style="font-size: 10px" v-b-modal="`${workout.exercises.indexOf(exercise)}`" class="btn btn-sm btn-outline-danger ml-3" >Delete Exercise</b-button>
 
         <b-modal  v-if="!workout.isCompleted"  :hide-footer="true" :id="`${workout.exercises.indexOf(exercise)}`" title="Wait a seconds...">
             <p class="my-4">Are You sure about deleting this exercise? It cannot be undone</p>
@@ -24,7 +24,7 @@ export default {
 
             this.workout.exercises = filtered
 
-            await window.location.reload()
+            window.location.reload()
             this.canDelete = true;
 
         },

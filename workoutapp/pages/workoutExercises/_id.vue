@@ -13,7 +13,7 @@ background-position: center top;"  class="text-center mt-5 pt-5">
             </h1>
             </div>
             <div class="col-2">
-                <p class="mt-5 ml-3">Page:{{pageNumber}}</p>
+                <p class="mt-5 ml-3">Page:{{getPageNumber}}</p>
             </div>
         
 
@@ -35,8 +35,8 @@ background-position: center top;"  class="text-center mt-5 pt-5">
                 <div class="pagination p1 justify-content-center">
                     <ul>
                         <a @click="pageChange('subtract', pageNumber)"><li>&lt;</li></a>
-                        <a style="color: white" :class="index === pageNumber ? 'is-active' :''" 
-                        :disabled="index === pageNumber ? true : false"
+                        <a style="color: white" :class="index === getPageNumber ? 'is-active' :''" 
+                        :disabled="index === getPageNumber ? true : false"
                         v-for="index in exercises.length" :key="index" @click="pageChange('none', index)"><li>{{index}}</li></a>
                         <a @click="pageChange('add', pageNumber)"><li>></li></a>
                     </ul>
@@ -66,9 +66,7 @@ export default  {
 },
     data() {
 
-
         return {
-            pageNumber: this.$store.getters.getPageNumber,
             loading: false
         }
     },
@@ -80,10 +78,14 @@ export default  {
              exercises: response.exercises,
              workoutName: response.workoutName,
              workoutId: response.workoutId,
+            pageNumber: 1,
          }
 
     },
-    beforeCreate() {
+    async created(){
+        this.pageNumber = this.$store.getters.getPageNumber
+    },
+    beforeCreate()  {
         this.loading = true;
     },
     created() {
