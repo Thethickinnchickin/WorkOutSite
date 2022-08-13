@@ -173,7 +173,7 @@ router.post('/create/new', verifyToken, async (req, res) => {
                         let newSet = await new Set({
                             targetRepAmount: foundSet.targetRepAmount,
                             targetWeight: foundSet.targetWeight,
-                            targetTimeInSeconds: foundSet.targetTimeInSeconds,
+                            targetTimeinSeconds: foundSet.targetTimeinSeconds,
                             warmupSet: foundSet.warmupSet,
                             exerciseId: newExercise._id,
                             isCompleted: false,
