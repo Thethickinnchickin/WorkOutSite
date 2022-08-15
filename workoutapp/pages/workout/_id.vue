@@ -1,153 +1,107 @@
 <template>
-<main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
-<div v-if="!loading" class="loading">
-    <div class="container">
-        <div v-if="!loading" class="row py-lg-5 mt-5">
-            <div class="col-lg-6 col-md-8 mx-auto" style="width: 50%">
-                <h1 class="text-center">{{workout.name}}<br/></h1>
-                <p class="text-light">Notes:</p><p class="text-center text-light">{{workout.notes}}<br></p>
-                <button style="background-color: blue" v-if="!workout.isCompleted" @click=editWorkout(workout._id) 
-                class="glow-on-hover mt-2">Edit</button>
-                <button style="background-color:  #FF0800" class="glow-on-hover mt-2" v-b-modal.modal-1>Delete</button>
-                <b-modal :hide-footer="true" id="modal-1" title="Hold On">
-                    <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
-                    <b-button class="btn btn-danger" :disabled="!canDelete"  @click="onWorkoutDelete">Delete</b-button>
-                </b-modal>
-                <button  class="glow-on-hover mt-2" v-b-modal.duplicate>Duplicate</button>
-                <b-modal :hide-footer="true" id="duplicate" title="Hold On">
-                    <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
-                    <div class="form-floating">
-                        <input required type="date" pattern="\d{4}-\d{2}-\d{2}" v-model="date" class="form-control" id="floatingPassword">
-                        <label for="floatingPassword">Workout Date</label>
+<div v-if="pageNotFound">
+    <ErrorPage/>
+</div>
+<div v-else>
+    <main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
+    <div v-if="!loading" class="loading">
+            <div class="container">
+                <div v-if="!loading" class="row py-lg-5 mt-5">
+                    <div class="col-lg-6 col-md-8 mx-auto" style="width: 50%">
+                        <h1 class="text-center">{{workout.name}}<br/></h1>
+                        <p class="text-light">Notes:</p><p class="text-center text-light">{{workout.notes}}<br></p>
+                        <button style="background-color: blue" v-if="!workout.isCompleted" @click=editWorkout(workout._id) 
+                        class="glow-on-hover mt-2">Edit</button>
+                        <button style="background-color:  #FF0800" class="glow-on-hover mt-2" v-b-modal.modal-1>Delete</button>
+                        <b-modal :hide-footer="true" id="modal-1" title="Hold On">
+                            <p class="my-4">Are You sure about deleting this workout? It cannot be undone</p>
+                            <b-button class="btn btn-danger" :disabled="!canDelete"  @click="onWorkoutDelete">Delete</b-button>
+                        </b-modal>
+                        <button  class="glow-on-hover mt-2" v-b-modal.duplicate>Duplicate</button>
+                        <b-modal :hide-footer="true" id="duplicate" title="Hold On">
+                            <p class="my-4">Select Date You Want Duplicated Workout to be On</p>
+                            <div class="form-floating">
+                                <input required type="date" pattern="\d{4}-\d{2}-\d{2}" v-model="date" class="form-control" id="floatingPassword">
+                                <label for="floatingPassword">Workout Date</label>
+                            </div>
+                            <b-button class="btn btn-warning" @click="onWorkoutDuplicate" :disabled="!canDelete">Duplicate</b-button>
+                        </b-modal>
+
                     </div>
-                    <b-button class="btn btn-warning" @click="onWorkoutDuplicate" :disabled="!canDelete">Duplicate</b-button>
-                </b-modal>
+                </div>        
+            </div>
+
+
+            
+            <div v-if="!loading"  class="row">
+                <div class="col-12 rounded my-2"
+                style="color: rgb(57, 165, 17); height: 65px;">
+                <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
 
             </div>
-        </div>        
-    </div>
 
-
-    
-    <div v-if="!loading"  class="row">
-        <div class="col-12 rounded my-2"
-         style="color: rgb(57, 165, 17); height: 65px;">
-         <h1 class="text-center mt-2">{{workout.dateScheduled}}</h1></div>
-
-    </div>
-
-    <div v-if="!loading"  class="row my-3" style="border: none">
-        <div class="col-md-6">
-            <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                <a  v-if="!workout.isCompleted && warmupList.length > 0"  :href="'/warmupExercises/' + workout._id"
-                 class="stretched-link text-light" id="beginWorkout">Begin WarmUp</a>
-                 <a  v-else-if="!workout.isCompleted" 
-                  :href="'/newexercise/' + workout._id" class="stretched-link text-light"
-                   style="font-size: 25px">Add Exercise To Warm up</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-        <div  class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-            <a  v-if="!workout.isCompleted  && workoutList.length > 0"  :href="'/workoutExercises/' + workout._id"
-             class="stretched-link" id="beginWorkout" style="color: rgb(255,215,0)">Begin Workout</a>
-             <a  v-else-if="!workout.isCompleted" 
-              :href="'/newexercise/' + workout._id" class="stretched-link"
-               style="font-size: 25px">Add Exercise To Workout</a>
-            </div>
-        </div>
-        </div>
-    </div>
-    <button  v-if="!workout.isCompleted"  @click="onRouteChange(`/newexercise/${workout._id}`)"
-    class="text-center btn btn-sm btn-success mb-5" id="addExercise">Add Exercise +</button>
-    <!-- Warm up exercises -->
-    <div v-if="warmupList.length > 0" class="col-md-12">
-        <h1 class="text-light mb-4">Warm up Exercises: </h1>
-    <div class="container">
-        <div class="row text-center">
-            <div v-for="exercise of warmupList" class="col-lg-4">
-                <div class="card card-margin" style="background-color: black; border: 2px solid rgb(57, 165, 17)">
-                    <div class="card-body p-3">
-                        <div class="widget-49 mt-3 pr-3" style="height: 300px; width: auto">
-
-                            <div class="widget-49-meeting-info float-center">
-                                
-                            </div>
-                            <ul style="list-style: none" class="widget-49-meeting-info mb-5">
-                                <li class="widget-49-meeting-item text-light">
-                                    <span style="color: rgb(255,215,0)" class="widget-49-pro-title text-center mb-3">{{exercise.name}}</span></li>
-                                <li><span>Total Sets: <span style="color: #7FFFD4">{{exercise.sets.length}}</span></span></li>
-                                <li class="widget-49-meeting-item text-light"><span>Notes:</span></li>
-                                <li class="widget-49-meeting-item text-light mt-1"><p style="font-size: 8px">{{exercise.notes}}</p></li>
-                                <li>
-                                <button 
-                                    id="addExercise"
-                                        class="btn btn-sm btn-flash-border-primary2 mt-2"
-                                        @click="showModal(exercise._id)">
-                                        View Exercise</button>
-                                  
-                                </li>
-                                <li class="mt-3" v-if="exercise.isCompleted">
-                                    	<h1 style="color: rgb(255,215,0)">&#9745;</h1><p style="border: 2px solid rgb(255,215,0);color: rgb(57, 165, 17); width: auto">Completed</p>
-                                </li>       
-                                <li class="mt-3" v-if="!exercise.isCompleted">
-                                    	<h1 style="color: red">&#10079;</h1><p style="border: 2px solid red;color: red; width: auto">Incomplete</p>
-                                </li>
-                                <WorkoutModal
-                                    :id="exercise._id"
-                                    :workout="workout"
-                                    :exercise="exercise"
-                                    :canDuplicate="canDuplicate"
-                                    v-show="openedModal === exercise._id"
-                                    @close="closeModal"
-                                    @duplicateExercise="onExerciseDuplication(exercise)"
-                                />         
-                            </ul>
-                            <div class="widget-49-meeting-info mt-5">
-
-                            </div>
+            <div v-if="!loading"  class="row my-3" style="border: none">
+                <div class="col-md-6">
+                    <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                        <a  v-if="!workout.isCompleted && warmupList.length > 0"  :href="'/warmupExercises/' + workout._id"
+                        class="stretched-link text-light" id="beginWorkout">Begin WarmUp</a>
+                        <a  v-else-if="!workout.isCompleted" 
+                        :href="'/newexercise/' + workout._id" class="stretched-link text-light"
+                        style="font-size: 25px">Add Exercise To Warm up</a>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                <div  class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                    <a  v-if="!workout.isCompleted  && workoutList.length > 0"  :href="'/workoutExercises/' + workout._id"
+                    class="stretched-link" id="beginWorkout" style="color: rgb(255,215,0)">Begin Workout</a>
+                    <a  v-else-if="!workout.isCompleted" 
+                    :href="'/newexercise/' + workout._id" class="stretched-link"
+                    style="font-size: 25px">Add Exercise To Workout</a>
+                    </div>
+                </div>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
-    <!-- Exercises -->
-    <div class="col-md-12">
-        <h1 v-if="workoutList.length > 0" class="text-light mb-3">Exercises</h1>
-        <div class="container">
-            <div class="row">
-                <div v-for="exercise of workoutList" class="col-lg-4">
-                    <div class="card card-margin" style="background-color: black; border: 2px solid rgb(57, 165, 17)">
-                        <div class="card-body p-3">
-                            <div class="widget-49 mt-3 pr-3" style="height: 300px; width: auto">
+            <button  v-if="!workout.isCompleted"  @click="onRouteChange(`/newexercise/${workout._id}`)"
+            class="text-center btn btn-sm btn-success mb-5" id="addExercise">Add Exercise +</button>
+            <!-- Warm up exercises -->
+            <div v-if="warmupList.length > 0" class="col-md-12">
+                <h1 class="text-light mb-4">Warm up Exercises: </h1>
+            <div class="container">
+                <div class="row text-center">
+                    <div v-for="exercise of warmupList" class="col-lg-4">
+                        <div class="card card-margin" style="background-color: black; border: 2px solid rgb(57, 165, 17)">
+                            <div class="card-body p-3">
+                                <div class="widget-49 mt-3 pr-3" style="height: 300px; width: auto">
 
-                                <div class="widget-49-meeting-info float-center">
-                                    
-                                </div>
-                                <ul style="list-style: none" class="widget-49-meeting-info mb-5">
-                                    <li class="widget-49-meeting-item text-light">
-                                        <span style="color: rgb(255,215,0)" class="widget-49-pro-title text-center mb-3">{{exercise.name}}</span></li>
-                                    <li><span>Total Sets: <span style="color: #7FFFD4">{{exercise.sets.length}}</span></span></li>
-                                    <li class="widget-49-meeting-item text-light"><span>Notes:</span></li>
-                                    <li class="widget-49-meeting-item text-light"><p style="font-size: 8px;">{{exercise.notes}}</p></li>
-                                    <li>
-                                    <button 
-                                    id="addExercise"
-                                        class="btn btn-sm btn-flash-border-primary2 mt-2"
-                                        @click="showModal(exercise._id)">
-                                        View Exercise</button>
-                                    </li>
-                                    <li class="mt-3" v-if="exercise.isCompleted">
-                                        <h1 style="color: rgb(255,215,0)">&#9745;</h1><p style="border: 2px solid rgb(255,215,0);color: rgb(57, 165, 17); width: auto">Completed</p>
-                                    </li>       
-                                    <li class="mt-3" v-if="!exercise.isCompleted">
-                                        <h1 style="color: red">&#10079;</h1><p style="border: 2px solid red;color: red; width: auto">Incomplete</p>
-                                    </li>
-                                    <li>
+                                    <div class="widget-49-meeting-info float-center">
+                                        
+                                    </div>
+                                    <ul style="list-style: none" class="widget-49-meeting-info mb-5">
+                                        <li class="widget-49-meeting-item text-light">
+                                            <span style="color: rgb(255,215,0)" class="widget-49-pro-title text-center mb-3">{{exercise.name}}</span></li>
+                                        <li><span>Total Sets: <span style="color: #7FFFD4">{{exercise.sets.length}}</span></span></li>
+                                        <li class="widget-49-meeting-item text-light"><span>Notes:</span></li>
+                                        <li class="widget-49-meeting-item text-light mt-1"><p style="font-size: 8px">{{exercise.notes}}</p></li>
+                                        <li>
+                                        <button 
+                                            id="addExercise"
+                                                class="btn btn-sm btn-flash-border-primary2 mt-2"
+                                                @click="showModal(exercise._id)">
+                                                View Exercise</button>
+                                        
+                                        </li>
+                                        <li class="mt-3" v-if="exercise.isCompleted">
+                                            <h1 style="color: rgb(255,215,0)">&#9745;</h1><p style="border: 2px solid rgb(255,215,0);color: rgb(57, 165, 17); width: auto">Completed</p>
+                                            <p style="'color: rgb(57, 165, 17)'">Good Job!</p>
+                                        </li>       
+                                        <li class="mt-3" v-if="!exercise.isCompleted">
+                                            <h1 style="color: red">&#9634;</h1><p 
+                                            style="border: 2px solid red;color: red; width: auto">Incomplete</p>
+                                            <p style="color: red">Keep Going!</p>
+                                        </li>
                                         <WorkoutModal
                                             :id="exercise._id"
                                             :workout="workout"
@@ -156,36 +110,96 @@
                                             v-show="openedModal === exercise._id"
                                             @close="closeModal"
                                             @duplicateExercise="onExerciseDuplication(exercise)"
-                                        />                                       
-                                    </li>
-                                </ul>
-                                <div class="widget-49-meeting-info mt-5">
+                                        />         
+                                    </ul>
+                                    <div class="widget-49-meeting-info mt-5">
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    
-    </div>
+            </div>
+            <!-- Exercises -->
+            <div class="col-md-12">
+                <h1 v-if="workoutList.length > 0" class="text-light mb-3">Exercises</h1>
+                <div class="container">
+                    <div class="row">
+                        <div v-for="exercise of workoutList" class="col-lg-4">
+                            <div class="card card-margin" style="background-color: black; border: 2px solid rgb(57, 165, 17)">
+                                <div class="card-body p-3">
+                                    <div class="widget-49 mt-3 pr-3" style="height: 300px; width: auto">
+
+                                        <div class="widget-49-meeting-info float-center">
+                                            
+                                        </div>
+                                        <ul style="list-style: none" class="widget-49-meeting-info mb-5">
+                                            <li class="widget-49-meeting-item text-light">
+                                                <span style="color: rgb(255,215,0)" class="widget-49-pro-title text-center mb-3">{{exercise.name}}</span></li>
+                                            <li><span>Total Sets: <span style="color: #7FFFD4">{{exercise.sets.length}}</span></span></li>
+                                            <li class="widget-49-meeting-item text-light"><span>Notes:</span></li>
+                                            <li class="widget-49-meeting-item text-light"><p style="font-size: 8px;">{{exercise.notes}}</p></li>
+                                            <li>
+                                            <button 
+                                            id="addExercise"
+                                                class="btn btn-sm btn-flash-border-primary2 mt-2"
+                                                @click="showModal(exercise._id)">
+                                                View Exercise</button>
+                                            </li>
+                                            <li class="mt-3" v-if="exercise.isCompleted">
+                                                <h1 style="color: rgb(255,215,0)">&#9745;</h1>
+                                                <p style="border: 2px solid rgb(255,215,0);color: rgb(57, 165, 17); width: auto">Completed</p>
+                                                <p style="'color: rgb(57, 165, 17)'">Good Job!</p>
+                                            </li>       
+                                            <li class="mt-3" v-if="!exercise.isCompleted">
+                                                <h1 style="color: red">&#9634;</h1>
+                                                <p style="border: 2px solid red;color: red; width: auto">Incomplete</p>
+                                                <p style="color: red">Keep Going!</p>
+                                            </li>
+                                            <li>
+                                                <WorkoutModal
+                                                    :id="exercise._id"
+                                                    :workout="workout"
+                                                    :exercise="exercise"
+                                                    :canDuplicate="canDuplicate"
+                                                    v-show="openedModal === exercise._id"
+                                                    @close="closeModal"
+                                                    @duplicateExercise="onExerciseDuplication(exercise)"
+                                                />                                       
+                                            </li>
+                                        </ul>
+                                        <div class="widget-49-meeting-info mt-5">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
 
 
 
 
-    <div v-if="!workout.isCompleted && !loading" class="row">
-        <div class="col-12">          
-            <CompleteButton :workoutId="workout._id" />  
-        </div>
-    </div>
+            <div v-if="!workout.isCompleted && !loading" class="row">
+                <div class="col-12">          
+                    <CompleteButton :workoutId="workout._id" />  
+                </div>
+            </div>
 
+        </div> 
+    </main>
+
+    <div v-if="loading">Loading</div>
+     
 </div>
-<div v-if="loading">Loading</div>
 
 
 
-</main>
 </template>
 
 
@@ -194,12 +208,14 @@ import moment from 'moment'
 import CompleteButton from '~/components/Buttons/WorkoutCompleted.vue'
 import DeleteExercise from '~/components/modals/DeleteExercise.vue'
 import WorkoutModal from '~/components/modals/WorkoutModal.vue'
+import ErrorPage from '~/components/ErrorPage.vue'
 
 export default {
     components: {
         CompleteButton,
         DeleteExercise,
-        WorkoutModal
+        WorkoutModal,
+        ErrorPage
     },
     data() {
         return {
@@ -240,7 +256,10 @@ export default {
                 canDuplicate: true
             }
         } catch (err) {
-            console.log(err);
+            console.log(err)
+           return {
+            pageNotFound: true
+           }
         }
     },
     methods: {

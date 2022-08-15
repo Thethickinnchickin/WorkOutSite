@@ -1,5 +1,10 @@
 const port = process.env.PORT || 8000
 export default {
+
+  generate: {
+    fallback: '404.html'
+  },
+
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
