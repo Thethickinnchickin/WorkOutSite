@@ -114,7 +114,7 @@
         </div>    
     </div>
   
-    <div class="isMobile">
+    <div class="isMobile" style="width: 90vw;">
          <div class="row mt-5">
           <div class="col">
             <h2 class="pt-5 mt-5 ml-3 border-bottom" style="font-size: 10px">Completed Workouts</h2>
@@ -438,7 +438,7 @@
   
   
   /* MOBILE PHONE */
-  @media only screen and (max-width: 363px)  {
+  @media only screen and (max-width: 500px)  {
     #workoutCard {
       display: flex;
       width: auto;
@@ -525,6 +525,11 @@
       flex-direction: column;
     }
   }
+  }
+  @media only screen and (min-width: 500px)  {
+    .isMobile {
+      display: none;
+    }
   }
   
   

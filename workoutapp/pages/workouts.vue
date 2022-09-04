@@ -178,7 +178,7 @@
 
       </div>      
     </div>
-    <div class="isMobile">
+    <div class="isMobile" style="width: 90vw;">
       <div class="section_our_solution mt-5 pt-5">
         <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
       <div class="row mt-4 mx-3 ">
@@ -493,7 +493,7 @@ h3 {
 }
 
 /* MOBILE PHONE */
-@media only screen and (max-width: 364px)  {
+@media only screen and (max-width: 500px)  {
   .isMain {
     display: none;
   }
@@ -574,7 +574,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 }
 
 }
-@media only screen and (min-width: 364px) {
+@media only screen and (min-width: 500px) {
   .isMobile {
     display: none;
   }
