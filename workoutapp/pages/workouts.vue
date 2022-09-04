@@ -1,15 +1,11 @@
 <template>
 
-  <main >
-    <div v-if="pageNotFound">
-      <ErrorPage />
-    </div>
-    <div v-else>
-
-      <div v-if="!loading" class="section_our_solution mt-5 pt-5">
+  <main>
+    <div class="isMain">
+      <div class="section_our_solution mt-5 pt-5">
         <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
       <div class="row mt-4 mx-3 ">
-      <div v-for="workout in workoutsToComplete" :key="workout._id" class="col-3 mr-0">
+      <div v-for="workout in workoutsToComplete" id="workoutCard"  :key="workout._id" class="row-3 workoutClass">
         <div class="our_solution_category mt-3">
           <div class="solution_cards_box">
             <div style="background-color: black; border: 1px solid rgb(12, 247, 255)"  class="solution_card">
@@ -75,7 +71,7 @@
 
         </div>
       </div>
-      <div v-if="workoutsToComplete.length >= 3"  class="col-3 mr-0">
+      <div v-if="workoutsToComplete.length >= 3"  class="ml-5 pl-1 mr-0">
         <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
           <div class="solution_cards_box">
             <div class="solution_card"  id="viewMore2"  style="background-color: black;">
@@ -92,9 +88,9 @@
 
 
       <h2 v-if="workoutsCompleted.length > 0" class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17);
-      border-bottom: 1px solid rgb(57, 165, 17); text-align: center;">Completed Workouts</h2>
+      border-bottom: 1px solid rgb(57, 165, 17); text-align: center;" id="completedWorkouts">Completed Workouts</h2>
       <div class="row mt-4 mx-3 ">
-      <div v-for="workout in workoutsCompleted" :key="workout._id" class="col-3 mr-0">
+      <div v-for="workout in workoutsCompleted"  id="workoutCard" :key="workout._id" class=" mr-5">
         <div class="our_solution_category mt-3">
           <div class="solution_cards_box">
             <div  style="background-color: black; border: 1px solid rgb(12, 247, 255)"  class="solution_card">
@@ -164,7 +160,7 @@
 
         </div>
       </div>
-      <div v-if="workoutsCompleted.length  >= 3" class="col-3 mr-0">
+      <div v-if="workoutsCompleted.length  >= 3"  id="workoutCard"  >
         <div @click="routeRedirect('/completedWorkouts')" class="our_solution_category mt-3">
           <div class="solution_cards_box">
             <div class="solution_card" id="viewMore2" style="background-color: black;">
@@ -178,12 +174,83 @@
       </div>
 
       </div>
-    <div class="row mt-4 mx-3"></div>
+      <div class="row mt-4 mx-3"></div>
+
+      </div>      
+    </div>
+    <div class="isMobile">
+      <div class="section_our_solution mt-5 pt-5">
+        <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
+      <div class="row mt-4 mx-3 ">
+      <div v-for="workout in workoutsToComplete" id="workoutCard"  :key="workout._id" class="row-3 workoutClass">
+
+        <div class="cards-list">
+          
+        <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
+          <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+          <div class="card_title title-white pb-5" style="font-size: 10px">
+            <p>{{workout.dateScheduled}}</p>
+            <p>{{workout.name}}</p>
+
+          </div>
+        </div>
+        
+        </div>
 
       </div>
-      <div v-else>
-        <Loading/>
-      </div>      
+      <div v-if="workoutsToComplete.length >= 3"  style="width: 1000px">
+        <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
+          <div class="card 1" style="background-color: black; width: 100%">
+          <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+          <div class="card_title title-white pb-5" style="font-size: 10px">
+            <p class="mt-2">View More</p>
+
+
+          </div>
+        </div>
+
+        </div>
+      </div>
+
+      </div>
+
+
+      <h2 v-if="workoutsCompleted.length > 0" class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17);
+      border-bottom: 1px solid rgb(57, 165, 17); text-align: center;" id="completedWorkouts">Completed Workouts</h2>
+      <div class="row mt-4 mx-3 ">
+      <div v-for="workout in workoutsCompleted"  id="workoutCard" :key="workout._id" >
+        <div class="cards-list">
+          
+          <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
+            <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+            <div class="card_title title-white pb-5" style="font-size: 10px">
+              <p>{{workout.dateScheduled}}</p>
+              <p>{{workout.name}}</p>
+  
+            </div>
+          </div>
+          
+          </div>
+  
+        </div>
+        <div v-if="workoutsCompleted.length >= 3"  style="width: 1000px">
+          <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
+            <div class="card 1" style="background-color: black; width: 100%">
+            <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+            <div class="card_title title-white pb-5" style="font-size: 10px">
+              <p class="mt-2">View More</p>
+  
+  
+            </div>
+          </div>
+  
+          </div>
+        </div>
+
+      </div>
+      <div class="row mt-4 mx-3"></div>
+
+      </div>   
     </div>
 
   </main>
@@ -196,59 +263,39 @@
 
 <script>
 import moment from 'moment';
-import Loading from '~/components/Loading.vue';
-import ErrorPage from '~/components/ErrorPage.vue'
 
 export default {
-    components: {
-      Loading,
-      ErrorPage
-    },
     async asyncData({$axios}) {
-      try {
-          let loading = true;
-          let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
-            totalWorkouts: 3,
-            isCompleted: true
-          }});
+        let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
+          totalWorkouts: 3,
+          isCompleted: true
+        }});
 
+        let incompletedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
+          totalWorkouts: 3,
+          isCompleted: false
+        }});
 
-          let incompletedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
-            totalWorkouts: 3,
-            isCompleted: false
-          }});
-
-          let FormattedCompletedWorkouts = []
-          let FormattedInCompletedWorkouts = []
-          
-          for(let workout of completedWorkoutsresponse.workouts)
-          {
-              let date = new Date(workout.dateScheduled)
-              workout.dateScheduled = moment(date)
-                  .format('MMMM D');
-              FormattedCompletedWorkouts.push(workout);
-          }
-          for(let workout of incompletedWorkoutsresponse.workouts)
-          {
-              let date = new Date(workout.dateScheduled)
-              workout.dateScheduled = moment(date)
-                  .format('MMMM D');
-              FormattedInCompletedWorkouts.push(workout);
-          }
-          loading = false;
-
-
-          return {
-              workoutsCompleted: FormattedCompletedWorkouts,
-              workoutsToComplete: FormattedInCompletedWorkouts,
-              loading: loading
-          }
-      } catch(e) {
-        return {
-          pageNotFound: true
+        let FormattedCompletedWorkouts = []
+        let FormattedInCompletedWorkouts = []
+        
+        for(let workout of completedWorkoutsresponse.workouts)
+        {
+            workout.dateScheduled = moment(String(workout.dateScheduled))
+                .format('MM/DD/YYYY');
+            FormattedCompletedWorkouts.push(workout);
         }
-      }
+        for(let workout of incompletedWorkoutsresponse.workouts)
+        {
+            workout.dateScheduled = moment(String(workout.dateScheduled))
+                .format('MM/DD/YYYY');
+            FormattedInCompletedWorkouts.push(workout);
+        }
 
+        return {
+            workoutsCompleted: FormattedCompletedWorkouts,
+            workoutsToComplete: FormattedInCompletedWorkouts
+        }
     },
     methods: {
       goToWorkout(id) {
@@ -442,6 +489,94 @@ h3 {
   .our_solution_category {
     width: 50%;
     margin: 0 auto;
+  }
+}
+
+/* MOBILE PHONE */
+@media only screen and (max-width: 364px)  {
+  .isMain {
+    display: none;
+  }
+  #workoutCard {
+    display: flex;
+    width: auto;
+    margin: auto;
+  }
+  #workoutsToComplete{
+    padding-top: 50px;
+    font-size: 20px;
+  }
+  #completedWorkouts {
+    padding-top: 50px;
+    font-size: 20px;
+  }
+
+  .cards-list {
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 40px;
+box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.card .card_image {
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+}
+
+.card .card_image img {
+  width: inherit;
+  height: inherit;
+  border-radius: 40px;
+  object-fit: cover;
+}
+
+.card .card_title {
+  text-align: center;
+  border-radius: 0px 0px 40px 40px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: -80px;
+  height: 40px;
+}
+
+.card:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
+    -5px -5px 30px 15px rgba(0,0,0,0.22);
+}
+
+.title-white {
+  color: white;
+}
+
+.title-black {
+  color: black;
+}
+
+@media all and (max-width: 500px) {
+  .card-list {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+}
+@media only screen and (min-width: 364px) {
+  .isMobile {
+    display: none;
   }
 }
 

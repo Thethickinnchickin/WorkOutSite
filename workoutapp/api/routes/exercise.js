@@ -35,19 +35,48 @@ router.post("/", verifyToken, async (req, res) => {
 
         if(req.body.searchParams !== null && req.body.searchParams.workoutId !== null && req.body.searchParams.isWarmup !== null) {
             try {
-                const exercises = await Exercise.find({workoutId: req.body.searchParams.workoutId,
-                warmUpExercise: req.body.searchParams.isWarmup})
-                .populate('sets')
-                .exec()
+                if(req.body.searchParams.pageNumber) {
+                    const exercise = await Exercise
+                        .where({workoutId: req.body.searchParams.workoutId,
+                        warmUpExercise: req.body.searchParams.isWarmup})
+                        .skip((req.body.searchParams.pageNumber - 1))
+                        .limit(1)            
+                        .populate('sets')       
 
-                const workout = await Workout.findById({_id:req.body.searchParams.workoutId}).exec();
+                    
 
-                res.json({
-                    success: true,
-                    exercises: exercises,
-                    workoutName: workout.name,
-                    workoutId: workout._id
-                })
+                    const exerciseLength = (await Exercise.find()
+                    .where({workoutId: req.body.searchParams.workoutId}).exec()).length
+
+                    const workout = await Workout.findById({_id:req.body.searchParams.workoutId}).exec();
+                
+
+                    res.json({
+                        success: true,
+                        exercise: exercise,
+                        workoutName: workout.name,
+                        workoutId: workout._id,
+                        exerciseLength: exerciseLength
+                    })                    
+
+                } else {
+                    const exercises = await Exercise.find({workoutId: req.body.searchParams.workoutId,
+                    warmUpExercise: req.body.searchParams.isWarmup})
+                    .populate('sets')
+                    .exec()
+                    
+
+                    const workout = await Workout.findById({_id:req.body.searchParams.workoutId}).exec();
+                    
+
+                    res.json({
+                        success: true,
+                        exercise: exercises,
+                        workoutName: workout.name,
+                        workoutId: workout._id
+                    })                    
+                }
+
             } catch (err) {
                 res.status(500).json({
                     success: false,
