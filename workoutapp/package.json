@@ -10,7 +10,10 @@
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
-    "eslint": "^8.20.0"
+    "@nuxtjs/style-resources": "^1.2.1",
+    "eslint": "^8.20.0",
+    "sass": "^1.54.8",
+    "sass-loader": "10.1.1"
   },
   "engines": {
     "node": "v16.13.0",
@@ -21,6 +24,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "body-parser": "^1.20.0",
     "bootstrap-vue": "^2.22.0",
+    "compass": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "connect-mongoose": "0.0.2",
     "core-js": "^3.23.4",

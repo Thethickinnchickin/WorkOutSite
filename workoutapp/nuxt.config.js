@@ -48,6 +48,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/style-resources',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -94,6 +95,15 @@ export default {
         }
       }
     }
+  },
+
+  
+ styleResources: {
+    scss: [
+      '~/assets/style/variables.scss',
+      '~/assets/style/mixins.scss',
+      '~/assets/style/functions.scss'
+    ],
   },
 
   serverMiddleware: ['~/api/app.js'],
