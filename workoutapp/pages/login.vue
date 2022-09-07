@@ -1,6 +1,6 @@
 
 <template>
-    <main class="text-center col-5 form-signin w-100 m-auto mt-5 pt-5">
+    <main class="text-center col form-signin w-100 m-auto mt-5 pt-5">
         <div v-if="loginFailed">
         <div class="row">
             <div class="col">
@@ -58,6 +58,11 @@ export default {
 </script>
 
 <style scoped>
+    form {
+    width: 50vw;
+    margin: auto;
+}
+
 #createButton {
   border: 2px solid rgb(57, 165, 17);
   border-radius: 3px;
@@ -73,6 +78,14 @@ export default {
 input[type="text"],input[type="password"] {
   background-color: black;
   color: rgb(57, 165, 17);
+}
+
+@media only screen and (max-width: 363px) {
+    form {
+        width: 90vw;
+        margin: auto;
+        text-align: start;
+    }
 }
 </style>
 

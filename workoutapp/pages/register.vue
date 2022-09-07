@@ -1,6 +1,6 @@
 
 <template>
-    <main class="text-center col-5 form-signin w-100 m-auto mt-5 pt-5">
+    <main class="text-center col form-signin w-100 m-auto mt-5 pt-5 main">
     <form class="mt-5 pt-5" @submit.prevent="userRegister" data-dashlane-rid="2608e848dd94dbf1" data-form-type="login">
         <img class="my-4" src="/images/workout.png" alt="photo" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Create Your Account</h1>
@@ -52,6 +52,11 @@ export default {
 
 
 <style scoped>
+form {
+    width: 50vw;
+    margin: auto;
+}
+
 #createButton {
   border: 2px solid rgb(57, 165, 17);
   border-radius: 3px;
@@ -67,5 +72,13 @@ export default {
 input[type="text"],input[type="password"],input[type="email"] {
   background-color: black;
   color: rgb(57, 165, 17);
+}
+
+@media only screen and (max-width: 363px) {
+    form {
+        width: 90vw;
+        margin: auto;
+        text-align: start;
+    }
 }
 </style>

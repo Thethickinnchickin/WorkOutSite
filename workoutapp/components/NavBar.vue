@@ -1,31 +1,49 @@
 <template>
     <div>
-        <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
-        <div class="container">
-        <a class="navbar-brand" @click="goToRoute('/')"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
-        <button  id="createNavButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul v-if="!$auth.$state.loggedIn" class="navbar-nav ms-auto">
-            <li class="nav-item">
-            <a class="nav-link" href="/login">Sign In</a>
-            </li>
-            <button id="createNavButton" type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
-        </ul>
-        <ul v-if="$auth.$state.loggedIn" class="navbar-nav ms-auto">
-            <li class="nav-item">
-            <button class="nav-link" style="border: none; background-color: black" @click="goToRoute('/workouts')">Go To Workouts</button>
-            </li>
-            <button style="background-color: black;" id="createNavButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
-            
-        </ul>
+        <div class="isMain">
+          <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
+          <div class="container">
+          <a class="navbar-brand" @click="goToRoute('/')"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
+          <button  id="createNavButton" class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+          data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul v-if="!$auth.$state.loggedIn" class="navbar-nav ms-auto">
+              <li class="nav-item">
+              <a class="nav-link" href="/login">Sign In</a>
+              </li>
+              <button id="createNavButton" type="button" @click="goToRoute('/register')" class="btn btn-dark ms-3">Register</button>
+          </ul>
+          <ul v-if="$auth.$state.loggedIn" class="navbar-nav ms-auto">
+              <li class="nav-item">
+              <button class="nav-link" style="border: none; background-color: black" @click="goToRoute('/workouts')">Go To Workouts</button>
+              </li>
+              <button style="background-color: black;" id="createNavButton" type="button" @click="goToRoute('/workout/new')" class="btn btn-dark ms-3">Create Workout</button>
+              
+          </ul>
+          </div>
+          </div>
+          <a v-if="$auth.$state.loggedIn" @click="onLogOut" href="" class="nav-link float-right">Logout</a>
+          </nav>          
         </div>
+        <div class="isMobile">
+        
+          <nav style="border-bottom: 2px solid rgb(57, 165, 17);" class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0">
+          <div class="container">
+          <a class="navbar-brand" @click="goToRoute('/')"><img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x"></a>
+          <div v-if="$auth.$state.loggedIn">
+            <button id="mobileButtons" @click="$router.push('/workouts')" class="btn m-0" style="font-size: 8px; border: 2px solid rgb(57, 165, 17); color: white">Workouts</button>
+            <button id="mobileButtons" @click="$router.push('/workout/new')" class=" btn" style="font-size: 8px;  border: 2px solid rgb(57, 165, 17); color: white">Create</button>
+            <button v-if="$auth.$state.loggedIn"  class="btn" @click="onLogOut" style="font-size: 8px; color: red; padding: auto" id="mobileButtons">Logout</button>
+          </div>
+
+          </div>
+
+          </nav> 
         </div>
-        <a v-if="$auth.$state.loggedIn" @click="onLogOut" href="" class="nav-link float-right">Logout</a>
-        </nav>
+
     </div>
 </template>
 
@@ -83,6 +101,32 @@
     background-color: black;
     color:rgb(57, 165, 17);
 }
+
+}
+
+@media  screen and (max-width: 363px) {
+  .isMain {
+    display: none
+  }
+  #mobileButtons {
+    border: 2px solid rgb(57, 165, 17);
+    background-color: black;
+  }
+  #mobileButtons:hover {
+    border: 2px solid white;
+    background-color: rgb(57, 165, 17);
+  }
+}
+
+@media screen and (min-width: 363px) {
+  .isMobile {
+    display: none;
+  }
+
+  #mobileButtons {
+    display: none;
+
+  }
 }
 </style>
 

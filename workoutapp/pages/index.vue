@@ -56,10 +56,14 @@
 
     <div class="row mt-5 pt-5 d-flex">
         <div class="col-1"></div>
-        <div class="col-10 topCard container">
+        <div v-if="$auth.$state.loggedIn" class="col-10 topCard container">
 
           <div class="row" style="width: 100%" >
-              <div class="todaysDate">
+            <div class="todaysDate" style="height:auto">
+                  Hello {{$auth.$state.user.username}}
+                </div>
+              <div class="todaysDate border-bottom" style="height:auto">
+
                 <div class="row-1">
                   <div class="col">
                       <h1 style="font-size: 12px;">
@@ -68,32 +72,77 @@
                   </div>
                 </div>
               </div>
-              <div class="todaysWorkout">
+              <div class="todaysWorkout mt-3" @click="$router.push(`/workout/${workout._id}`)">
                     <div class="col" >
                       <div class="row">
-                          <h1 style="font-size: 18px; margin:auto;" >Workout Today: </h1>
+                          <h1 style="font-size: 14px; margin:auto;" >Scheduled Workout</h1>
                       </div>
-                      <div class="row">
+                      <div class="row mt-3">
                         <h1 style="font-size: 10px; color: white; margin: auto;" > {{workout.name}}</h1>
                       </div>                     
                     </div>
               </div> 
-              <div class="todaysWorkout">
+              <div class="todaysWorkout" @click="$router.push('/workout/new')">
                     <div class="col" >
                       <div class="row">
-                          <h1 style="font-size: 18px; margin: auto;" >Create New Workout</h1>
-                      </div>
-                      <div class="row">
-                        <h1 style="font-size: 10px; color: white; margin: auto;" > {{workout.name}}</h1>
-                      </div>                     
+                          <h1 style="font-size: 10px; margin: auto;" >Create New Workout</h1>
+                      </div>              
                     </div>
-              </div>     
+              </div> 
+              <div class="todaysWorkout" @click="$router.push('/workouts')">
+                <div class="col">
+                  <div class="row">
+                    <h1 style="font-size: 10px; margin: auto;">Browse Your Workouts</h1>
+                  </div>
+                </div>
+              </div>   
+              <div style="height: 50px; font-size: 14px;" class="todaysDate border-bottom">
+                Go To Your Workouts
+              </div>
+              <div class="todaysDate"  style="height: 50px;">
+                <div class="col bottom-cards-1 mr-1" @click="$router.push('/incompleteWorkouts')">
+                  <h1 style="font-size: 8px; margin: auto;">Incomplete</h1>
+                </div>
+                <div class="col bottom-cards-2 ml-1" @click="$router.push('/completedWorkouts')">
+                  <h1 style="font-size: 8px; margin: auto;" >Completed</h1>
+                </div>
+              </div> 
           </div>
 
 
         </div>
+        <div v-else class="col-10 topCard container" style="height: 425px">
+          <div class="row" style="width: 100%; height: 100px" >
+            <div class="todaysDate" style="height:100px">
+              Welcome to Big Man's League
+            </div>
+            <div class="todaysDate border-bottom" style="height:auto">
+
+              <div class="row-1 mb-3">
+                <div class="col">
+                  <img height="50px"  src="/images/workout.png" class="fab fa-mdb fa-4x">                    
+                </div>
+              </div>
+            </div>
+            <div class="todaysWorkout mt-3"  @click="$router.push('/register')">
+                <div class="col" >
+                  <div class="row">
+                      <h1 style="font-size: 15px; margin: auto;" >Register</h1>
+                  </div>              
+                </div>
+              </div> 
+              <div class="todaysWorkout mt-3" style=" box-shadow: 0 15px 60px rgb(57, 165, 17);"  @click="$router.push('/login')">
+                <div class="col">
+                  <div class="row">
+                    <h1 class="text-light" style="font-size: 15px; margin: auto;">Sign In</h1>
+                  </div>
+                </div>
+              </div>   
+          </div>
+
+        </div>
         <div class="col-1"></div>  
-</div>
+    </div>
 
 
     </div>
@@ -156,7 +205,7 @@
 
   .topCard {
     backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.872);
+    background-color: rgba(0, 0, 0, 0.625);
     height: 40vh;
     width: 100%;
 
@@ -164,6 +213,7 @@
     border-radius: 40px;
     display: flex;
     justify-content: center;
+    box-shadow: 0 15px 60px; 
   }
 
   .todaysDate {
@@ -173,6 +223,7 @@
     align-items: center;
     width: 100%;
     height: 100px;
+    
   }
 
   .topCard p {
@@ -181,19 +232,69 @@
   }
 
   .todaysWorkout {
-    background-color: rgb(99, 99, 99);
+    background-color: rgb(0, 0, 0);
     height: 100px;
     width: 100%;
     border-radius: 49px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    box-shadow: 0 15px 60px blueviolet; 
+  }
+
+  .todaysWorkout:hover {
+    cursor: pointer;
+    background-color: rgba(134, 42, 221, 0.462);
+    box-shadow: 0 10px 15px rgb(57, 165, 17);
+    color: white;
   }
 
 
+
+  .bottom-cards-1 {
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    border-radius: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    box-shadow: 0 15px 60px;  
+  }
+
+  .bottom-cards-2 {
+    background-color: rgb(57, 165, 17);
+    height: 100%;
+    width: 100%;
+    border-radius: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    box-shadow: 0 15px 60px;  
+  }
+
+
+
+  .bottom-cards-1:hover {
+    cursor: pointer;
+    background-color: black;
+    border: 2px solid red;
+    color: red;
+    box-shadow: 0 10px 15px red;
+  }
+
+  .bottom-cards-2:hover {
+    cursor: pointer;
+    background-color: black;
+    border: 2px solid rgb(57, 165, 17);
+    color: rgb(57, 165, 17);
+    box-shadow: 0 10px 15px rgb(57, 165, 17);
+  }
+
 }
-@media only screen and (min-width: 500px)  {
+@media only screen and (min-width: 363px)  {
     .isMobile {
       display: none;
     }
@@ -204,7 +305,9 @@
 import moment from 'moment';
 
 export default {
-    async asyncData({$axios}) {
+    async asyncData({$axios,$auth}) {
+      console.log($auth.$state.loggedIn)
+      if($auth.$state.loggedIn) {
         let response = await $axios.$post('/api/workout', {isMainPage: true});
 
 
@@ -214,8 +317,10 @@ export default {
 
         return {
           workout: workout,
-          today: moment().format('MM/DD/YY')
+          today: moment().format('MMM Do YYYY')
         }
+      }
+
     }        
 }
 
