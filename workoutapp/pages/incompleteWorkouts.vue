@@ -117,14 +117,14 @@
     <div class="isMobile" style="width: 90vw;">
          <div class="row mt-5">
           <div class="col">
-            <h2 class="pt-5 mt-5 ml-3 border-bottom" style="font-size: 10px">Completed Workouts</h2>
+            <h2 class="pt-5 mt-5 ml-3 border-bottom" style="font-size: 10px">Incomplete Workouts</h2>
           </div>
           <div class="col">
             <h2 class="pt-5 mt-5 border-bottom" style="font-size: 10px; color: white">Page Number: {{pageNumber}}</h2>
           </div>
   
          </div>  
-         <div class="row mt-2">
+         <div class="row ml-3">
               <div class="col">
                   <ul class="pagination justify-content-center paginationMobile" >
                       <li class="page-item">
@@ -143,16 +143,16 @@
                   </ul>
               </div>
           </div>      
-        <div class="row">
+        <div class="row ml-2">
         <div v-for="workout in workoutsNotCompleted">
           <div class="col">
             <div class="cards-list" >
               
               <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
                 <div class="card_image"> <img src="~/static/images/jeremy-lapak-CVvFVQ_-oUg-unsplash.jpg"/> </div>
-                <div class="card_title title-white pb-5" style="font-size: 10px">
-                  <p style="font-size: 7px; color: black;">{{workout.dateScheduled}}</p>
-                  <p style="color: black">{{workout.name}}</p>
+                <div class="card_title title-white pb-5 " style="font-size: 10px">
+                  <p class="mt-4" style="font-size: 5px; color: black;">{{workout.dateScheduled}}</p>
+                  <p style="color: black; font-size: 7px">{{workout.name}}</p>
       
                 </div>
               </div>
@@ -165,7 +165,7 @@
             <div class="card 3" style="background-color: black;"  @click="$router.push(`/workout/new`)">
                   <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
                   <div class="card_title title-white pb-5" style="font-size: 10px">
-                    <p style="font-size: 10px" class="mt-3">Create Workout</p>
+                    <p style="font-size: 8px" class="pt-4">Create Workout</p>
               
         
                   </div>
@@ -208,7 +208,7 @@
           }
   
           totalPages = incompletedWorkoutsresponse.totalPages;
-          console.log(incompletedWorkoutsresponse)
+
   
   
   
@@ -441,7 +441,7 @@
   @media only screen and (max-width: 500px)  {
     #workoutCard {
       display: flex;
-      width: auto;
+      width: 10vw;
       margin: auto;
     }
     #pageNumber {
@@ -453,10 +453,10 @@
       font-size: 12px;
     }
     #cardSection {
-      margin-top: 150px;
+      margin-top: 15px;
     }
     .paginationMobile {
-      font-size: 8px;
+      font-size: 7px;
     }
   
     .isMain {
@@ -468,15 +468,14 @@
     z-index: 0;
     width: 100%;
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
   }
   
   .card {
-    margin: 10px auto;
-    width: 100px;
-    height: 100px;
-    border-radius: 40px;
+    margin: 3px;
+    width: 20vw;
+    height: 70px;
+    border-radius: 0px;
   box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
     cursor: pointer;
     transition: 0.4s;
@@ -485,19 +484,18 @@
   .card .card_image {
     width: inherit;
     height: inherit;
-    border-radius: 40px;
+    
   }
   
   .card .card_image img {
     width: inherit;
     height: inherit;
-    border-radius: 40px;
+    border-radius: 20px;
     object-fit: cover;
   }
   
   .card .card_title {
     text-align: center;
-    border-radius: 0px 0px 40px 40px;
     font-family: sans-serif;
     font-weight: bold;
     font-size: 30px;

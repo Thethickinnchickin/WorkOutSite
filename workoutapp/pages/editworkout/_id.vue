@@ -1,6 +1,6 @@
 <template>
     <main class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed=""> 
-        <div class="form-signin col-4 w-100 m-auto">
+        <div class="form-signin w-60 m-auto" style="width: 70vw">
             <h1 class="h3 mb-3 fw-normal">Update Workout</h1>
             <div class="form-floating">
             <input maxlength="20" v-model="name" type="text" class="form-control" id="floatingInput" :placeholder="workout.name">
@@ -109,5 +109,16 @@ input[type="text"],input[type="date"], textarea[type="text"] {
   background-color: black;
   color: rgb(57, 165, 17);
 }
+@media only screen and (max-width: 380px) {
+    form {
+        width: 90vw;
+        margin: auto;
+        text-align: start;
+        font-size: 10px;
+    }
+    #createButton {
+        font-size: 10px
+    }
 
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
   <main class="text-center mt-5 pt-5" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed=""  style="height: auto">
       
-  <div class="form-signin col-4 w-100 m-auto">
-    <form @submit.prevent="createWorkout">
+  <div class="form-signin col w-60">
+    <form @submit.prevent="createWorkout" style="width: 70vw">
    
       <h1 class="h3 mb-3 fw-normal">Create New Workout</h1>
   
@@ -28,6 +28,7 @@
   
   
   <style scoped>
+  
   #createButton {
     border: 2px solid rgb(57, 165, 17);
     border-radius: 3px;
@@ -43,6 +44,26 @@
   input[type="text"],input[type="date"], textarea[type="text"] {
     background-color: black;
     color: rgb(57, 165, 17);
+  }
+  .form-signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  @media only screen and (max-width: 380px) {
+      form {
+          width: 90vw;
+          margin: auto;
+          text-align: start;
+        
+      }
+      #createButton {
+          font-size: 10px
+      }
+  
   }
   
   </style>
@@ -66,12 +87,14 @@
             notes: this.notes,
             dateScheduled: this.date
           }
+  
           const response = await this.$axios.$post('/api/workout/create/new', workoutData)
           
   
           this.$router.push(`/newexercise/${response.workout._id}`)
   
         } catch (err) {
+          console.log(err)
           return 
         }
   
