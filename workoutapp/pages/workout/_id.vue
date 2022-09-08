@@ -1,5 +1,5 @@
 <template>
-    <main class="py-5 text-center container mt-5 pt-5" style="width: 100%">
+    <main class="py-5 text-center container" style="width: 100%">
     <div v-if="!loading" class="loading">
        <div v-if="!loading" class="row py-lg-5 mt-5">
           <div class="col-lg-6 col-md-8 mx-auto">
@@ -354,7 +354,7 @@
             </div>
         
             <div v-if="!workout.isCompleted && !loading" class="row">
-                <div class="col-12">          
+                <div class="col-12" >          
                     <CompleteButton :workoutId="workout._id" />  
                 </div>
             </div>
@@ -540,6 +540,10 @@
     </script>
     
     <style>
+        * {
+            font-size: 12px;
+
+        }
         button {
             pointer-events: initial;
             font-size: 6px;
@@ -612,4 +616,3 @@
         }
     
     </style>
-

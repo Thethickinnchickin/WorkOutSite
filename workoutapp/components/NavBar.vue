@@ -104,7 +104,7 @@
 
 }
 
-@media  screen and (max-width: 363px) {
+@media  screen and (max-width: 320px) {
   .isMain {
     display: none
   }

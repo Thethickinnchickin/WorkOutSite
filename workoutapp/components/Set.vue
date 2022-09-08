@@ -32,10 +32,6 @@
                  </div>
              </b-modal>  
  
-           
-         <button  v-if="!set.rest" @click="isCompleted(set._id, true)" class="btn btn-sm btn-outline-danger">
-             Set Inomplete
-         </button> 
      </td>
      <td  style="font-size:1vw" v-if="set.isCompleted"  class="text-right">
          <button @click="isCompleted(set._id, false)"
@@ -229,7 +225,6 @@
                      totalRest --;
                      this.restTimeInSeconds = totalRest;  
                      if(document.getElementById('countdownTimer')) {
-                         console.log("first: " + this.restTimeInSeconds)
                          document.getElementById('countdownTimer').innerHTML = this.restTimeInSeconds + " secs"
                      }
                      

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="isMain">
+    <div class="isMain" style="height: 90vh">
         <div class="container pt-5 pb-3 mt-5" id="custom-cards">
             <h2 v-if="$auth.$state.loggedIn"
             class="pb-2 border-bottom text-center"
@@ -175,7 +175,7 @@
 }
 
 /* MOBILE PHONE */
-@media only screen and (max-width: 363px)  {
+@media only screen and (max-width: 500px)  {
   #workoutCard {
     display: flex;
     width: auto;
@@ -199,17 +199,12 @@
   .isMain {
     display: none;
   }
-  .isMobile {
-    z-index: 5;
-  }
 
   .topCard {
     backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.625);
-    height: 40vh;
+    height: 70vh;
     width: 100%;
-
-    margin-top: 150px;
     border-radius: 40px;
     display: flex;
     justify-content: center;
@@ -222,7 +217,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100px;
+    height: 75px;
     
   }
 
@@ -233,7 +228,7 @@
 
   .todaysWorkout {
     background-color: rgb(0, 0, 0);
-    height: 100px;
+    height: 75px;
     width: 100%;
     border-radius: 49px;
     display: flex;
@@ -294,7 +289,7 @@
   }
 
 }
-@media only screen and (min-width: 363px)  {
+@media only screen and (min-width: 500px)  {
     .isMobile {
       display: none;
     }
@@ -306,7 +301,6 @@ import moment from 'moment';
 
 export default {
     async asyncData({$axios,$auth}) {
-      console.log($auth.$state.loggedIn)
       if($auth.$state.loggedIn) {
         let response = await $axios.$post('/api/workout', {isMainPage: true});
 
@@ -325,6 +319,7 @@ export default {
 }
 
 </script>
+
 
 
 

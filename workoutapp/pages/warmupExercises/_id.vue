@@ -71,8 +71,9 @@
             let response = await $axios.$post(`/api/exercise`,
              {searchParams: {workoutId: params.id, isWarmup: true}});
     
+    
              return {
-                 exercises: response.exercises,
+                 exercises: response.exercise,
                  workoutName: response.workoutName,
                  workoutId: response.workoutId
              }

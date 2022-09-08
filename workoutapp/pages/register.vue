@@ -79,6 +79,7 @@ input[type="text"],input[type="password"],input[type="email"] {
         width: 90vw;
         margin: auto;
         text-align: start;
+        
     }
 }
 </style>
