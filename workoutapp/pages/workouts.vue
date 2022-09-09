@@ -178,15 +178,17 @@
 
       </div>      
     </div>
-    <div class="isMobile" style="width: 100vw; height: %">
-      <div class="row" id="background-card" style="margin-top: 100px;">
+    <div class="isMobile" style="width: 100vw; height: 100vh">
+      <div class="row" id="background-card" style="margin-top: 100px; height: 200px">
         <div class="row" id="scheduledWorkout">
-            <button id="completed" class="text-light" @click="$router.push('/incompleteWorkouts')">Scheduled Workouts</button> 
+            <button id="completed" 
+            @click="$router.push('/incompleteWorkouts')">Scheduled Workouts</button> 
 
         </div>  
         <div class="row" id="workout-row">
           <div class="col" id="workout-card" v-for="workout in workoutsToComplete">
-            <div class="card text-white mb-3" style="max-width: 18rem; background-color: #2B2B2B; border: 2px solid rgb(57, 165, 17)" @click="$router.push(`/workout/${workout._id}`)">
+            <div class="card text-white" style="max-width: 18rem; background-color: #2B2B2B;
+             border: 2px solid rgb(57, 165, 17)" @click="$router.push(`/workout/${workout._id}`)">
               <div class="card-header"  style="font-size: 6px">{{workout.dateScheduled}}</div>
               <div class="card-body">
                 <h5 class="card-title" style="font-size: 7px">{{workout.name}}</h5>
@@ -569,7 +571,7 @@ h3 {
     font-size: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
+
     width: 75%;
     margin: 0px auto 0px auto;
   }
@@ -578,7 +580,6 @@ h3 {
     background-color: black;
     border-radius: 40px;
     color: white;
-    padding: 20px;
     font-size: 10px;
     display: flex;
     justify-content: center;
