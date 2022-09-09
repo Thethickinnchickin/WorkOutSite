@@ -106,7 +106,7 @@
                         <g>
                           <g>
                             <g>
-                              <g>
+                               <g>
                                 <g>
                                   <path d="m17.5 504.177h226.14l79.96-79.605v-355.86c0-5.523-4.477-10-10-10h-296.1c-5.523 0-10 4.477-10 10v425.466c0 5.522 4.477 9.999 10 9.999z" fill="#fff9e9" />
                                 </g>
@@ -178,93 +178,65 @@
 
       </div>      
     </div>
-    <div class="isMobile" style="width: 90vw;">
-      <div class="section_our_solution mt-5 pt-5">
-        <h2 v-if="workoutsToComplete.length > 0" class="pb-2 mb-5 mt-4 border-bottom" id="workoutsToComplete" style="color: rgb(255, 55, 0); text-align: center; border-bottom: 1px solid rgb(255, 55, 0);" >Workouts to Complete...</h2>
-      <div class="row mt-4 mx-3 ">
-      <div v-for="workout in workoutsToComplete" id="workoutCard"  :key="workout._id" class="row-3 workoutClass">
+    <div class="isMobile" style="width: 100vw; height: %">
+      <div class="row" id="background-card" style="margin-top: 100px;">
+        <div class="row" id="scheduledWorkout">
+            <button id="completed" class="text-light" @click="$router.push('/incompleteWorkouts')">Scheduled Workouts</button> 
 
-        <div class="cards-list">
-          
-        <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
-          <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
-          <div class="card_title title-white pb-5" style="font-size: 10px">
-            <p>{{workout.dateScheduled}}</p>
-            <p>{{workout.name}}</p>
-
-          </div>
-        </div>
-        
-        </div>
-
-      </div>
-      <div v-if="workoutsToComplete.length >= 3"  style="width: 1000px">
-        <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
-          <div class="card 1" style="background-color: black; width: 100%">
-          <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
-          <div class="card_title title-white pb-5" style="font-size: 10px">
-            <p class="mt-2">View More</p>
-
-
-          </div>
-        </div>
-
-        </div>
-      </div>
-
-      </div>
-
-
-      <h2 v-if="workoutsCompleted.length > 0" class="pb-2 border-bottom mt-4"  style="color: rgb(57, 165, 17);
-      border-bottom: 1px solid rgb(57, 165, 17); text-align: center;" id="completedWorkouts">Completed Workouts</h2>
-      <div class="row mt-4 mx-3 ">
-      <div v-for="workout in workoutsCompleted"  id="workoutCard" :key="workout._id" >
-        <div class="cards-list">
-          
-          <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
-            <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
-            <div class="card_title title-white pb-5" style="font-size: 10px">
-              <p>{{workout.dateScheduled}}</p>
-              <p>{{workout.name}}</p>
-  
+        </div>  
+        <div class="row" id="workout-row">
+          <div class="col" id="workout-card" v-for="workout in workoutsToComplete">
+            <div class="card text-white mb-3" style="max-width: 18rem; background-color: #2B2B2B; border: 2px solid rgb(57, 165, 17)" @click="$router.push(`/workout/${workout._id}`)">
+              <div class="card-header"  style="font-size: 6px">{{workout.dateScheduled}}</div>
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 7px">{{workout.name}}</h5>
+              </div>
             </div>
           </div>
-          
-          </div>
-  
-        </div>
-        <div v-if="workoutsCompleted.length >= 3"  style="width: 1000px">
-          <div @click="routeRedirect('/incompleteWorkouts')" class="our_solution_category mt-3">
-            <div class="card 1" style="background-color: black; width: 100%">
-            <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
-            <div class="card_title title-white pb-5" style="font-size: 10px">
-              <p class="mt-2">View More</p>
-  
-  
-            </div>
-          </div>
-  
-          </div>
+
+        </div>        
+      </div>
+      <div class="row">
+        <div class="row" id="scheduledWorkout" style="width: 100%;">
+            <button id="completed"
+             @click="$router.push('/incompleteWorkouts')"
+             >Completed Workouts
+            </button> 
+
+        </div>       
+      </div>
+      <div class="row">
+        <div class="chart-style">
+          <LineChart 
+          :data="barChartData"
+          :options="barChartOptions"
+          :height="200"
+          :width="320"/>  
         </div>
 
       </div>
-      <div class="row mt-4 mx-3"></div>
 
-      </div>   
     </div>
 
   </main>
 
 </template>
 
-<style>
 
-</style>
 
 <script>
 import moment from 'moment';
+import LineChart from '~/components/LineChart.vue';
+
 
 export default {
+    components: { LineChart },
+    data() {
+    return {
+
+    };
+    },
+
     async asyncData({$axios}) {
         let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
           totalWorkouts: 3,
@@ -276,25 +248,92 @@ export default {
           isCompleted: false
         }});
 
+        let chartData = completedWorkoutsresponse.chartData;
+
         let FormattedCompletedWorkouts = []
         let FormattedInCompletedWorkouts = []
         
         for(let workout of completedWorkoutsresponse.workouts)
         {
             workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+                .format('MMM Do');
             FormattedCompletedWorkouts.push(workout);
         }
         for(let workout of incompletedWorkoutsresponse.workouts)
         {
             workout.dateScheduled = moment(String(workout.dateScheduled))
-                .format('MM/DD/YYYY');
+                .format('MMM Do');
             FormattedInCompletedWorkouts.push(workout);
         }
 
+
+
         return {
             workoutsCompleted: FormattedCompletedWorkouts,
-            workoutsToComplete: FormattedInCompletedWorkouts
+            workoutsToComplete: FormattedInCompletedWorkouts,        
+            barChartData: {
+              labels: [
+                "Jan",
+                "Feb",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ],
+              datasets: [
+                {
+                  label: "Visualizaciones",
+                  data: [chartData.jan, chartData.feb, chartData.mar, chartData.apr, chartData.may, chartData.jun,
+                   chartData.jul, chartData.aug, chartData.sep, chartData.oct, chartData.nov, chartData.dec],
+                  backgroundColor: "rgba(20, 255, 0, 0.3)",
+                  borderColor: "rgba(100, 255, 0, 1)",
+                  borderWidth: 2,
+                },
+              ],
+            },
+            barChartOptions: {
+              responsive: true,
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Monthly Completed Workouts",
+                fontSize: 20,
+                fontColor: "#FFFFF",
+              },
+              tooltips: {
+                backgroundColor: "#17BF62",
+              },
+              scales: {
+                xAxes: [
+                  {
+                    gridLines: {
+                      display: true,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    ticks: {
+                      beginAtZero: true,
+                      max: 30,
+                      min: 0,
+                      stepSize: 5,
+                    },
+                    gridLines: {
+                      display: false,
+                    },
+                  },
+                ],
+              },
+            },
         }
     },
     methods: {
@@ -312,7 +351,7 @@ export default {
 </script>
 
 
-<style>
+<style >
 h3 {
   color: rgb(57, 165, 17);
 }
@@ -322,6 +361,10 @@ h3 {
 
 .section_our_solution .row {
   align-items: center;
+}
+
+.bg-primary {
+  background-color: #2B2B2B;
 }
 
 .our_solution_category {
@@ -460,47 +503,92 @@ h3 {
   border: 1px solid rgb(12, 247, 255);
 }
 
-/*start media query*/
-@media screen and (min-width: 320px) {
-  .sol_card_top_3 {
-    position: relative;
-    top: 0;
-  }
-
-  .our_solution_category {
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .our_solution_category .solution_cards_box {
-    flex: auto;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .our_solution_category .solution_cards_box {
-    flex: 1;
-  }
-}
-@media only screen and (min-width: 1024px) {
-  .sol_card_top_3 {
-    position: relative;
-    top: -3rem;
-  }
-  .our_solution_category {
-    width: 50%;
-    margin: 0 auto;
-  }
-}
 
 /* MOBILE PHONE */
 @media only screen and (max-width: 500px)  {
   .isMain {
     display: none;
   }
-  #workoutCard {
+
+  .title {
+  display: block;
+  font-weight: 400;
+  font-size: 100px;
+  color: #2E495E;
+  letter-spacing: 1px;
+  font-size: 6em;
+}
+.green {
+  color: #00C48D;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 1em;
+  color: #2E495E;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+.links {
+  padding-top: 15px;
+}
+
+.chart-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  margin: auto auto auto 88px;
+}
+
+  #background-card {
+    background-color: black;
+    border-radius: 300px;
+    border: 2px solid white;
+  }
+
+
+  #scheduledWorkout {
     display: flex;
-    width: auto;
+
     margin: auto;
+  }
+
+  #workout-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6px;
+    max-width: 24vw;
+    padding: 0 5px 0 5px;
+
+  }
+  #workout-row {
+
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 0px auto 0px auto;
+  }
+
+  #completed {
+    background-color: black;
+    border-radius: 40px;
+    color: white;
+    padding: 20px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    margin: 10px auto 0px auto;
+    border: 2px solid white;
+  }
+  #completed:hover {
+    background-color: white;
+    color: black;
   }
   #workoutsToComplete{
     padding-top: 50px;
@@ -517,6 +605,9 @@ h3 {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+
 }
 
 .card {
@@ -573,7 +664,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   }
 }
 
-}
+
 @media only screen and (min-width: 500px) {
   .isMobile {
     display: none;

@@ -145,7 +145,7 @@ router.put('/', async (req, res) => {
     try {
         if(req.body.updateType === "target")
         {
-            const updatedSet = cleanSetInput(req.body);
+
 
             const set = await Set.findByIdAndUpdate(req.body.setId, {
                 $set: {

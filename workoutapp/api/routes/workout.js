@@ -6,6 +6,7 @@ const User = require('../models/user');
 const Set = require('../models/set');
 const verifyToken = require('../middleware/verify-token');
 const moment = require('moment');
+const createChartData = require('../helpers/createChartData');
 
 
 
@@ -19,6 +20,7 @@ router.post('/', verifyToken, async(req, res) => {
         if(req.body.searchParams) {
             if(req.body.searchParams && req.body.searchParams.isCompleted !== null || req.body.searchParams.isCompleted !== undefined)
             {
+   
 
                 if(req.body.searchParams.pageNumber) {
                     const workouts = await Workout
@@ -28,6 +30,9 @@ router.post('/', verifyToken, async(req, res) => {
                         .exec();
 
                     let workoutsForLength = await Workout.where({isCompleted: req.body.searchParams.isCompleted});
+
+
+
                     let workoutLength = workoutsForLength.length;
                     const totalPages = Math.ceil(workoutLength / 7);
 
@@ -49,11 +54,30 @@ router.post('/', verifyToken, async(req, res) => {
                     })
                     .sort({dateScheduled: -1})
                     .exec();     
-                    
-                    return res.json({
+
+                   
+
+                    if(req.body.searchParams.isCompleted) {
+                       const workoutForData = await Workout.where({isCompleted: true}).exec();
+                       let chartData = createChartData(workoutForData);
+
+                       return res.json({
                         success: true,
                         workouts: workouts,
-                    });                
+                        chartData: chartData
+                    });    
+                    } else {
+                        return res.json({
+                            success: true,
+                            workouts: workouts,
+                        });                           
+                    }
+
+                    
+
+                    
+                    
+             
                 }
 
             }  else {
