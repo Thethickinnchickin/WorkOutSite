@@ -539,7 +539,7 @@
     }
     </script>
     
-    <style>
+    <style scoped>
         * {
             font-size: 12px;
 

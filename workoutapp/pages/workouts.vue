@@ -186,12 +186,12 @@
 
         </div>  
         <div class="row" id="workout-row">
-          <div class="col" id="workout-card" v-for="workout in workoutsToComplete">
+          <div  id="workout-card" v-for="workout in workoutsToComplete">
             <div class="card text-white" style="max-width: 18rem; background-color: #2B2B2B;
              border: 2px solid rgb(57, 165, 17)" @click="$router.push(`/workout/${workout._id}`)">
               <div class="card-header"  style="font-size: 6px">{{workout.dateScheduled}}</div>
               <div class="card-body">
-                <h5 class="card-title" style="font-size: 7px">{{workout.name}}</h5>
+                <h5 class="card-title" style="font-size: 6px">{{workout.name}}</h5>
               </div>
             </div>
           </div>
@@ -201,7 +201,7 @@
       <div class="row">
         <div class="row" id="scheduledWorkout" style="width: 100%;">
             <button id="completed"
-             @click="$router.push('/incompleteWorkouts')"
+             @click="$router.push('/completedWorkouts')"
              >Completed Workouts
             </button> 
 
@@ -233,11 +233,6 @@ import LineChart from '~/components/LineChart.vue';
 
 export default {
     components: { LineChart },
-    data() {
-    return {
-
-    };
-    },
 
     async asyncData({$axios}) {
         let completedWorkoutsresponse = await $axios.$post('/api/workout', {searchParams: {
@@ -290,7 +285,7 @@ export default {
               ],
               datasets: [
                 {
-                  label: "Visualizaciones",
+                  label: "Workouts Completed",
                   data: [chartData.jan, chartData.feb, chartData.mar, chartData.apr, chartData.may, chartData.jun,
                    chartData.jul, chartData.aug, chartData.sep, chartData.oct, chartData.nov, chartData.dec],
                   backgroundColor: "rgba(20, 255, 0, 0.3)",
@@ -353,7 +348,7 @@ export default {
 </script>
 
 
-<style >
+<style scoped>
 h3 {
   color: rgb(57, 165, 17);
 }
@@ -511,6 +506,10 @@ h3 {
   .isMain {
     display: none;
   }
+  
+  #workout-card {
+    border-radius: 1px;
+  }
 
   .title {
   display: block;
@@ -546,7 +545,7 @@ h3 {
 
   #background-card {
     background-color: black;
-    border-radius: 300px;
+    border-radius: 400px;
     border: 2px solid white;
   }
 
@@ -615,7 +614,7 @@ h3 {
   margin: 30px auto;
   width: 100px;
   height: 100px;
-  border-radius: 40px;
+  border-radius: 10px;
 box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
   cursor: pointer;
   transition: 0.4s;

@@ -117,10 +117,10 @@
     <div class="isMobile" style="width: 90vw;">
          <div class="row mt-5">
           <div class="col">
-            <h2 class="pt-5 mt-5 ml-3 border-bottom" style="font-size: 10px">Incomplete Workouts</h2>
+            <h2 class="pt-5 mt-5 ml-3 border-bottom" style="font-size: 10px; color: red">Incomplete Workouts</h2>
           </div>
           <div class="col">
-            <h2 class="pt-5 mt-5 border-bottom" style="font-size: 10px; color: white">Page Number: {{pageNumber}}</h2>
+            <h2 class="pt-5 mt-5 border-bottom" style="font-size: 10px; color: white">Page: {{pageNumber}}</h2>
           </div>
   
          </div>  
@@ -143,38 +143,24 @@
                   </ul>
               </div>
           </div>      
-        <div class="row ml-2">
-        <div v-for="workout in workoutsNotCompleted">
-          <div class="col">
-            <div class="cards-list" >
-              
-              <div class="card 1" style="background-color: black"  @click="$router.push(`/workout/${workout._id}`)">
-                <div class="card_image"> <img src="~/static/images/jeremy-lapak-CVvFVQ_-oUg-unsplash.jpg"/> </div>
-                <div class="card_title title-white pb-5 " style="font-size: 10px">
-                  <p class="mt-4" style="font-size: 5px; color: black;">{{workout.dateScheduled}}</p>
-                  <p style="color: black; font-size: 7px">{{workout.name}}</p>
-      
-                </div>
+          <div class="row ml-4">
+            <div class="mb-3" id="workout-card" v-for="workout in workoutsNotCompleted">
+            <div class="card text-white" style="max-width: 18rem; background-color: #2B2B2B;
+             border: 2px solid rgb(57, 165, 17)" @click="$router.push(`/workout/${workout._id}`)">
+              <div class="card-header" id="card-body">
+                <h1 class="ml-2" style="font-size: 8px">
+                  {{workout.dateScheduled}}
+                </h1>
               </div>
-              
-            </div>          
+              <div class="card-body">
+                <h5 class="card-title ml-2" style="font-size: 7px">{{workout.name}}</h5>
+              </div>
+            </div>
           </div>
-  
-          </div>   
-          <div class="card-list ml-3" style="display: inline">
-            <div class="card 3" style="background-color: black;"  @click="$router.push(`/workout/new`)">
-                  <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
-                  <div class="card_title title-white pb-5" style="font-size: 10px">
-                    <p style="font-size: 8px" class="pt-4">Create Workout</p>
               
-        
-                  </div>
-                </div> 
+              
           </div>
-         
-        </div>
-   
-    
+     
       </div>
   
   
@@ -203,7 +189,7 @@
           for(let workout of incompletedWorkoutsresponse.workouts)
           {
               workout.dateScheduled = moment(String(workout.dateScheduled))
-                  .format('MM/DD/YYYY');
+                  .format('MMM Do');
               FormattedInCompleteWorkouts.push(workout);
           }
   
@@ -239,7 +225,7 @@
           for(let workout of incompletedWorkoutsresponse.workouts)
           {
               workout.dateScheduled = moment(String(workout.dateScheduled))
-                  .format('MM/DD/YYYY');
+                  .format('MMM Do');
               FormattedInCompleteWorkouts.push(workout);
           }
   
@@ -270,7 +256,7 @@
   </script>
   
   
-  <style>
+  <style scoped>
   .section_our_solution .row {
     align-items: center;
   }
@@ -439,9 +425,39 @@
   
   /* MOBILE PHONE */
   @media only screen and (max-width: 500px)  {
+
+
+  #card-body {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+
+      
+  #workout-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6px;
+    max-width: 29vw;
+    min-height: 20vh;
+    min-width: 29vw;
+    padding: 0 5px 0 5px;
+
+  }
+  #workout-row {
+
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+
+    width: 75%;
+    margin: 0px auto 0px auto;
+  }
+
     #workoutCard {
       display: flex;
-      width: 10vw;
+      width: 30vw;
       margin: auto;
     }
     #pageNumber {
@@ -462,60 +478,28 @@
     .isMain {
       display: none;
     }
+
+    .workout-card {
+      background-color: white;
+      border-radius: 20px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
   
     
-    .cards-list {
+    #cards-list {
     z-index: 0;
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
   }
   
-  .card {
-    margin: 3px;
-    width: 20vw;
-    height: 70px;
-    border-radius: 0px;
-  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
-    cursor: pointer;
-    transition: 0.4s;
-  }
-  
-  .card .card_image {
-    width: inherit;
-    height: inherit;
-    
-  }
-  
-  .card .card_image img {
-    width: inherit;
-    height: inherit;
-    border-radius: 20px;
-    object-fit: cover;
-  }
-  
-  .card .card_title {
-    text-align: center;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: 30px;
-    margin-top: -80px;
-    height: 40px;
-  }
-  
-  .card:hover {
-    transform: scale(0.9, 0.9);
-    box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
-      -5px -5px 30px 15px rgba(0,0,0,0.22);
-  }
-  
-  .title-white {
-    color: white;
-  }
-  
-  .title-black {
-    color: black;
-  }
+
+
+
+ 
   
   @media all and (max-width: 500px) {
     .card-list {

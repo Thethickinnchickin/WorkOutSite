@@ -14,7 +14,7 @@ const createChartData = require('../helpers/createChartData');
 router.post('/', verifyToken, async(req, res) => {
     try {
         //setting total items for pagination
-        const pageSize = 7;
+        const pageSize = 6;
         //Getting all workouts for user
         const user = await User.findByUsername(req.decoded.username);
         if(req.body.searchParams) {
@@ -34,7 +34,7 @@ router.post('/', verifyToken, async(req, res) => {
 
 
                     let workoutLength = workoutsForLength.length;
-                    const totalPages = Math.ceil(workoutLength / 7);
+                    const totalPages = Math.ceil(workoutLength / pageSize);
 
 
                     return res.json({
