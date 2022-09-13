@@ -38,7 +38,7 @@
     height: auto;      
           /* Footer height */
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     #footer {
       font-size: 8px
     }
