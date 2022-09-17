@@ -130,13 +130,37 @@
   
   @media only screen and (max-width: 380px) {
       form {
-          width: 90vw;
-          margin: auto;
+          width: 80vw;
+          height: 50vh;
+          margin: 0px auto;
           text-align: start;
-        
+          color: white;
       }
+      input {
+        height: 3vh;
+        text-align: center;
+        font-size: 10px;
+        width: 30vw;
+        margin: auto;
+      }
+
+      label {
+        font-size: 10px;
+      }
+
+      #checkbox {
+        height: 15px;
+        width: 15px;
+      }
+
+
+    
+      
       #createButton {
           font-size: 10px
+      }
+      h1 {
+        font-size: 14px;
       }
   
   }

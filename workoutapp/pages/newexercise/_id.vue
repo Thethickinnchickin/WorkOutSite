@@ -113,6 +113,42 @@
           text-align: start;
         
       }
+
+      form {
+          width: 80vw;
+          height: 50vh;
+          margin: 0px auto;
+          text-align: start;
+          color: white;
+      }
+      input {
+        height: 5vh;
+        text-align: center;
+        font-size: 10px;
+        width: 80vw;
+        margin: auto;
+      }
+
+      input[type="number"], textarea[type="text"] {
+        height: 15vh;
+        font-size: 10px;
+        width: 80vw;
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+
+      label {
+        font-size: 10px;
+      }
+
+      #checkbox {
+        height: 15px;
+        width: 15px;
+      }
       #createButton {
           font-size: 10px
       }

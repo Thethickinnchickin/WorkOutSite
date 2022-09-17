@@ -58,7 +58,7 @@
           width: 90vw;
           margin: auto;
           text-align: start;
-        
+          color: white;
       }
       #createButton {
           font-size: 10px

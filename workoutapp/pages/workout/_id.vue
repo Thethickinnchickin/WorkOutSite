@@ -383,12 +383,12 @@
                 <div class="row">
                     <div class="col mt-4">
                         <div class="warmupExercises">
-                            <div class="warmupCard">
-                                <h1 class="mt-4">Warm Up</h1>
+                            <div class="warmupCard bookCollapse" @click="onRouteChange('/warmupExercises/' + workout._id)">
+                                <h1 class="mt-4">Begin Warm Up</h1>
                             </div>
                             
                             <div class="bookCollapse" @click="toggleWarmUp">
-                                <p class="mt-3" style="font-size: 10px">view more</p>
+                                <p class="mt-3" style="font-size: 10px; color: white">view more</p>
                             </div>
                         </div>                    
                     </div>
@@ -397,12 +397,12 @@
                 <div class="row">
                     <div class="col mt-4">
                         <div class="warmupExercises">
-                            <div class="warmupCard">
-                                <h1 class="mt-4">Workout</h1>
+                            <div class="warmupCard bookCollapse" @click="onRouteChange('/workoutExercises/' + workout._id)">
+                                <h1 class="mt-4">Begin Workout</h1>
                             </div>
                             
                             <div class="bookCollapse" style="" @click="toggleWorkoutModal">
-                                <p class="mt-3" style="font-size: 10px">view more</p>
+                                <p class="mt-3" style="font-size: 10px; color: white">view more</p>
                             </div>
                     
                         </div>                    
@@ -424,10 +424,13 @@
                     <h2>Exercise Name</h2>
                 </div>
 
-                <div v-if="!warmUpSetsModal" class="row mt-3">
-                    <div v-for="exercise of workout.exercises" style="margin: auto;" 
-                                        class="exerciseCol mt-2">
-                        <p v-if="!warmUpSetsModal" class="pt-1" @click="toggleWarmUpSet(exercise)">{{exercise.name}}</p>
+                <div v-if="!warmUpSetsModal" class="">
+                    <div v-for="exercise of workout.exercises" >
+                        <div v-if="exercise.warmUpExercise" style="margin: auto;" 
+                                        class="exerciseCol mt-2 row mt-3 text-center">
+                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}}</p>
+                        </div>
+                        
                 
                     </div>
                 </div>
@@ -451,9 +454,14 @@
                     <h2>Exercise Name</h2>
                 </div>
 
-                <div v-if="!warmUpSetsModal" v-for="exercise of workout.exercises" class="row mt-3">
-                    <div v-if="!exercise.warmUpExercise" class="exerciseCol mt-2" style="margin: auto;"  @click="toggleWarmUpSet(exercise)">
-                            <p v-if="!warmUpSetsModal" class="pt-1">{{exercise.name}}</p>
+                <div v-if="!warmUpSetsModal" class="">
+                    <div v-for="exercise of workout.exercises" >
+                        <div v-if="exercise.warmUpExercise" style="margin: auto;" 
+                                        class="exerciseCol mt-2 row mt-3 text-center">
+                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}}</p>
+                        </div>
+                        
+                
                     </div>
                 </div>
                 <div class="row">
@@ -529,6 +537,11 @@
                 </div>
                         
                 
+                </div>
+                <div class="row">
+                    <div @click="onRouteChange(`/newset/${selectedExercise._id}`)" class="createExerciseCol mt-3">
+                        <p class="pt-1">Create Set</p> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -928,7 +941,8 @@
                 height: 15vh;
                 width: 90%;
                 margin: auto;
-                background-color: white;
+                background-color: black;
+                border: 2px solid rgb(121, 221, 255);
                 border-radius: 20px;
             }
             .bookCollapse {
@@ -937,7 +951,8 @@
                  margin-right: 10px;
                  margin-top: 8px;
                  border-radius: 20px;
-                background-color: black;
+                 border: 2px solid rgb(210, 29, 213);
+                background-color: rgba(131, 193, 255, 0.3);
                 float: right;
             }
             .bookCollapse:hover {
@@ -946,18 +961,21 @@
             }
             .warmupCard {
                 float: left;
-                background-color: black;
+                background-color: rgba(255, 140, 39, .3);
                 margin-top: 8px;
                 margin-left: 10px;
                 width: 48vw;
                 height: 12vh;
                 border-radius: 20px;
+                border: 2px solid rgb(255, 140, 39);
             }
+
             .exerciseCol {
                 height: 5vh;
                 width: 80%;
                 margin: auto;
-                background-color: white;
+                background-color: black;
+                border: 2px solid rgb(121, 221, 255);
                 border-radius: 20px;
             }
             .exerciseCol:hover {
