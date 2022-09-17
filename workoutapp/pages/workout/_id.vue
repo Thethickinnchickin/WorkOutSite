@@ -956,7 +956,7 @@
                 float: right;
             }
             .bookCollapse:hover {
-                background-color: white;
+                background-color: rgb(210, 29, 213);
                 border: 5px solid black;
             }
             .warmupCard {
@@ -964,7 +964,7 @@
                 background-color: rgba(255, 140, 39, .3);
                 margin-top: 8px;
                 margin-left: 10px;
-                width: 48vw;
+                width: 44vw;
                 height: 12vh;
                 border-radius: 20px;
                 border: 2px solid rgb(255, 140, 39);
