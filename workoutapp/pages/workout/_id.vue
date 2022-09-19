@@ -381,7 +381,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mt-4">
+                    <div class="col mt-2">
                         <div class="warmupExercises">
                             <div class="warmupCard bookCollapse" @click="onRouteChange('/warmupExercises/' + workout._id)">
                                 <h1 class="mt-4">Begin Warm Up</h1>
@@ -408,7 +408,12 @@
                         </div>                    
                     </div>
 
-                </div>                
+                </div>   
+                <div class="row" v-if="!workout.isCompleted">
+                    <div class="col mt-2" style="width: 70vw">
+                        <button @click="completeWorkout" class="completeButton">Finish Workout</button>
+                    </div>
+                </div>             
             </div>
             <div v-else-if="warmUpModal">
                 <div class="row mb-1">
@@ -428,7 +433,9 @@
                     <div v-for="exercise of workout.exercises" >
                         <div v-if="exercise.warmUpExercise" style="margin: auto;" 
                                         class="exerciseCol mt-2 row mt-3 text-center">
-                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}}</p>
+                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}} 
+                                <span v-if="exercise.isCompleted" style="color:rgb(57, 165, 17)">Completed</span>
+                                <span v-else>Incomplete</span></p>
                         </div>
                         
                 
@@ -456,10 +463,14 @@
 
                 <div v-if="!warmUpSetsModal" class="">
                     <div v-for="exercise of workout.exercises" >
-                        <div v-if="exercise.warmUpExercise" style="margin: auto;" 
+                        <div v-if="!exercise.warmUpExercise" style="margin: auto;" 
                                         class="exerciseCol mt-2 row mt-3 text-center">
-                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}}</p>
+                            <p v-if="!warmUpSetsModal" class="pt-1 col" @click="toggleWarmUpSet(exercise)">{{exercise.name}} 
+                                <span v-if="exercise.isCompleted">Completed</span>
+                                <span v-else>Incomplete</span></p>
+                            
                         </div>
+                        
                         
                 
                     </div>
@@ -513,26 +524,40 @@
                         </div>
                          
                     </div>
-                    <div v-if="!set.isCompleted" class="setComplete">
-                        <p v-if="set.targetLoad" class="m-0">Target Reps <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
-                        <p v-if="set.targetTimeinSeconds" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
-                        <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
-                        <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
+                    <div v-if="setViewModal">
+                        <div v-if="!set.isCompleted" class="setComplete mt-2">
+                            <button class="btn view-more" @click="toggleSetView">View More</button> 
+                        </div>
+                        <div v-else class="setIncomplete">
+                            <button class="view-more" @click="toggleSetView">View More</button>
+                        </div>
                     </div>
-                    <div v-else class="setIncomplete">
-                        <p v-if="set.targetReps" class="m-0">Target Reps <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetReps" class="m-0">Actual Reps <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
-                        <p v-if="set.targetWeight" class="m-0">Actual Weight <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetTime" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
-                        <p v-if="set.targetTime" class="m-0">Actual Time <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.targetLoad" class="m-0">Actual Load <span>{{set.targetLoad}}</span></p> 
-                        <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
-                        <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
+                    <div v-else>
+                        <div v-if="!set.isCompleted" class="setComplete mt-2">
+                            <p v-if="set.targetRepAmount" class="m-0">Target Reps <span>{{set.targetRepAmount}}</span></p> 
+                            <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
+                            <p v-if="set.targetTimeinSeconds" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
+                            <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
+                            <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
+                            <button class="view-more pb-2"  @click="toggleSetView">Close</button>
+                        </div>
+                        <div v-else class="setIncomplete">
+                            <p v-if="set.targetReps" class="m-0">Target Reps <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.targetReps" class="m-0">Actual Reps <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
+                            <p v-if="set.targetWeight" class="m-0">Actual Weight <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.targetTime" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
+                            <p v-if="set.targetTime" class="m-0">Actual Time <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.targetLoad" class="m-0">Actual Load <span>{{set.targetLoad}}</span></p> 
+                            <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
+                            <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
+                            <button class="view-more pb-2" @click="toggleSetView">Close</button>
+                        </div>
                     </div>
+
+                        
                     
                 </div>
                         
@@ -570,6 +595,7 @@
                 warmUpSetsModal: false,
                 selectedExercise: null,
                 setModal: false,
+                setViewModal: false,
                 workoutModal: false
             }
         },
@@ -777,6 +803,17 @@
                 await this.$router.push(`/workout/${this.workout._id}`);
     
     
+            },
+            async completeWorkout() {
+                await this.$axios.$put('/api/workout/isCompleted', {
+                    workoutId: this.workout._id,
+                    isCompleted: true    
+                })
+
+                this.$router.push("/workouts")
+            },
+            toggleSetView() {
+                this.setViewModal = !this.setViewModal
             }
        
         },
@@ -866,9 +903,35 @@
             .isMain {
                 display: none;
             }
+            .view-more {
+                border: 2px solid rgb(57, 165, 17);
+                color: white;
+                background-color: black;
+                border-radius: 20px;
+            }
+            .view-more:hover {
+                background-color: rgb(57, 165, 17);
+                color: black;
+            }
+            .completeButton {
+                height: 4vh;
+                width: 70vw;
+                background-color: black;
+                border: 2px solid white;
+                font-size: 12px;
+                margin: auto;
+                border-radius: 20px;
+                color: rgb(57, 165, 17);
+            }
+            .completeButton:hover {
+                background-color: rgb(57, 165, 17);
+                color: black;
+                border: 2px solid rgb(197, 217, 68);
+            }
             .setCard > p {
                 font-size: 8px;
-                color: black
+                color: black;
+                
             }
             span {
                 font-size: 8px;
@@ -1010,25 +1073,43 @@
             }
             .setsCol {
                 height: auto;
-                background-color: white;
+                background-color: black;
                 width: 90%;
                 border-radius: 20px;
             }
 
             .setComplete > p {
                 font-size: 8px;
-                color: black;
+                color: white;
             }
             .setIncomplete p > span {
-                color: rgb(57, 165, 17)
+                color: rgb(57, 165, 17);
+                
+            }
+            .setComplete {
+                border: 2px solid rgb(121, 221, 255);
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-radius: 10px;
+            }
+            .setIncomplete {
+                border: 2px solid rgb(121, 221, 255);
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-radius: 10px;
             }
             .setIncomplete > p {
                 font-size: 8px;
-                color: black;
+                color: white;
             }
             .setCompletedHeader {
                 background-color: black;
                 border: 2px solid rgb(57, 165, 17);
+                border-bottom: none;
+                border-left: none;
+                border-right: none;
                 border-radius: 20px 20px 0 0;
                 width: 100%;
                 
@@ -1036,6 +1117,9 @@
             .setIncompleteHeader {
                 background-color: black;
                 border: 2px solid red;
+                border-bottom: none;
+                border-left: none;
+                border-right: none;
                 border-radius: 20px 20px 0 0;
                 width: 100%;
 
