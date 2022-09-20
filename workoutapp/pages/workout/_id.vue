@@ -499,67 +499,7 @@
                 </div>
                 <div v-for="set of selectedExercise.sets" style="margin: auto; margin-bottom: 10px;" 
                                         class="setsCol mt-2">
-                <div class="setCard pb-2">
-                    <div v-if="set.isCompleted" class="ml-0 row setCompletedHeader">
-                        <div class="col">
-                            <h1 class="pt-3" style="font-size: 12px">Set {{selectedExercise.sets.indexOf(set) + 1}}</h1>
-                        </div>
-                        
-                    </div>
-                    <div v-else class="ml-0 row setIncompleteHeader">
-                        <div class="col">
-                            <h1 class="pt-3" style="font-size: 12px; color: red">Set {{selectedExercise.sets.indexOf(set) + 1}}</h1>
-                        </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button style="width: 18vw" class="deleteButton" @click="onSetDelete(selectedExercise._id, selectedExercise.workoutId, set._id)" >delete</button>    
-                        </div>
-                        <div class="col">
-                            <button style="width: 18vw" class="editButton" @click="onRouteChange(`/editset/${set._id}`)">edit</button> 
-                        </div>
-                        <div class="col">
-                            <button style="width: 18vw" class="duplicateButton" @click="onSetDuplication(set, selectedExercise, workout._id)">duplicate</button>
-                        </div>
-                         
-                    </div>
-                    <div v-if="setViewModal">
-                        <div v-if="!set.isCompleted" class="setComplete mt-2">
-                            <button class="btn view-more" @click="toggleSetView">View More</button> 
-                        </div>
-                        <div v-else class="setIncomplete">
-                            <button class="view-more" @click="toggleSetView">View More</button>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <div v-if="!set.isCompleted" class="setComplete mt-2">
-                            <p v-if="set.targetRepAmount" class="m-0">Target Reps <span>{{set.targetRepAmount}}</span></p> 
-                            <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
-                            <p v-if="set.targetTimeinSeconds" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
-                            <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
-                            <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
-                            <button class="view-more pb-2"  @click="toggleSetView">Close</button>
-                        </div>
-                        <div v-else class="setIncomplete">
-                            <p v-if="set.targetReps" class="m-0">Target Reps <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.targetReps" class="m-0">Actual Reps <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.targetWeight" class="m-0">Target Weight <span>{{set.targetWeight}}</span></p> 
-                            <p v-if="set.targetWeight" class="m-0">Actual Weight <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.targetTime" class="m-0">Target Time (secs) <span>{{set.targetTimeinSeconds}}</span></p> 
-                            <p v-if="set.targetTime" class="m-0">Actual Time <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.targetLoad" class="m-0">Target Load <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.targetLoad" class="m-0">Actual Load <span>{{set.targetLoad}}</span></p> 
-                            <p v-if="set.rpe" class="m-0">RPE <span>{{set.rpe}}</span></p> 
-                            <p v-if="set.rest" class="m-0">Rest (mins) <span>{{set.rest}}</span></p>  
-                            <button class="view-more pb-2" @click="toggleSetView">Close</button>
-                        </div>
-                    </div>
-
-                        
-                    
-                </div>
+                <SetViewM :set="set" :selectedExercise="selectedExercise" :workout="workout"/>
                         
                 
                 </div>
@@ -580,11 +520,13 @@
     import moment from 'moment'
     import CompleteButton from '~/components/Buttons/WorkoutCompleted.vue'
     import DeleteExercise from '~/components/modals/DeleteExercise.vue'
+    import SetViewM from '~/components/mobile/SetViewM.vue';
     
     export default {
         components: {
             CompleteButton,
-            DeleteExercise
+            DeleteExercise,
+            SetViewM
         },
         data() {
             return {
@@ -595,7 +537,7 @@
                 warmUpSetsModal: false,
                 selectedExercise: null,
                 setModal: false,
-                setViewModal: false,
+
                 workoutModal: false
             }
         },
@@ -680,21 +622,7 @@
             getSelectedExercise() {
                 return this.selectExercise;
             },
-            async onSetDelete(exerciseId, workoutId, setId) {
-                let response = await this.$axios.$delete('/api/set', {data: {exerciseId: exerciseId, setId: setId}});
-    
-                for(let exercise of this.workout.exercises) {
-                    if(exercise.sets.length > 0) {
-                        var filtered = exercise.sets.filter(function(value, index, arr){ 
-                            return value._id != setId;
-                        });
-                        exercise.sets = filtered;
-                    }
-    
-                }
-    
-                this.$router.push(`/workout/${workoutId}`)
-            },
+
             async onWorkoutDelete() {
                 this.canDelete = false;
                 await this.$axios.$delete('/api/workout', {data: {workoutId: this.workout._id}});
@@ -744,21 +672,7 @@
                 await this.$router.push('/workouts');
                 this.canDelete = true;
             },
-            async onSetDuplication(set, exercise, workoutId) {
-                const response = await this.$axios.$post('/api/set/create', {
-                    duplicate: true,
-                    setId: set._id,
-                    exerciseId: exercise._id
-                });
-    
-    
-                for(let ex of this.workout.exercises) {
-                    if(ex._id === exercise._id) {
-                        await ex.sets.push(response.set);
-                    }
-                }
-                await this.$router.push(`/workout/${workoutId}`)
-            },
+
             findSetNumber(set, setType, exercise) {
                 let trainingSets = []
                 let warmUpSets = []
