@@ -370,7 +370,7 @@
         <div class="backdiv mt-5 pt-4 ml-4" style="height: 60vh; overflow: scroll"  >
             <div v-if="!warmUpModal && !setModal && !workoutModal">
                 <div class="row"></div>
-                <div class="row-8 pt-3" id="background-title">
+                <div class="row-8 pt-2" id="background-title">
                     <h1>{{workout.name}}</h1>
                 </div>
                 <div class="row-4">
@@ -413,7 +413,7 @@
                     <div class="col mt-2" style="width: 70vw">
                         <button @click="completeWorkout" class="completeButton">Finish Workout</button>
                     </div>
-                </div>             
+                </div>       
             </div>
             <div v-else-if="warmUpModal">
                 <div class="row mb-1">
@@ -483,8 +483,8 @@
                 
             </div>
             <div v-else-if="setModal">
-                <div class="row mb-1">
-                    <button class="backButton" style="margin: auto;" @click="toggleSet">Back to Exercise</button>
+                <div v-if="selectedExercise.iswar" class="row mb-1">
+                    <button class="backButton" style="margin: auto;" @click="toggleSet()">Back to Exercise</button>
                 </div>
                 <div v-if="!warmUpSetsModal" class="row-8 pt-2" id="background-title">
                     <h1 style="color: white;">{{selectedExercise.name}}</h1>

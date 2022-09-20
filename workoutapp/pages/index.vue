@@ -72,13 +72,23 @@
                   </div>
                 </div>
               </div>
-              <div class="todaysWorkout mt-3" @click="$router.push(`/workout/${workout._id}`)">
+              <div v-if="workout" class="todaysWorkout mt-3" @click="$router.push(`/workout/${workout._id}`)">
                     <div class="col" >
                       <div class="row">
                           <h1 style="font-size: 14px; margin:auto;" >Scheduled Workout</h1>
                       </div>
                       <div class="row mt-3">
                         <h1 style="font-size: 10px; color: white; margin: auto;" > {{workout.name}}</h1>
+                      </div>                     
+                    </div>
+              </div> 
+              <div v-else class="todaysWorkout mt-3" @click="$router.push('/workout/new')">
+                    <div class="col" >
+                      <div class="row">
+                          <h1 style="font-size: 14px; margin:auto;" >No Workouts created</h1>
+                      </div>
+                      <div class="row mt-3">
+                        <h1 style="font-size: 10px; color: white; margin: auto;">Create New</h1>
                       </div>                     
                     </div>
               </div> 

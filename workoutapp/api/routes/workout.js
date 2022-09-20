@@ -105,7 +105,7 @@ router.post('/', verifyToken, async(req, res) => {
                 .populate({
                     path: 'exercises'
                 })
-                .where({isToday: true})
+                .where({isToday: true, isCompleted: false})
                 .limit(1)
                 .exec(); 
 
